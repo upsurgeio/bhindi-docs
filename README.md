@@ -1,6 +1,7 @@
 # Bhindi Agent Development Guide
 
 Build powerful AI agents that integrate seamlessly with [Bhindi.io](https://bhindi.io) 🚀 
+
 Bhindi supports 100+ integrations and is the easiest way to build AI agents.
 
 Check a list of integrations available at [Bhindi Agents Directory](https://directory.bhindi.io/)
@@ -20,6 +21,7 @@ For detailed specifications, advanced examples, and comprehensive API reference,
 - [📋 Core Requirements](#-core-requirements)
 - [🔐 Authentication](#-authentication)
 - [🧪 Testing Your Agent](#-testing-your-agent)
+- [🚀 Bringing Your Custom Agent to Bhindi](#-bringing-your-custom-agent-to-bhindi)
 - [📖 Next Steps](#-next-steps)
 
 ---
@@ -28,12 +30,13 @@ For detailed specifications, advanced examples, and comprehensive API reference,
 
 ### 5-Minute Setup
 
-Get your agent up and running in minutes:
+Clone the agent-starter-kit repository and get your agent up and running in minutes:
+https://github.com/upsurgeio/bhindi-agent-starter
 
 ```bash
 # 1. Clone the starter template
-git clone https://github.com/upsurgeio/bhindi-agent-starter.git my-agent
-cd my-agent
+git clone https://github.com/upsurgeio/bhindi-agent-starter.git starter-kit
+cd starter-kit
 
 # 2. Install dependencies
 npm install
@@ -91,7 +94,6 @@ router.post('/tools/:toolName', (req, res) => {
   if (toolName === 'greet') {
     res.json({
       success: true,
-      responseType: 'text',
       data: {
         text: `Hello ${name}! Welcome to Bhindi agents!`
       }
@@ -113,11 +115,11 @@ export default router;
 
 ### How Agents Work
 
-[![](https://mermaid.ink/img/pako:eNqNVEtu2zAUvArBVYvKv8iyZKIw0CZpV02KOl208IaRniUiEqk-krEdw4fopttkEaDX6xFKiVY_qWFUC0qPmjejGZLa0lRlQBnV8MWCTOFM8Bx5tZDEXTVHI1JRc2nIRw1IuCY_7r8-tsW_kNeFkJnwoO8PXTnfaAMHCF_l4MYW_PiNfFIW_ZRH-vFCGSDq1ik3ikH7nu07P0AutEFuhJLkTalWvqUB9mYzL84cyvnShhhFrAbCfyt4hIPuWd-eX5GBUarUL69xMHu2EqYg6x6vRe8GNqQAngE-971ty18qxqIk_JaLkl-XQFqeJzrNlzEyL9TqMPCY5SsHI-drSO1xux7iaUnrwEXOKzCA-rDt95fzzveANbcLB_8jAW7d4M1r8sLT6ScxdFSoUtCaoM_8aFTapg12AIgKXYeuldRwMLEzoeuSbxqQLc1_hHVZNyHx0mlpt61SIKdKGlibYwngHuut52Ca_YIk9Z3H130Psk5SyKXCqt2UNKA5iowygxYCWoGbb0q6bcgW1BRQwYIy95hxvFnQhdy5Hnc4PitVdW2obF5QtuSldpWtM266Q_prFkG65TlVVhrKRsm4JaFsS9eURdFJfxjFYRKNwuEkDsOAbiiLx_0ojMJRMp2MT-JoHO4CeteqDvvxNE7iKJ6MpkkUx0kSUMiEUfjO_ymc2aXI6e4n29xrDQ?type=png)](https://mermaid.live/edit#pako:eNqNVEtu2zAUvArBVYvKv8iyZKIw0CZpV02KOl208IaRniUiEqk-krEdw4fopttkEaDX6xFKiVY_qWFUC0qPmjejGZLa0lRlQBnV8MWCTOFM8Bx5tZDEXTVHI1JRc2nIRw1IuCY_7r8-tsW_kNeFkJnwoO8PXTnfaAMHCF_l4MYW_PiNfFIW_ZRH-vFCGSDq1ik3ikH7nu07P0AutEFuhJLkTalWvqUB9mYzL84cyvnShhhFrAbCfyt4hIPuWd-eX5GBUarUL69xMHu2EqYg6x6vRe8GNqQAngE-971ty18qxqIk_JaLkl-XQFqeJzrNlzEyL9TqMPCY5SsHI-drSO1xux7iaUnrwEXOKzCA-rDt95fzzveANbcLB_8jAW7d4M1r8sLT6ScxdFSoUtCaoM_8aFTapg12AIgKXYeuldRwMLEzoeuSbxqQLc1_hHVZNyHx0mlpt61SIKdKGlibYwngHuut52Ca_YIk9Z3H130Psk5SyKXCqt2UNKA5iowygxYCWoGbb0q6bcgW1BRQwYIy95hxvFnQhdy5Hnc4PitVdW2obF5QtuSldpWtM266Q_prFkG65TlVVhrKRsm4JaFsS9eURdFJfxjFYRKNwuEkDsOAbiiLx_0ojMJRMp2MT-JoHO4CeteqDvvxNE7iKJ6MpkkUx0kSUMiEUfjO_ymc2aXI6e4n29xrDQ)
+[![](https://mermaid.ink/img/pako:eNp9k82O0zAUhV_F8gpE2sZp02ktVAmYgRUDosMC1I0nuSTWJHa4tqftVH0INmxhMRKvxyPgxA0_Q9UsnNz4O-fmXMU7mukcKKcGPjtQGZxLUaCoV4r4qxFoZSYboSx5bwCJMOTnty_3XfE_8ryUKpcB-vG9L5dbY-GI4bMC_NrB91_JB-0wvApkWC-1BaJvfee2Y9Tt84PyHRTSWBRWakVeVnodJC04WCxCc-4pn8tYYjVxBoj40yEQHj24vrq4IiOrdWWeXuNo8WgtbUk2A9HIwQ1sSQkiB3wctJ3kny7WoSLiVshKXFdAOp8Hfdov42RZ6vVx8FTkK4-Riw1k7nTcgARb0iXwIxc1WEBzPPbbN8s-94i3t0uP_zUB4fwSwhvyJNiZB2PorVBnYAzBMPOTozIua9kRIGr0CtNoZeDoxM6laSqxbSFX2UMMGtECZU65RQcRrQFr0ZZ01-6vqC2hhhXl_jEXeLOiK7X3Gv_nfdS67mWoXVFS_klUxleuyYXtT8DvtwjKZ3-hnbKUp0nnQfmObihPUjaM0yRh4_k4Hc_Z1O9uKR-wZDhhyWQ2nbCYnc3jabKP6F3XNx7O2CSN42TGztLpmM0iCrm0Gl-Hc9gdx_0vCtcxng?type=png)](https://mermaid.live/edit#pako:eNp9k82O0zAUhV_F8gpE2sZp02ktVAmYgRUDosMC1I0nuSTWJHa4tqftVH0INmxhMRKvxyPgxA0_Q9UsnNz4O-fmXMU7mukcKKcGPjtQGZxLUaCoV4r4qxFoZSYboSx5bwCJMOTnty_3XfE_8ryUKpcB-vG9L5dbY-GI4bMC_NrB91_JB-0wvApkWC-1BaJvfee2Y9Tt84PyHRTSWBRWakVeVnodJC04WCxCc-4pn8tYYjVxBoj40yEQHj24vrq4IiOrdWWeXuNo8WgtbUk2A9HIwQ1sSQkiB3wctJ3kny7WoSLiVshKXFdAOp8Hfdov42RZ6vVx8FTkK4-Riw1k7nTcgARb0iXwIxc1WEBzPPbbN8s-94i3t0uP_zUB4fwSwhvyJNiZB2PorVBnYAzBMPOTozIua9kRIGr0CtNoZeDoxM6laSqxbSFX2UMMGtECZU65RQcRrQFr0ZZ01-6vqC2hhhXl_jEXeLOiK7X3Gv_nfdS67mWoXVFS_klUxleuyYXtT8DvtwjKZ3-hnbKUp0nnQfmObihPUjaM0yRh4_k4Hc_Z1O9uKR-wZDhhyWQ2nbCYnc3jabKP6F3XNx7O2CSN42TGztLpmM0iCrm0Gl-Hc9gdx_0vCtcxng)
 
 ### Authentication & Endpoint Overview
 
-[![](https://mermaid.ink/img/pako:eNqNVMuO0zAU_RXLLGmneTRNxkIjFYgAwahVGbGAsHDjm6nVxA6OPWqm6o4PQII94g_5BJxHy0SaIrLyfZxzro9j73EqGWCCbxUtN-jdKhHIfpVZd4kE__754xuaG70BoXlKNZcC3dQlVAnueptv7n5K8Hz5Br2FGi1EXj9bq8nVbkxLPt5CTVAFqQKd4M8PMJ7FLBpm9BT12MdhbbZplIrftxMQ9ByoAoW03IIY0vqW9gNVnK5zQK-BMlDVP3h3Y7Y2ihOUSiEgbdj7fGoqLQuC7mhu4KQBgnWLR5z6_gut4IvhChiKBSslF3rgU9z49Cq-QRMtZd6NtQJtlKhQk0EMMi54M0Q12FXcmLVcvD8iJ0TQAlp8vIPUaKhQVULKM562TP8371e0KBsxmp-Z1z_JKqikUWmnuVTyjjOraSp7CNY5DTt9TnLuovH4yu69D71h6A_CuG_2-rBv9gd70LU9Wkub8TwnT7Is88EZlLy-BFEWQDQo-UeUD0EWPCzFR0LwMy9jg9J5wtj_O0YELh7Zq8QZJloZGOECVEGbEO8bUILtPSrsz0TsklG1bcw-WExJxUcpiyNMSXO7wSSjeWUjUzKq4SWn9uSKU1ZZm0G9kEZoTLwwbEkw2eOdDQP_wgnCaTBzvNB3Z140wjUm4_BiOpvOwsgNHC9yImd6GOH7Vte5CC_DKAzCmXsZBWEYWQQwrqW67h6I9p04_AFMwEpG?type=png)](https://mermaid.live/edit#pako:eNqNVMuO0zAU_RXLLGmneTRNxkIjFYgAwahVGbGAsHDjm6nVxA6OPWqm6o4PQII94g_5BJxHy0SaIrLyfZxzro9j73EqGWCCbxUtN-jdKhHIfpVZd4kE__754xuaG70BoXlKNZcC3dQlVAnueptv7n5K8Hz5Br2FGi1EXj9bq8nVbkxLPt5CTVAFqQKd4M8PMJ7FLBpm9BT12MdhbbZplIrftxMQ9ByoAoW03IIY0vqW9gNVnK5zQK-BMlDVP3h3Y7Y2ihOUSiEgbdj7fGoqLQuC7mhu4KQBgnWLR5z6_gut4IvhChiKBSslF3rgU9z49Cq-QRMtZd6NtQJtlKhQk0EMMi54M0Q12FXcmLVcvD8iJ0TQAlp8vIPUaKhQVULKM562TP8371e0KBsxmp-Z1z_JKqikUWmnuVTyjjOraSp7CNY5DTt9TnLuovH4yu69D71h6A_CuG_2-rBv9gd70LU9Wkub8TwnT7Is88EZlLy-BFEWQDQo-UeUD0EWPCzFR0LwMy9jg9J5wtj_O0YELh7Zq8QZJloZGOECVEGbEO8bUILtPSrsz0TsklG1bcw-WExJxUcpiyNMSXO7wSSjeWUjUzKq4SWn9uSKU1ZZm0G9kEZoTLwwbEkw2eOdDQP_wgnCaTBzvNB3Z140wjUm4_BiOpvOwsgNHC9yImd6GOH7Vte5CC_DKAzCmXsZBWEYWQQwrqW67h6I9p04_AFMwEpG)
+[![](https://mermaid.ink/img/pako:eNqNVMuO0zAU_RXLLGmnSdxHaqGRCkSAYNSqjFhAWLjJzdSaxA5-jJqpuuMDkGCP-EM-AefRMpGmiKx8H-ec6-PYe5zIFDDFN4qVW_RuHQvkPm03bSLGv3_--IYW1mxBGJ4ww6VA11UJOsZtb_0t_E8xXqzeoLdQoaXIq2cbNbrcDVnJh7dQUaQhUWBi_PkBJnCYZc2MnqIO-zisydaNUvH7ZgKKngNToJCRtyD6tMTRfmCKs00O6DWwFJT-B-9umG6s4hQlUghIavYun1htZEHRHcstnDRApO3iEae-_0Jr-GK5ghRFIi0lF6bnU1T79Cq6RiMjZd6OtQZjldCozqAUMi54PYTu7SqqzVot3x-RIypYAQ0-2kFiDWikS0h4xpOG6f_m_YqWZS3G8jPzkpOsAi2tSlrNlZJ3PHWaVrtDcM4Z2JlzkgsfDYeXbu9dGPRD0gujrjnowq6Z9PZgKne0jjbjeU6fZFlGwOuVgq4EYTaBsFciRxSBSTZ5WIqOhECyIEt7pfOEEfk7Rgg-HrirxFNMjbIwwAWogtUh3tegGLt7VLifibrlhmmozT44TMnERymLI0xJe7PFNGO5dpEtU2bgJWfu5IpTVjmbQb2QVhhMg3HYkGC6xztM_WByMRsT4s1n0znxZtPxAFeua3JBvNAl534YTsbzYHoY4PtG17sIpyEJpx7x_PnMH5PpAEPKjVRX7QPRvBOHP0ocSjY?type=png)](https://mermaid.live/edit#pako:eNqNVMuO0zAU_RXLLGmnSdxHaqGRCkSAYNSqjFhAWLjJzdSaxA5-jJqpuuMDkGCP-EM-AefRMpGmiKx8H-ec6-PYe5zIFDDFN4qVW_RuHQvkPm03bSLGv3_--IYW1mxBGJ4ww6VA11UJOsZtb_0t_E8xXqzeoLdQoaXIq2cbNbrcDVnJh7dQUaQhUWBi_PkBJnCYZc2MnqIO-zisydaNUvH7ZgKKngNToJCRtyD6tMTRfmCKs00O6DWwFJT-B-9umG6s4hQlUghIavYun1htZEHRHcstnDRApO3iEae-_0Jr-GK5ghRFIi0lF6bnU1T79Cq6RiMjZd6OtQZjldCozqAUMi54PYTu7SqqzVot3x-RIypYAQ0-2kFiDWikS0h4xpOG6f_m_YqWZS3G8jPzkpOsAi2tSlrNlZJ3PHWaVrtDcM4Z2JlzkgsfDYeXbu9dGPRD0gujrjnowq6Z9PZgKne0jjbjeU6fZFlGwOuVgq4EYTaBsFciRxSBSTZ5WIqOhECyIEt7pfOEEfk7Rgg-HrirxFNMjbIwwAWogtUh3tegGLt7VLifibrlhmmozT44TMnERymLI0xJe7PFNGO5dpEtU2bgJWfu5IpTVjmbQb2QVhhMg3HYkGC6xztM_WByMRsT4s1n0znxZtPxAFeua3JBvNAl534YTsbzYHoY4PtG17sIpyEJpx7x_PnMH5PpAEPKjVRX7QPRvBOHP0ocSjY)
 
 ---
 
@@ -129,10 +131,6 @@ Every agent must implement **2 required endpoints** and **1 optional endpoint**:
 
 1. **`GET /tools`** - Returns available tools and their parameters
 2. **`POST /tools/:toolName`** - Executes a specific tool
-
-### Optional Endpoints
-
-3. **`POST /resource`** - Provides user/environment context
 
 ### Tool Structure
 
@@ -158,7 +156,6 @@ Each tool follows this format:
 ```json
 {
   "success": true,
-  "responseType": "text|html|media|mixed",
   "data": { "text": "Your response content" }
 }
 ```
@@ -179,7 +176,9 @@ Each tool follows this format:
 
 ## 🔐 Authentication
 
-All requests require authentication headers:
+To let agents use integrations like GitHub, Gmail, Discord etc from the [Bhindi Agents Directory](https://directory.bhindi.io/), requests to the agent endpoint include the below headers.
+
+Read [Connecting your agent to Bhindi](#-bringing-your-custom-agent-to-bhindi) for more details.
 
 ### Basic Authentication
 ```bash
@@ -221,11 +220,72 @@ For comprehensive testing examples including OAuth and variable headers, see the
 
 ---
 
+## 🚀 Bringing Your Custom Agent to Bhindi
+
+Once you've built and deployed your agent, you can easily integrate it with [Bhindi.io](https://bhindi.io) to make it accessible through the platform.
+
+### Integration Process
+
+1. **Create & Deploy Your Agent**
+   - Build your agent using this development guide
+   - Deploy it to a publicly accessible endpoint
+   - Ensure both `/tools` and `/tools/:toolName` endpoints are working
+
+2. **Add Agent to Your Bhindi Account**
+   - Start a new chat on [Bhindi.io](https://bhindi.io)
+   - Use the following message format:
+
+```
+Add my agent using Bhindi Agent Manager. The details are as follows:
+
+id: my-special-calculator
+name: Special Calculator
+description: A powerful calculator that can perform complex mathematical operations and generate visualizations
+endpoint: https://my-calculator-app-here.com
+```
+
+3. **With OAuth Integration (Optional)**
+   - For agents that need access to services like GitHub, Google, Discord, etc.
+   - First connect the required apps at [bhindi.io/apps](https://bhindi.io/apps)
+   - Include OAuth services in your agent registration:
+
+```
+Add my agent using Bhindi Agent Manager. The details are as follows:
+
+id: my-github-analyzer
+name: GitHub Repository Analyzer
+description: Analyzes GitHub repositories and provides insights
+endpoint: https://my-github-analyzer.com
+oauth: github, discord
+```
+
+### Required Information
+
+- **id**: Unique identifier for your agent (lowercase, hyphens allowed)
+- **name**: Display name for your agent
+- **description**: What your agent does and its capabilities
+- **endpoint**: Public HTTPS URL where your agent is deployed
+- **oauth** (optional): Comma-separated list of services your agent needs access to
+
+### OAuth Access
+
+For agents requiring OAuth access:
+
+1. **Connect Apps First**: Visit [bhindi.io/apps](https://bhindi.io/apps) and connect the required services (GitHub, Google, Discord, etc.)
+2. **Account Access**: Your custom agent will automatically get authentication access for the connected accounts
+3. **Supported Services**: Include any of the 100+ integrations available in the Bhindi ecosystem
+
+### Integration Support
+
+The **Bhindi Agent Manager** will guide you through the integration process and help resolve any issues during setup.
+
+---
+
 ## 📖 Next Steps
 
-1. **📚 [Read the Complete Guide](./development-guide.md)** - Detailed specifications and advanced examples
+1. **📚 [Detailed specifications and advanced examples](./development-guide.md)**
 2. **🚀 [Clone the Starter Kit](https://github.com/upsurgeio/bhindi-agent-starter)** - Get started immediately
-3. **💬 Join the Community** - [Discord](https://discord.gg/tuXzyx5U) • [Twitter/X](https://x.com/bhindiai)
+3. **💬 Join the Community** - [Discord](https://discord.gg/hSfTG33ymy) • [Twitter/X](https://x.com/bhindiai)
 4. **🆘 Get Support** - [Documentation](https://github.com/upsurgeio/bhindi-docs) • [Email](mailto:info@bhindi.io)
 5. **🌐 Visit** - [Bhindi.io](https://bhindi.io)
 

@@ -4,7 +4,7 @@ This guide explains how to create external agents that integrate with the system
 
 ## Required Structure
 
-Every agent must implement **2 required endpoints (GET /tools and POST /tools/:toolName)** and **1 optional endpoint (POST /resource)**:
+Every agent must implement **2 required endpoints (GET /tools and POST /tools/:toolName)**:
 
 ### 1. GET /tools (Required)
 
@@ -115,32 +115,13 @@ export class BaseErrorResponseDto {
 
 export class BaseSuccessResponseDto<T> {
   success: true;
-  responseType: string;
   data: {
     [key: string]: T;
   };
 
-  constructor(data: T, responseType: 'text' | 'html' | 'media' | 'mixed') {
+  constructor(data: T) {
     this.success = true;
-    this.responseType = responseType;
-    if (responseType === 'text') {
-      this.data = {
-        text: data,
-      };
-    } else if (responseType === 'html') {
-      this.data = {
-        html: data,
-      };
-    } else if (responseType === 'media') {
-      this.data = {
-        media: data,
-      };
-    } else if (responseType === 'mixed') {
-      // @ts-expect-error - data is of type T
-      this.data = {
-        ...data,
-      };
-    }
+    this.data = data;
   }
 }
 
@@ -167,43 +148,51 @@ export class ResponseMediaItem {
 }
 ```
 
-### 3. POST /resource (Optional)
-
-Provides contextual information about the current user or environment to help the agent work effectively.
-
-**Example Use Cases:**
-
-- GitHub agent: Return user's profile and repositories
-- MongoDB agent: Return database schema information
-- Slack agent: Return user's workspace info and frequent contacts
-
 ## Authentication
 
-All requests include authentication headers:
+To let agents use integrations like GitHub, GMail etc from the [Bhindi Agents Directory](https://directory.bhindi.io/), 
+requests to agents include the following headers:
 
-### API Key Authentication
+### Basic Authentication
+```bash
+x-api-key: your-secret-key
+```
 
-- Header: `x-api-key`
-  - Used to authenticate the server making the request
-  - Required for all endpoints
+- **Required for all endpoints**
+- Used to authenticate the server making the request
+- Every agent must validate this header
 
 ### OAuth Authentication (Optional)
+```bash
+x-api-key: your-secret-key
+Authorization: Bearer oauth-token
+```
 
-- Header: `x-api-key`
-  - Used to authenticate the server making the request
-  - Required for all endpoints
-- Header: `Authorization: Bearer <token>`
-  - Used for agents requiring user-specific OAuth tokens
-  - Examples: Twitter, Slack, GitHub agents
+- Used for agents requiring user-specific OAuth tokens
+- The `Authorization` header contains the OAuth token for services like Twitter, Slack, GitHub, etc.
+- The `x-api-key` header is still required for server authentication
+- Examples: Twitter agent, Slack agent, GitHub agent
 
 ### Variable Headers (Optional)
+```bash
+x-api-key: your-secret-key
+x-dburi: mongodb://connection-string
+x-custom-var: custom-value
+```
 
-- Header: `x-api-key`
-  - Used to authenticate the server making the request
-  - Required for all endpoints
-- Header: `x-<variablename>`
-  - Used for agent-specific configuration
-  - Example: `x-dburi` for MongoDB agent
+- Used for agent-specific configuration
+- Pattern: `x-<variablename>` where `variablename` is your custom variable
+- The `x-api-key` header is still required for server authentication
+- Examples:
+  - `x-dburi`: MongoDB connection string for database agents
+  - `x-custom-var`: Any custom configuration your agent needs
+
+### Implementation Notes
+
+- **API Key Validation**: Always validate the `x-api-key` header first
+- **OAuth Token Handling**: Extract OAuth tokens from the `Authorization` header when needed
+- **Custom Variables**: Parse custom headers starting with `x-` for agent-specific configuration
+- **Security**: Never log or expose authentication tokens in responses or logs
 
 ## Tool Definition Structure
 
