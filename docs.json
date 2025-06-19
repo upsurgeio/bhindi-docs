@@ -1,0 +1,68 @@
+{
+    "$schema": "https://mintlify.com/docs.json",
+    "theme": "mint",
+    "name": "Mint Starter Kit",
+    "appearance": {
+        "default": "dark",
+        "strict": true
+    },
+    "colors": {
+        "primary": "#16A34A",
+        "light": "#07C983",
+        "dark": "#15803D"
+    },
+    "favicon": "/favicon.ico",
+    "navigation": {
+        "tabs": [
+            {
+                "tab": "Guides",
+                "groups": [
+                    {
+                        "group": "Get Started",
+                        "pages": [
+                            "index",
+                            "quickstart",
+                            "development"
+                        ]
+                    }
+                ]
+            }
+        ],
+        "global": {
+            "anchors": [
+                {
+                    "anchor": "Launch Bhindi",
+                    "href": "https://bhindi.io",
+                    "icon": "arrow-up-right-from-square"
+                },
+                {
+                    "anchor": "Discover Agents",
+                    "href": "https://directory.bhindi.io/",
+                    "icon": "magnifying-glass"
+                },
+                {
+                    "anchor": "Join Community",
+                    "href": "https://discord.gg/hSfTG33ymy",
+                    "icon": "discord"
+                }
+            ]
+        }
+    },
+    "logo": {
+        "light": "/logo/bhindi-logo.webp",
+        "dark": "/logo/bhindi-logo.webp"
+    },
+    "navbar": {
+        "primary": {
+            "type": "button",
+            "label": "Launch Bhindi",
+            "href": "https://bhindi.io"
+        }
+    },
+    "footer": {
+        "socials": {
+            "x": "https://x.com/bhindiai",
+            "github": "https://github.com/upsurgeio"
+        }
+    }
+}
