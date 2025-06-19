@@ -1,0 +1,736 @@
+{
+    "Scheduling & Collaboration": [
+        {
+            "title": "Trello",
+            "description": "Trello project management agent",
+            "category": "Scheduling & Collaboration",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Ftrello.png&w=96&q=75",
+            "link": "/trello",
+            "fullUrl": "https://directory.bhindi.io/trello"
+        },
+        {
+            "title": "Notion",
+            "description": "Notion workspace and document management agent",
+            "category": "Scheduling & Collaboration",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fnotion.png&w=96&q=75",
+            "link": "/notion",
+            "fullUrl": "https://directory.bhindi.io/notion"
+        },
+        {
+            "title": "Linear",
+            "description": "Linear issue tracking and project management agent",
+            "category": "Scheduling & Collaboration",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Flinear.png&w=96&q=75",
+            "link": "/linear",
+            "fullUrl": "https://directory.bhindi.io/linear"
+        },
+        {
+            "title": "Gmail",
+            "description": "Gmail email management agent",
+            "category": "Scheduling & Collaboration",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgoogle-gmail.png&w=96&q=75",
+            "link": "/google-gmail",
+            "fullUrl": "https://directory.bhindi.io/google-gmail"
+        },
+        {
+            "title": "Google Calendar",
+            "description": "Google Calendar scheduling and management agent",
+            "category": "Scheduling & Collaboration",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgoogle-calendar.png&w=96&q=75",
+            "link": "/google-calendar",
+            "fullUrl": "https://directory.bhindi.io/google-calendar"
+        },
+        {
+            "title": "Google Docs",
+            "description": "Google Docs document management agent",
+            "category": "Scheduling & Collaboration",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgoogle-docs.png&w=96&q=75",
+            "link": "/google-docs",
+            "fullUrl": "https://directory.bhindi.io/google-docs"
+        },
+        {
+            "title": "Google Sheets",
+            "description": "Google Sheets spreadsheet management agent",
+            "category": "Scheduling & Collaboration",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgoogle-sheets.png&w=96&q=75",
+            "link": "/google-sheets",
+            "fullUrl": "https://directory.bhindi.io/google-sheets"
+        },
+        {
+            "title": "Typeform",
+            "description": "Use Typeform to create, edit and manage typeforms and view form responses",
+            "category": "Scheduling & Collaboration",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Ftypeform.png&w=96&q=75",
+            "link": "/typeform",
+            "fullUrl": "https://directory.bhindi.io/typeform"
+        },
+        {
+            "title": "Google Forms",
+            "description": "Create, edit and manage Google Forms.",
+            "category": "Scheduling & Collaboration",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgoogle-forms.png&w=96&q=75",
+            "link": "/google-forms",
+            "fullUrl": "https://directory.bhindi.io/google-forms"
+        },
+        {
+            "title": "Bhindi Scheduler",
+            "description": "A scheduling agent that helps users create, manage, and track appointments, events, and tasks. Features include creating events, setting reminders, checking availability, and sending notifications.",
+            "category": "Scheduling & Collaboration",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fbhindi-scheduler.png&w=96&q=75",
+            "link": "/bhindi-scheduler",
+            "fullUrl": "https://directory.bhindi.io/bhindi-scheduler"
+        }
+    ],
+    "AI, Language Models": [
+        {
+            "title": "OpenRouter",
+            "description": "OpenRouter agent for accessing any models available on OpenRouter, getting model info, running inference, and listing models",
+            "category": "AI, Language Models",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fopenrouter.png&w=96&q=75",
+            "link": "/openrouter",
+            "fullUrl": "https://directory.bhindi.io/openrouter"
+        },
+        {
+            "title": "Youtube Analyzer",
+            "description": "Youtube agent for analyzing youtube videos and providing detailed descriptions and insights.",
+            "category": "AI, Language Models",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fyoutube-analyzer.png&w=96&q=75",
+            "link": "/youtube-analyzer",
+            "fullUrl": "https://directory.bhindi.io/youtube-analyzer"
+        },
+        {
+            "title": "Gemini Vision",
+            "description": "Powerful image analysis tool using Google's Gemini 2.0 Flash model that can answer questions, describe content, identify objects, and extract text from images. Handles multiple images and automatically optimizes for large files.",
+            "category": "AI, Language Models",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgeminivision.png&w=96&q=75",
+            "link": "/geminivision",
+            "fullUrl": "https://directory.bhindi.io/geminivision"
+        },
+        {
+            "title": "Perplexity Reasoning",
+            "description": "Perplexity reasoning agent for complex reasoning tasks using Perplexity's Sonar Reasoning model",
+            "category": "AI, Language Models",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fperplexity-reasoning.png&w=96&q=75",
+            "link": "/perplexity-reasoning",
+            "fullUrl": "https://directory.bhindi.io/perplexity-reasoning"
+        },
+        {
+            "title": "Perplexity Search",
+            "description": "Web search agent for finding information online. Perplexity search for searching the web and providing detailed descriptions and insights.",
+            "category": "AI, Language Models",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fperplexity-search.png&w=96&q=75",
+            "link": "/perplexity-search",
+            "fullUrl": "https://directory.bhindi.io/perplexity-search"
+        },
+        {
+            "title": "Gemini Flash 2.0 Summarizer",
+            "description": "Long context summarization tool using Gemini Flash 2.0 model",
+            "category": "AI, Language Models",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgemini-flash-2-summarizer.png&w=96&q=75",
+            "link": "/gemini-flash-2-summarizer",
+            "fullUrl": "https://directory.bhindi.io/gemini-flash-2-summarizer"
+        },
+        {
+            "title": "Gemini 2.5 Pro Sequential Thinking",
+            "description": "Step-by-step thinking agent that breaks down complex problems using a structured approach using the state of the art gemini-2.5-pro as the LLM. Use this agent when a user asks to \"think hard\" about a problem or needs methodical, thorough analysis of a complex issue.",
+            "category": "AI, Language Models",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgemini-25-pro-sequential-thinking.png&w=96&q=75",
+            "link": "/gemini-25-pro-sequential-thinking",
+            "fullUrl": "https://directory.bhindi.io/gemini-25-pro-sequential-thinking"
+        },
+        {
+            "title": "Hugging Face",
+            "description": "Hugging Face Hub integration for accessing models, datasets, spaces, papers, and collections",
+            "category": "AI, Language Models",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fhuggingface.png&w=96&q=75",
+            "link": "/huggingface",
+            "fullUrl": "https://directory.bhindi.io/huggingface"
+        },
+        {
+            "title": "Code Interpreter",
+            "description": "Execute code snippets or execute code from a file URL in JavaScript, Python, and Bash with full output capture",
+            "category": "AI, Language Models",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fcode-interpreter.png&w=96&q=75",
+            "link": "/code-interpreter",
+            "fullUrl": "https://directory.bhindi.io/code-interpreter"
+        }
+    ],
+    "Image & Visual Tools": [
+        {
+            "title": "Google Image Generation",
+            "description": "Advanced image generation service powered by Google's AI models that creates high-quality, diverse images from text prompts with customizable parameters. Ideal for creative projects, marketing materials, and visual content generation.",
+            "category": "Image & Visual Tools",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgoogle-imagegen.png&w=96&q=75",
+            "link": "/google-imagegen",
+            "fullUrl": "https://directory.bhindi.io/google-imagegen"
+        },
+        {
+            "title": "Flux Pro Ultra Image Generation",
+            "description": "High-quality image generation using Fal AI's Flux Pro v1.1 Ultra model, capable of creating detailed, photorealistic images from text prompts with customizable aspect ratios and output formats",
+            "category": "Image & Visual Tools",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Ffluxproultra-imagegen.png&w=96&q=75",
+            "link": "/fluxproultra-imagegen",
+            "fullUrl": "https://directory.bhindi.io/fluxproultra-imagegen"
+        },
+        {
+            "title": "IdeogramV2 Image Generation",
+            "description": "Generates images using the Ideogram v2a model, known for better text accuracy. Supports various styles and aspect ratios.",
+            "category": "Image & Visual Tools",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fideogramv2-imagegen.png&w=96&q=75",
+            "link": "/ideogramv2-imagegen",
+            "fullUrl": "https://directory.bhindi.io/ideogramv2-imagegen"
+        },
+        {
+            "title": "Vector Artist",
+            "description": "Generates a vector image (SVG format) from a text description using the Fal AI Recraft v3 model. Ideal for creating illustrations, line art, icons, and other vector graphics. Offers control over aspect ratio, various style presets (e.g., bold stroke, contour pop art, engraving), and optional seed for reproducibility.",
+            "category": "Image & Visual Tools",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fvectorartist.png&w=96&q=75",
+            "link": "/vectorartist",
+            "fullUrl": "https://directory.bhindi.io/vectorartist"
+        },
+        {
+            "title": "Digital Illustrator",
+            "description": "Generates digital illustrations (JPEG or PNG format) in a versatile digital art style using the Fal AI Recraft v3 model. Takes a text prompt as input and allows control over aspect ratio, output format (jpeg/png), and optional seed for reproducibility. Ideal for creating general digital artwork based on descriptions.",
+            "category": "Image & Visual Tools",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2FdigitalIllustrator.png&w=96&q=75",
+            "link": "/digitalIllustrator",
+            "fullUrl": "https://directory.bhindi.io/digitalIllustrator"
+        },
+        {
+            "title": "FluxDev Image Generation",
+            "description": "High-quality image generation using Fal AI's FluxDev model, capable of creating detailed, photorealistic images from text prompts with customizable aspect ratios and output formats",
+            "category": "Image & Visual Tools",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Ffluxdev-imagegen.png&w=96&q=75",
+            "link": "/fluxdev-imagegen",
+            "fullUrl": "https://directory.bhindi.io/fluxdev-imagegen"
+        },
+        {
+            "title": "QuickChart",
+            "description": "Create and share beautiful piecharts, line charts, bar charts, QR codes and other graphs from data inputs",
+            "category": "Image & Visual Tools",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fquickchart.png&w=96&q=75",
+            "link": "/quickchart",
+            "fullUrl": "https://directory.bhindi.io/quickchart"
+        },
+        {
+            "title": "FluxDev Image Edit",
+            "description": "Image editing agent using FluxDev model for high-quality image editing",
+            "category": "Image & Visual Tools",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Ffluxdev-imageedit.png&w=96&q=75",
+            "link": "/fluxdev-imageedit",
+            "fullUrl": "https://directory.bhindi.io/fluxdev-imageedit"
+        },
+        {
+            "title": "Gemini Flash Image Edit",
+            "description": "Image editing agent using Gemini Flash model for high-quality image editing",
+            "category": "Image & Visual Tools",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgeminiflash-imageedit.png&w=96&q=75",
+            "link": "/geminiflash-imageedit",
+            "fullUrl": "https://directory.bhindi.io/geminiflash-imageedit"
+        },
+        {
+            "title": "QR Code Generator",
+            "description": "Generate QR codes from text or URL content with customizable parameters",
+            "category": "Image & Visual Tools",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fqr-code-generator.png&w=96&q=75",
+            "link": "/qr-code-generator",
+            "fullUrl": "https://directory.bhindi.io/qr-code-generator"
+        },
+        {
+            "title": "GPT1 Image Generation",
+            "description": "Advanced image generation and editing agent powered by the GPT1 model. Supports high-quality, customizable image synthesis and editing for a variety of creative and practical applications.",
+            "category": "Image & Visual Tools",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgpt1-imagegen.png&w=96&q=75",
+            "link": "/gpt1-imagegen",
+            "fullUrl": "https://directory.bhindi.io/gpt1-imagegen"
+        },
+        {
+            "title": "Flux.1 Kontext Pro Image Generator/Editor",
+            "description": "Generate and edit high-quality images using Flux.1 Kontext Pro model through fal SDK",
+            "category": "Image & Visual Tools",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fflux-kontext-pro-image-generator.png&w=96&q=75",
+            "link": "/flux-kontext-pro-image-generator",
+            "fullUrl": "https://directory.bhindi.io/flux-kontext-pro-image-generator"
+        },
+        {
+            "title": "Flux.1 Kontext Max Image Generator/Editor",
+            "description": "Generate and edit high-resolution images using Flux.1 Kontext Max model through fal SDK",
+            "category": "Image & Visual Tools",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fflux-kontext-max-image-generator.png&w=96&q=75",
+            "link": "/flux-kontext-max-image-generator",
+            "fullUrl": "https://directory.bhindi.io/flux-kontext-max-image-generator"
+        },
+        {
+            "title": "Imgflip Meme Generator",
+            "description": "Get memes and generate memes using the Imgflip API",
+            "category": "Image & Visual Tools",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fimgflip-meme-generator.png&w=96&q=75",
+            "link": "/imgflip-meme-generator",
+            "fullUrl": "https://directory.bhindi.io/imgflip-meme-generator"
+        }
+    ],
+    "Finance, Market Data, Crypto": [
+        {
+            "title": "Coingecko",
+            "description": "Cryptocurrency data agent providing real-time prices, market data, and conversions",
+            "category": "Finance, Market Data, Crypto",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fcoingecko.png&w=96&q=75",
+            "link": "/coingecko",
+            "fullUrl": "https://directory.bhindi.io/coingecko"
+        },
+        {
+            "title": "Etherscan",
+            "description": "Ethereum blockchain data and analytics including address balances, token information, transactions, and gas prices",
+            "category": "Finance, Market Data, Crypto",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fetherscan.png&w=96&q=75",
+            "link": "/etherscan",
+            "fullUrl": "https://directory.bhindi.io/etherscan"
+        },
+        {
+            "title": "Google Finance",
+            "description": "Google Finance integration for stocks, market data, and financial news",
+            "category": "Finance, Market Data, Crypto",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgoogle-finance.png&w=96&q=75",
+            "link": "/google-finance",
+            "fullUrl": "https://directory.bhindi.io/google-finance"
+        },
+        {
+            "title": "DefiLlama",
+            "description": "Access DeFi data including protocol info, protocol TVL, prices, stablecoins, dexes, fees, pools, and more",
+            "category": "Finance, Market Data, Crypto",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fdefillama.png&w=96&q=75",
+            "link": "/defillama",
+            "fullUrl": "https://directory.bhindi.io/defillama"
+        },
+        {
+            "title": "Alchemy",
+            "description": "Interact with the blockchain based Alchemy API. Supports fetching gas details, transaction details, block details, nft details, token balances, token prices, wallet balances, contract details, ens details on multiple blockchains.",
+            "category": "Finance, Market Data, Crypto",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Falchemy.png&w=96&q=75",
+            "link": "/alchemy",
+            "fullUrl": "https://directory.bhindi.io/alchemy"
+        },
+        {
+            "title": "Fluid Stats",
+            "description": "Agent for providing stats about the Fluid Defi Platform. Get the total value locked, lending stats, dex stats, and vault stats for the supported chains (1, 137, 42161, 8453).",
+            "category": "Finance, Market Data, Crypto",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Ffluid-stats.png&w=96&q=75",
+            "link": "/fluid-stats",
+            "fullUrl": "https://directory.bhindi.io/fluid-stats"
+        },
+        {
+            "title": "Uniswap V4 Stats",
+            "description": "Uniswap Statistics API for uniswap v4 to get data about pool managers, pools, tokens and positions",
+            "category": "Finance, Market Data, Crypto",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Funiswap-v4-stats.png&w=96&q=75",
+            "link": "/uniswap-v4-stats",
+            "fullUrl": "https://directory.bhindi.io/uniswap-v4-stats"
+        },
+        {
+            "title": "Aave V3 Stats",
+            "description": "Agent for providing stats about the Aave lending protocol. Get information about reserves, users, flash loans, liquidations, supplies, borrows, repays, EMode categories, price oracles, rewards, and more.",
+            "category": "Finance, Market Data, Crypto",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Faave-v3-stats.png&w=96&q=75",
+            "link": "/aave-v3-stats",
+            "fullUrl": "https://directory.bhindi.io/aave-v3-stats"
+        },
+        {
+            "title": "Tenderly",
+            "description": "Tenderly agent for interacting with the Tenderly API. Get detailed information and analytics for transactions including balance changes, function calls, asset transfers, and more.",
+            "category": "Finance, Market Data, Crypto",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Ftenderly.png&w=96&q=75",
+            "link": "/tenderly",
+            "fullUrl": "https://directory.bhindi.io/tenderly"
+        },
+        {
+            "title": "Avocado",
+            "description": "Agent for interacting with Avocado smart contract wallet infrastructure. Supports fetching safes, transaction history, and transaction details.",
+            "category": "Finance, Market Data, Crypto",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Favocado.png&w=96&q=75",
+            "link": "/avocado",
+            "fullUrl": "https://directory.bhindi.io/avocado"
+        },
+        {
+            "title": "Zerodha Kite",
+            "description": "Zerodha Kite agent for interacting with the Zerodha trading platform. Enables users to access market data, manage portfolios, and execute trades through Kite API integration.",
+            "category": "Finance, Market Data, Crypto",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fzerodha-kite.png&w=96&q=75",
+            "link": "/zerodha-kite",
+            "fullUrl": "https://directory.bhindi.io/zerodha-kite"
+        }
+    ],
+    "Search Apps, Web & Media": [
+        {
+            "title": "Tavily Search",
+            "description": "Web search agent for finding information online",
+            "category": "Search Apps, Web & Media",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Ftavily-search.png&w=96&q=75",
+            "link": "/tavily-search",
+            "fullUrl": "https://directory.bhindi.io/tavily-search"
+        },
+        {
+            "title": "Google Flights",
+            "description": "Flight search agent for finding available flights between locations with pricing information",
+            "category": "Search Apps, Web & Media",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgoogle-flights.png&w=96&q=75",
+            "link": "/google-flights",
+            "fullUrl": "https://directory.bhindi.io/google-flights"
+        },
+        {
+            "title": "Google Jobs",
+            "description": "Google Jobs integration for searching job listings, job details, and company jobs",
+            "category": "Search Apps, Web & Media",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgoogle-jobs.png&w=96&q=75",
+            "link": "/google-jobs",
+            "fullUrl": "https://directory.bhindi.io/google-jobs"
+        },
+        {
+            "title": "Google Shopping",
+            "description": "Product search tool using SerpAPI Google Shopping data to find products and compare prices",
+            "category": "Search Apps, Web & Media",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgoogle-shopping.png&w=96&q=75",
+            "link": "/google-shopping",
+            "fullUrl": "https://directory.bhindi.io/google-shopping"
+        },
+        {
+            "title": "Google Maps",
+            "description": "Google Maps integration for searching places, getting place details, and directions using SERP API",
+            "category": "Search Apps, Web & Media",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgoogle-maps.png&w=96&q=75",
+            "link": "/google-maps",
+            "fullUrl": "https://directory.bhindi.io/google-maps"
+        },
+        {
+            "title": "Google Trends",
+            "description": "Google Trends integration for trending searches and topics",
+            "category": "Search Apps, Web & Media",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgoogle-trends.png&w=96&q=75",
+            "link": "/google-trends",
+            "fullUrl": "https://directory.bhindi.io/google-trends"
+        },
+        {
+            "title": "Google Hotels",
+            "description": "Hotel search and booking information agent",
+            "category": "Search Apps, Web & Media",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgoogle-hotels.png&w=96&q=75",
+            "link": "/google-hotels",
+            "fullUrl": "https://directory.bhindi.io/google-hotels"
+        },
+        {
+            "title": "Google News",
+            "description": "Google news agent for searching the web and providing detailed descriptions and insights.",
+            "category": "Search Apps, Web & Media",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgoogle-news.png&w=96&q=75",
+            "link": "/google-news",
+            "fullUrl": "https://directory.bhindi.io/google-news"
+        },
+        {
+            "title": "Google Search",
+            "description": "Google search agent for searching the web and providing detailed descriptions and insights.",
+            "category": "Search Apps, Web & Media",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgoogle-search.png&w=96&q=75",
+            "link": "/google-search",
+            "fullUrl": "https://directory.bhindi.io/google-search"
+        },
+        {
+            "title": "Google Scholar",
+            "description": "Google scholar agent for searching the web and providing detailed descriptions and insights.",
+            "category": "Search Apps, Web & Media",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgoogle-scholar.png&w=96&q=75",
+            "link": "/google-scholar",
+            "fullUrl": "https://directory.bhindi.io/google-scholar"
+        },
+        {
+            "title": "Google Images",
+            "description": "Google Image search integration for searching images",
+            "category": "Search Apps, Web & Media",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgoogle-images.png&w=96&q=75",
+            "link": "/google-images",
+            "fullUrl": "https://directory.bhindi.io/google-images"
+        },
+        {
+            "title": "YouTube Search",
+            "description": "YouTube search integration for finding videos",
+            "category": "Search Apps, Web & Media",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fyoutube-search.png&w=96&q=75",
+            "link": "/youtube-search",
+            "fullUrl": "https://directory.bhindi.io/youtube-search"
+        },
+        {
+            "title": "Giphy GIF Search",
+            "description": "Giphy integration for searching and retrieving GIFs, trending content, and random GIFs",
+            "category": "Search Apps, Web & Media",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgiphy-gif-search.png&w=96&q=75",
+            "link": "/giphy-gif-search",
+            "fullUrl": "https://directory.bhindi.io/giphy-gif-search"
+        },
+        {
+            "title": "Unsplash",
+            "description": "Unsplash integration for searching and retrieving high-quality photos and images",
+            "category": "Search Apps, Web & Media",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Funsplash.png&w=96&q=75",
+            "link": "/unsplash",
+            "fullUrl": "https://directory.bhindi.io/unsplash"
+        },
+        {
+            "title": "Amazon",
+            "description": "Amazon agent for searching products, getting product details, getting best selling products in a specific category and getting product reviews via RapidAPI",
+            "category": "Search Apps, Web & Media",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Famazon.png&w=96&q=75",
+            "link": "/amazon",
+            "fullUrl": "https://directory.bhindi.io/amazon"
+        },
+        {
+            "title": "Reddit",
+            "description": "Access Reddit content, manage posts, comments, and subreddit interactions using the Reddit API",
+            "category": "Search Apps, Web & Media",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Freddit.png&w=96&q=75",
+            "link": "/reddit",
+            "fullUrl": "https://directory.bhindi.io/reddit"
+        }
+    ],
+    "Audio, TTS, Transcription": [
+        {
+            "title": "TTS PlayAI v3",
+            "description": "Blazing-fast text-to-speech. Generate audio with improved emotional tones and extensive multilingual support. Ideal for high-volume processing and efficient workflows.",
+            "category": "Audio, TTS, Transcription",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Ftts-playAI-v3.png&w=96&q=75",
+            "link": "/tts-playAI-v3",
+            "fullUrl": "https://directory.bhindi.io/tts-playAI-v3"
+        },
+        {
+            "title": "Sound Effects Generator",
+            "description": "Create stunningly realistic sound effects in seconds - CassetteAIs Sound Effects Model generates high-quality SFX up to 30 seconds long in just 1 second of processing time",
+            "category": "Audio, TTS, Transcription",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fsoundeffectsgenerator.png&w=96&q=75",
+            "link": "/soundeffectsgenerator",
+            "fullUrl": "https://directory.bhindi.io/soundeffectsgenerator"
+        },
+        {
+            "title": "TTS Minimax Turbo",
+            "description": "Text-to-speech agent using the Minimax Turbo model for fast and high-quality speech synthesis",
+            "category": "Audio, TTS, Transcription",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Ftts-minimax-turbo.png&w=96&q=75",
+            "link": "/tts-minimax-turbo",
+            "fullUrl": "https://directory.bhindi.io/tts-minimax-turbo"
+        },
+        {
+            "title": "Turbov2point5 TTS",
+            "description": "Text-to-speech agent using Turbo v2.5 model for high-quality speech synthesis",
+            "category": "Audio, TTS, Transcription",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fturbov2point5-tts.png&w=96&q=75",
+            "link": "/turbov2point5-tts",
+            "fullUrl": "https://directory.bhindi.io/turbov2point5-tts"
+        },
+        {
+            "title": "TTS GPT-4o-mini-tts",
+            "description": "Text-to-speech agent using GPT-4o-mini-tts model for high-quality speech synthesis",
+            "category": "Audio, TTS, Transcription",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Ftts-gpt4omini.png&w=96&q=75",
+            "link": "/tts-gpt4omini",
+            "fullUrl": "https://directory.bhindi.io/tts-gpt4omini"
+        },
+        {
+            "title": "Groq Transcribe",
+            "description": "Transcribe audio files to text",
+            "category": "Audio, TTS, Transcription",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgroq-voice.png&w=96&q=75",
+            "link": "/groq-voice",
+            "fullUrl": "https://directory.bhindi.io/groq-voice"
+        },
+        {
+            "title": "Vapi",
+            "description": "Interact with Vapi API to manage assistants, calls, phone numbers",
+            "category": "Audio, TTS, Transcription",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fvapi.png&w=96&q=75",
+            "link": "/vapi",
+            "fullUrl": "https://directory.bhindi.io/vapi"
+        }
+    ],
+    "Developer & Infrastructure": [
+        {
+            "title": "GitHub",
+            "description": "GitHub agent for repository management and code operations",
+            "category": "Developer & Infrastructure",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgithub.png&w=96&q=75",
+            "link": "/github",
+            "fullUrl": "https://directory.bhindi.io/github"
+        },
+        {
+            "title": "Stagehand",
+            "description": "Stagehand Agent for browser automation and web interaction",
+            "category": "Developer & Infrastructure",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fbrowserbase-stagehand.png&w=96&q=75",
+            "link": "/browserbase-stagehand",
+            "fullUrl": "https://directory.bhindi.io/browserbase-stagehand"
+        },
+        {
+            "title": "GitHub Pages",
+            "description": "GitHub Pages deployment agent for creating and publishing static website content to GitHub Pages",
+            "category": "Developer & Infrastructure",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fgithub-pages.png&w=96&q=75",
+            "link": "/github-pages",
+            "fullUrl": "https://directory.bhindi.io/github-pages"
+        },
+        {
+            "title": "Cloud Convert",
+            "description": "Cloud Convert agent for converting files between different formats and merging multiple files into a single pdf file",
+            "category": "Developer & Infrastructure",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fcloud-convert.png&w=96&q=75",
+            "link": "/cloud-convert",
+            "fullUrl": "https://directory.bhindi.io/cloud-convert"
+        },
+        {
+            "title": "SSH Client",
+            "description": "The SSH Client agent can connect to any server IP address, even if it's not in the user's configured IP list. The tool will automatically generate SSH keys and establish connections to new servers as needed. User can add these keys to their server and can start executing.",
+            "category": "Developer & Infrastructure",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fssh-client.png&w=96&q=75",
+            "link": "/ssh-client",
+            "fullUrl": "https://directory.bhindi.io/ssh-client"
+        },
+        {
+            "title": "Cosmos",
+            "description": "Advanced web browser automation agent that enables seamless interaction with websites. Allows to navigate to URLs, interact with page elements (clicking buttons, filling forms), capture screenshots, and execute complex web workflows.",
+            "category": "Developer & Infrastructure",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fcosmos.png&w=96&q=75",
+            "link": "/cosmos",
+            "fullUrl": "https://directory.bhindi.io/cosmos"
+        },
+        {
+            "title": "Curl",
+            "description": "Simple HTTP client agent for making requests to any URL with customizable method, headers, body, and parameters",
+            "category": "Developer & Infrastructure",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fcurl.png&w=96&q=75",
+            "link": "/curl",
+            "fullUrl": "https://directory.bhindi.io/curl"
+        }
+    ],
+    "Database & Storage": [
+        {
+            "title": "MySQL",
+            "description": "MySQL agent to list tables and execute read-only SQL queries on database",
+            "category": "Database & Storage",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fmysql.png&w=96&q=75",
+            "link": "/mysql",
+            "fullUrl": "https://directory.bhindi.io/mysql"
+        },
+        {
+            "title": "PostgreSQL",
+            "description": "PostgreSQL agent to list tables and execute read-only SQL queries on database",
+            "category": "Database & Storage",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fpostgresql.png&w=96&q=75",
+            "link": "/postgresql",
+            "fullUrl": "https://directory.bhindi.io/postgresql"
+        },
+        {
+            "title": "Mongodb",
+            "description": "Mongodb agent to list collections and executing read-only queries on database",
+            "category": "Database & Storage",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fmongodb.png&w=96&q=75",
+            "link": "/mongodb",
+            "fullUrl": "https://directory.bhindi.io/mongodb"
+        },
+        {
+            "title": "Supabase",
+            "description": "Interact with your Supabase projects. Query and manage your Supabase database, execute SQL queries, manage tables and records, and perform other Supabase operations. Provides seamless integration with Supabase's PostgreSQL database service and authentication features.",
+            "category": "Database & Storage",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fsupabase.png&w=96&q=75",
+            "link": "/supabase",
+            "fullUrl": "https://directory.bhindi.io/supabase"
+        }
+    ],
+    "Social Media & Communication": [
+        {
+            "title": "Slack",
+            "description": "Interact with your slack account",
+            "category": "Social Media & Communication",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fslack.png&w=96&q=75",
+            "link": "/slack",
+            "fullUrl": "https://directory.bhindi.io/slack"
+        },
+        {
+            "title": "X/Twitter",
+            "description": "Twitter (X) interaction agent for reading and posting tweets and managing user interactions",
+            "category": "Social Media & Communication",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fx-twitter.png&w=96&q=75",
+            "link": "/x-twitter",
+            "fullUrl": "https://directory.bhindi.io/x-twitter"
+        },
+        {
+            "title": "Telegram Bot",
+            "description": "An agent for sending messages and images to Telegram users through a Telegram bot.",
+            "category": "Social Media & Communication",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Ftelegram-bot.png&w=96&q=75",
+            "link": "/telegram-bot",
+            "fullUrl": "https://directory.bhindi.io/telegram-bot"
+        },
+        {
+            "title": "SendGrid",
+            "description": "SendGrid agent for comprehensive email services including sending, templates, contacts, and analytics",
+            "category": "Social Media & Communication",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fsendgrid.png&w=96&q=75",
+            "link": "/sendgrid",
+            "fullUrl": "https://directory.bhindi.io/sendgrid"
+        }
+    ],
+    "Business & Productivity": [
+        {
+            "title": "AccuWeather",
+            "description": "Weather forecasting and information agent",
+            "category": "Business & Productivity",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Faccuweather.png&w=96&q=75",
+            "link": "/accuweather",
+            "fullUrl": "https://directory.bhindi.io/accuweather"
+        },
+        {
+            "title": "Time",
+            "description": "Time utilities for date/time manipulation, timezone conversion, and calendar calculations",
+            "category": "Business & Productivity",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Ftime.png&w=96&q=75",
+            "link": "/time",
+            "fullUrl": "https://directory.bhindi.io/time"
+        },
+        {
+            "title": "OpenWeather",
+            "description": "Weather data agent providing forecasts, current conditions, and air quality using OpenWeatherMap API",
+            "category": "Business & Productivity",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fopen-weather.png&w=96&q=75",
+            "link": "/open-weather",
+            "fullUrl": "https://directory.bhindi.io/open-weather"
+        },
+        {
+            "title": "Calculator",
+            "description": "Calculator agent for performing mathematical operations",
+            "category": "Business & Productivity",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fcalculator.png&w=96&q=75",
+            "link": "/calculator",
+            "fullUrl": "https://directory.bhindi.io/calculator"
+        }
+    ],
+    "Utilities & Tools": [
+        {
+            "title": "Random",
+            "description": "Randomization utilities including coin flips, dice rolls, number generation, choices from lists, shuffle arrays, random boolean, random UUID, random date",
+            "category": "Utilities & Tools",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Frandom.png&w=96&q=75",
+            "link": "/random",
+            "fullUrl": "https://directory.bhindi.io/random"
+        },
+        {
+            "title": "Wait",
+            "description": "Simple delay utility that pauses execution for a specified duration up to 20 seconds.",
+            "category": "Utilities & Tools",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fwait.png&w=96&q=75",
+            "link": "/wait",
+            "fullUrl": "https://directory.bhindi.io/wait"
+        },
+        {
+            "title": "Bhindi Prompt Manager",
+            "description": "Organize and manage your personal collection of reusable Bhindi prompts with easy create, edit, and delete capabilities",
+            "category": "Utilities & Tools",
+            "logo": "https://directory.bhindi.io/_next/image?url=https%3A%2F%2Fagents-storage.nyc3.digitaloceanspaces.com%2Fagents%2Fbhindi-prompt-manager.png&w=96&q=75",
+            "link": "/bhindi-prompt-manager",
+            "fullUrl": "https://directory.bhindi.io/bhindi-prompt-manager"
+        }
+    ]
+}

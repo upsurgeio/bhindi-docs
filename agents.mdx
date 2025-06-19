@@ -1,0 +1,78 @@
+---
+title: 'Agents Directory'
+description: 'Comprehensive directory of all available agents organized by category'
+---
+
+import agents from './agents.json';
+
+# Agents Directory
+
+Explore our comprehensive collection of agents organized by category. Each agent provides specialized functionality to help you automate and enhance your workflows.
+
+{Object.entries(agents).map(([category, categoryAgents]) => (
+  <div key={category} className="mb-12">
+    <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b-2 border-blue-500 pb-2">
+      {category}
+    </h2>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {categoryAgents.map((agent, index) => (
+        <div key={index} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6 border border-gray-200">
+          <div className="flex items-start space-x-4">
+            <img 
+              src={agent.logo} 
+              alt={`${agent.title} logo`}
+              className="w-12 h-12 rounded-lg object-cover flex-shrink-0"
+            />
+            <div className="flex-1 min-w-0">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                {agent.title}
+              </h3>
+              <p className="text-gray-600 text-sm mb-3 leading-relaxed">
+                {agent.description}
+              </p>
+              <div className="flex space-x-2">
+                <a 
+                  href={agent.fullUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-3 py-1 text-xs font-medium text-blue-600 bg-blue-50 rounded-full hover:bg-blue-100 transition-colors duration-200"
+                >
+                  View Agent
+                  <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+                <span className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-500 bg-gray-100 rounded-full">
+                  {agent.category}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+))}
+
+## Categories Overview
+
+<div className="mt-8 p-6 bg-gray-50 rounded-lg">
+  <h3 className="text-lg font-semibold mb-4">Available Categories</h3>
+  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+    {Object.entries(agents).map(([category, categoryAgents]) => (
+      <div key={category} className="flex items-center justify-between p-3 bg-white rounded border">
+        <span className="font-medium text-gray-700">{category}</span>
+        <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+          {categoryAgents.length}
+        </span>
+      </div>
+    ))}
+  </div>
+</div>
+
+---
+
+<div className="mt-8 text-center text-gray-600">
+  <p>Total Agents: <strong>{Object.values(agents).flat().length}</strong></p>
+  <p className="text-sm mt-2">Visit <a href="https://directory.bhindi.io" className="text-blue-600 hover:text-blue-800">directory.bhindi.io</a> for more information</p>
+</div>
