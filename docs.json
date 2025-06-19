@@ -24,12 +24,6 @@
                             "quickstart",
                             "development"
                         ]
-                    },
-                       {
-                        "group": "Agents Directory",
-                        "pages": [
-                            "agents"
-                        ]
                     }
                 ]
             }
