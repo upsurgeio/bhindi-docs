@@ -39,7 +39,7 @@
                         ]
                     },
                   {
-                        "group": "Build your first agent",
+                        "group": "Build your custom agent",
                         "pages": [
                             "quickstart",
                             "development",

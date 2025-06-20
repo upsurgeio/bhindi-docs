@@ -1,65 +1,20 @@
 ---
-title: "Build your first custom agent"
+title: "Quickstart"
+description: "Get started with building your own custom agent on Bhindi Platform in a few minutes!"
 ---
+
+## Why build on Bhindi though?
+
+1. If you have ever written tools for LLMs, you will feel right in place\!
+2. BCP - Bhindi Communication Protocol is just that on steroids\!
+3. You connect with 15\+ OAuth apps out of the box. 
+4. So you can focus on your idea and get it out before it becomes dead burried under other 99 dead ideas which you did not ship because some random setup issue took half of your day
+
+## Start here 👇🏻
 
 https://github.com/upsurgeio/bhindi-agent-starter
 
-A TypeScript-based agent starter kit that demonstrates both **public calculator tools** and **authenticated GitHub tools**. Perfect for learning agent development with the [Bhindi.io](https://bhindi.io) specification.
-
-## 🎯 What This Starter Kit Demonstrates
-
-This starter kit teaches you how to build agents with:
-
-- **Public tools** (Calculator - no authentication required)
-- **Authenticated tools** (GitHub - Bearer token required)
-- **Mixed authentication patterns** in a single agent
-- **Proper parameter validation** using JSON Schema
-- **Advanced features** like `confirmationRequired`
-- **Standardized response formats** following agent specification
-
-## ✨ Features
-
-### Calculator Tools (No Authentication)
-
-- **8 mathematical operations**: Basic arithmetic, power, square root, percentage, factorial
-- **Parameter validation**: Proper error handling for invalid inputs
-- **Confirmation required**: Demonstrates user confirmation for certain operations
-
-### GitHub Tools (Authentication Required)
-
-- **Repository listing**: List user's GitHub repositories with Bearer token
-- **Simple REST API**: Uses standard fetch calls (no heavy dependencies)
-- **Authentication demonstration**: Shows how to handle Bearer tokens
-
-### Development Features
-
-- **Full TypeScript support** with strict typing
-- **Comprehensive testing** with Jest
-- **ESLint \+ Prettier** for code quality
-- **JSON Schema validation** for parameters
-- **Standardized error handling**
-
-## 🚀 Available Tools
-
-### Calculator Tools
-
-| Tool             | Description                         | Special Features                    |
-| ---------------- | ----------------------------------- | ----------------------------------- |
-| `add`            | Add two numbers                     | Basic operation                     |
-| `subtract`       | Subtract two numbers                | `confirmationRequired: true`        |
-| `multiply`       | Multiply two numbers                | Basic operation                     |
-| `divide`         | Divide two numbers                  | Error handling for division by zero |
-| `power`          | Calculate a^b                       | Supports negative exponents         |
-| `sqrt`           | Square root                         | Error handling for negative inputs  |
-| `percentage`     | Calculate percentage                | Handles decimal percentages         |
-| `factorial`      | Calculate factorial                 | `confirmationRequired: true`        |
-| `countCharacter` | Count character occurrences in text | String manipulation                 |
-
-### GitHub Tools (Private - Auth Required)
-
-| Tool                   | Description              | Authentication        |
-| ---------------------- | ------------------------ | --------------------- |
-| `listUserRepositories` | List user's repositories | Bearer token required |
+We have provideed an Open Source TypeScript-based agent starter kit that demonstrates both **public calculator tools** and **authenticated GitHub tools**. Perfect for learning agent development with the [Bhindi.io](https://bhindi.io) specification.
 
 ## 📋 Quick Start
 
@@ -159,6 +114,28 @@ curl -X POST "http://localhost:3000/tools/listUserRepositories" \
   -d '{"per_page": 5, "sort": "updated"}'
 ```
 
+## 🚀 Available Tools
+
+### Calculator Tools
+
+| Tool             | Description                         | Special Features                    |
+| :--------------- | :---------------------------------- | :---------------------------------- |
+| `add`            | Add two numbers                     | Basic operation                     |
+| `subtract`       | Subtract two numbers                | `confirmationRequired: true`        |
+| `multiply`       | Multiply two numbers                | Basic operation                     |
+| `divide`         | Divide two numbers                  | Error handling for division by zero |
+| `power`          | Calculate a^b                       | Supports negative exponents         |
+| `sqrt`           | Square root                         | Error handling for negative inputs  |
+| `percentage`     | Calculate percentage                | Handles decimal percentages         |
+| `factorial`      | Calculate factorial                 | `confirmationRequired: true`        |
+| `countCharacter` | Count character occurrences in text | String manipulation                 |
+
+### GitHub Tools (Private - Auth Required)
+
+| Tool                   | Description              | Authentication        |
+| :--------------------- | :----------------------- | :-------------------- |
+| `listUserRepositories` | List user's repositories | Bearer token required |
+
 ## 🔐 Authentication
 
 This agent demonstrates **hybrid authentication**:
@@ -175,7 +152,6 @@ This agent demonstrates **hybrid authentication**:
 
 ## 📖 Documentation & Examples
 
-- [**Complete API Examples**](examples.md) - Detailed usage examples for all tools with curl commands
 - **Swagger Documentation** - Available at `/docs` endpoint when server is running
 - **Postman Collection** - Import `Bhind-Agent-Starter.postman_collection.json` for easy testing
 
@@ -222,6 +198,39 @@ npm run format
 # Development server with auto-reload
 npm run dev
 ```
+
+## 🎯 What This Starter Kit Demonstrates
+
+This starter kit teaches you how to build agents with:
+
+- **Public tools** (Calculator - no authentication required)
+- **Authenticated tools** (GitHub - Bearer token required)
+- **Mixed authentication patterns** in a single agent
+- **Proper parameter validation** using JSON Schema
+- **Advanced features** like `confirmationRequired`
+- **Standardized response formats** following agent specification
+
+## ✨ Features
+
+### Calculator Tools (No Authentication)
+
+- **8 mathematical operations**: Basic arithmetic, power, square root, percentage, factorial
+- **Parameter validation**: Proper error handling for invalid inputs
+- **Confirmation required**: Demonstrates user confirmation for certain operations
+
+### GitHub Tools (Authentication Required)
+
+- **Repository listing**: List user's GitHub repositories with Bearer token
+- **Simple REST API**: Uses standard fetch calls (no heavy dependencies)
+- **Authentication demonstration**: Shows how to handle Bearer tokens
+
+### Development Features
+
+- **Full TypeScript support** with strict typing
+- **Comprehensive testing** with Jest
+- **ESLint \+ Prettier** for code quality
+- **JSON Schema validation** for parameters
+- **Standardized error handling**
 
 ## 🚀 Next Steps
 
