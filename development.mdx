@@ -22,7 +22,6 @@ export class ToolDto {
   description: string; // What the tool does
   parameters: ToolParameterDto; // JSON Schema for parameters
   confirmationRequired?: boolean; // If true, the tool will require user confirmation
-  credits?: number; // Cost in credits (optional: important for billing costly functions like Image generation, Video generation, etc.)
 }
 
 export class ToolParameterDto {
@@ -220,7 +219,6 @@ Each tool in the `ToolsResponseDto` follows this structure:
   };
   visibleParameters?: string[];    // Parameters shown in UI
   confirmationRequired?: boolean;  // Requires user confirmation
-  credits?: number;               // Cost in credits
 }
 ```
 

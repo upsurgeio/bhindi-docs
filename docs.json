@@ -2,21 +2,30 @@
     "$schema": "https://mintlify.com/docs.json",
     "theme": "mint",
     "name": "Bhindi.io Docs",
-    "appearance": {
-        "default": "dark",
-        "strict": true
-    },
     "colors": {
         "primary": "#16A34A",
         "light": "#07C983",
         "dark": "#15803D"
     },
     "favicon": "/favicon.ico",
-  "seo": {
-    "metatags": {
-        "og:image": "/bhindi-logo.webp"
-    }
-},
+    "seo": {
+        "metatags": {
+            "title": "Bhindi.io - Documentation",
+            "description": "Explore comprehensive documentation and resources making AI agents for Bhindi.io.",
+            "keywords": "bhindi.io, documentation, developer tools",
+            "robots": "index, follow",
+            "og:title": "Bhindi.io - Documentation",
+            "og:description": "Your go-to resource for bhindi.io documentation.",
+            "og:url": "https://bhindi.io",
+            "og:image": "/images/og.png",
+            "og:type": "website",
+            "twitter:card": "summary",
+            "twitter:site": "@bhindiai",
+            "twitter:title": "Bhindi.io - Documentation",
+            "twitter:description": "Your go-to resource for bhindi.io documentation.",
+            "twitter:image": "/images/og.png"
+        }
+    },
     "navigation": {
         "tabs": [
             {
@@ -60,8 +69,8 @@
         }
     },
     "logo": {
-        "light": "/logo/bhindi-logo.webp",
-        "dark": "/logo/bhindi-logo.webp"
+        "light": "/logo/logo-light.png",
+        "dark": "/logo/logo-dark.png"
     },
     "navbar": {
         "primary": {

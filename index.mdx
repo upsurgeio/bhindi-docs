@@ -144,7 +144,6 @@ Each tool follows this format:
     required?: string[];
   };
   confirmationRequired?: boolean;  // Requires user confirmation
-  credits?: number;               // Cost in credits
 }
 ```
 
@@ -274,8 +273,10 @@ oauth: github, discord
 For agents requiring OAuth access:
 
 1. **Connect Apps First**: Visit [bhindi.io/apps](https://bhindi.io/apps) and connect the required services (GitHub, Google, Discord, etc.)
-2. **Account Access**: Your custom agent will automatically get authentication access for the connected accounts
+2. **Account Access**: Your custom agent will get access to predefined scopes only, not full authentication access to connected accounts
 3. **Supported Services**: Include any of the 100\+ integrations available in the Bhindi ecosystem
+
+**Note**: OAuth agents can only access the specific scopes that are currently configured in Bhindi, ensuring secure and limited access to your connected accounts.
 
 ### Integration Support
 
