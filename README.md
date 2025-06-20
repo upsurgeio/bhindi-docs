@@ -2,7 +2,7 @@
 
 Build powerful AI agents that integrate seamlessly with [Bhindi.io](https://bhindi.io) 🚀 
 
-Bhindi supports 100+ integrations and is the easiest way to build AI agents.
+Bhindi supports 15+ OAuth integrations and is the easiest way to build AI agents.
 
 Check a list of integrations available at [Bhindi Agents Directory](https://directory.bhindi.io/)
 
