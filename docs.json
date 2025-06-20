@@ -17,13 +17,13 @@
             "og:title": "Bhindi.io - Documentation",
             "og:description": "Your go-to resource for bhindi.io documentation.",
             "og:url": "https://bhindi.io",
-            "og:image": "/images/og.png",
+            "og:image": "/images/og-docs.png",
             "og:type": "website",
             "twitter:card": "summary",
             "twitter:site": "@bhindiai",
             "twitter:title": "Bhindi.io - Documentation",
             "twitter:description": "Your go-to resource for bhindi.io documentation.",
-            "twitter:image": "/images/og.png"
+            "twitter:image": "/images/og-docs.png"
         }
     },
     "navigation": {
@@ -35,16 +35,18 @@
                         "group": "Get Started",
                         "pages": [
                             "index",
-                            "quickstart",
-                            "development"
+                          "agents"
                         ]
                     },
-                    {
-                        "group": "Agents Directory",
+                  {
+                        "group": "Build your first agent",
                         "pages": [
-                            "agents"
+                            "quickstart",
+                            "development",
+                          "connect"
                         ]
                     }
+                
                 ]
             }
         ],

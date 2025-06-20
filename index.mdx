@@ -1,296 +1,58 @@
 ---
-title: "Introduction"
+title: "What is Bhindi?"
 ---
 
-Build powerful AI agents that integrate seamlessly with [Bhindi.io](https://bhindi.io) 🚀
+Five minutes into your work and its already **_too much?_**
 
-Bhindi supports 100\+ integrations and is the easiest way to build AI agents.
+<img
+  src="/images/this-is-mind-31cf31893e.jpg"
+  alt="this-is-mind-31cf31893e.jpg"
+  title="this-is-mind-31cf31893e.jpg"
+  style={{ width:"47%" }}
+/>
 
-Check a list of integrations available at [Bhindi Agents Directory](https://directory.bhindi.io/)
+So, let me guess, you are already tired of jumping between apps and losing focus? You're not alone. Your day starts with Calendar, then email, then a flood of Slack messages — before you’ve even figured out what _you_ need to do, you feel like calling it a day and gather courage to feel the same tomorrow.
 
-## 📖 Complete Documentation
+Apps promised productivity, but now they just compete for your attention.
 
-[**📚 Read the Full Development Guide →**](./development-guide.md)
+That’s where [**Bhindi.io**](http://Bhindi.io)  🥳 comes in clutch\!\
+We don’t replace your tools — we help you _use_ them better.
 
-For detailed specifications, advanced examples, and comprehensive API reference, see our complete development guide.
+One place to talk to all your daily apps, cut the noise, and get things done.
 
----
+And the good part? There's more\! You are not limited to what team Bhindi has cooked, you can be your own chef and make something useful for yourself, with least friction possible.
 
-## 📚 Table of Contents
-
-- [🚀 Quick Start](#-quick-start)
-- [🏗️ Agent Architecture](#️-agent-architecture)
-- [📋 Core Requirements](#-core-requirements)
-- [🔐 Authentication](#-authentication)
-- [🧪 Testing Your Agent](#-testing-your-agent)
-- [🚀 Bringing Your Custom Agent to Bhindi](#-bringing-your-custom-agent-to-bhindi)
-- [📖 Next Steps](#-next-steps)
-
----
-
-## 🚀 Quick Start
-
-### 5-Minute Setup
-
-Clone the agent-starter-kit repository and get your agent up and running in minutes:
-https://github.com/upsurgeio/bhindi-agent-starter
-
-```bash
-# 1. Clone the starter template
-git clone https://github.com/upsurgeio/bhindi-agent-starter.git starter-kit
-cd starter-kit
-
-# 2. Install dependencies
-npm install
-
-# 3. Start development server
-npm run dev
-
-# 4. Test your agent
-curl -X 'POST' \
-  'http://localhost:3000/tools/countCharacter' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "character": "s",
-  "text": "strawberrry"
-}'
-```
-
-### Minimal Working Example
-
-Here's a complete, runnable agent:
-
-```typescript
-import { Router } from 'express';
-
-const router = Router();
-
-// GET /tools - Return available tools
-router.get('/tools', (req, res) => {
-  res.json({
-    tools: [
-      {
-        name: 'greet',
-        description: 'Send a friendly greeting',
-        parameters: {
-          type: 'object',
-          properties: {
-            name: {
-              type: 'string',
-              description: 'Name of the person to greet'
-            }
-          },
-          required: ['name']
-        }
-      }
-    ]
-  });
-});
-
-// POST /tools/:toolName - Execute a tool
-router.post('/tools/:toolName', (req, res) => {
-  const { toolName } = req.params;
-  const { name } = req.body;
-  
-  if (toolName === 'greet') {
-    res.json({
-      success: true,
-      data: {
-        text: `Hello ${name}! Welcome to Bhindi agents!`
-      }
-    });
-  } else {
-    res.status(404).json({ 
-      success: false,
-      error: { message: 'Tool not found', code: 404 }
-    });
-  }
-});
-
-export default router;
-```
+Bhindi is not another Chatbot, its the last app you need in your life before it all becomes a mess.
 
 ---
 
-## 🏗️ Agent Architecture
+## Bhindi Agents
 
-### How Agents Work
+Bhindi comes with 80\+ agents, out of the box which you can start using them as soon as you sign up on the app.
 
-### Authentication & Endpoint Overview
+The agents are curated for a variety of use cases, there's something for everyone and your can be your own alchemist and create your own workflows by combining the agents.
 
----
+So if you are a marketer, recruiter, sales guy or tech bro, Bhindi has something for everyone 😉
 
-## 📋 Core Requirements
+_How to use agents?_ Just write your query and assemble them one by one with an **@**
 
-Every agent must implement **2 required endpoints** and **1 optional endpoint**:
+Here's me searching for flights, organisizing them in a google sheet and emailing, all in one breathe 🧘
 
-### Required Endpoints
+![add-agent.gif](/images/add-agent.gif)
 
-1. **`GET /tools`** - Returns available tools and their parameters
-2. **`POST /tools/:toolName`** - Executes a specific tool
+Check a list of agents available at 📁 [**Bhindi Agents Directory**](https://directory.bhindi.io/)
 
-### Tool Structure
+<Tooltip tip="">Did you know, You can check out the capabilites of each agent in the Bhindi Agents Directory</Tooltip>.\
+You don't have to guess what Bhindi does and does not do. Here's [Gmail agent](https://directory.bhindi.io/google-gmail)
 
-Each tool follows this format:
-
-```typescript
-{
-  name: string;                    // Tool identifier
-  description: string;             // What the tool does
-  parameters: {                    // JSON Schema for parameters
-    type: 'object';
-    properties: Record<string, any>;
-    required?: string[];
-  };
-  confirmationRequired?: boolean;  // Requires user confirmation
-}
-```
-
-### Response Format
-
-**Success Response:**
-
-```json
-{
-  "success": true,
-  "data": { "text": "Your response content" }
-}
-```
-
-**Error Response:**
-
-```json
-{
-  "success": false,
-  "error": {
-    "message": "Error description",
-    "code": 400,
-    "details": "Additional details"
-  }
-}
-```
-
----
-
-## 🔐 Authentication
-
-To let agents use integrations like GitHub, Gmail, Discord etc from the [Bhindi Agents Directory](https://directory.bhindi.io/), requests to the agent endpoint include the below headers.
-
-Read [Connecting your agent to Bhindi](#-bringing-your-custom-agent-to-bhindi) for more details.
-
-### Basic Authentication
-
-```bash
-x-api-key: your-secret-key
-```
-
-### OAuth Authentication (Optional)
-
-```bash
-x-api-key: your-secret-key
-Authorization: Bearer oauth-token
-```
-
-### Variable Headers (Optional)
-
-```bash
-x-api-key: your-secret-key
-x-dburi: mongodb://connection-string
-x-custom-var: custom-value
-```
-
----
-
-## 🧪 Testing Your Agent
-
-### Quick Test Commands
-
-```bash
-# Test tools endpoint
-curl -H "x-api-key: your-api-key" http://localhost:3000/tools
-
-# Test tool execution
-curl -X POST \
-  -H "x-api-key: your-api-key" \
-  -H "Content-Type: application/json" \
-  -d '{"name": "World"}' \
-  http://localhost:3000/tools/greet
-```
-
-For comprehensive testing examples including OAuth and variable headers, see the [development guide](./development-guide.md#testing-your-agent).
-
----
-
-## 🚀 Bringing Your Custom Agent to Bhindi
-
-Once you've built and deployed your agent, you can easily integrate it with [Bhindi.io](https://bhindi.io) to make it accessible through the platform.
-
-### Integration Process
-
-1. **Create & Deploy Your Agent**
-   - Build your agent using this development guide
-   - Deploy it to a publicly accessible endpoint
-   - Ensure both `/tools` and `/tools/:toolName` endpoints are working
-2. **Add Agent to Your Bhindi Account**
-   - Start a new chat on [Bhindi.io](https://bhindi.io)
-   - Use the following message format:
-
-```
-Add my agent using Bhindi Agent Manager. The details are as follows:
-
-id: my-special-calculator
-name: Special Calculator
-description: A powerful calculator that can perform complex mathematical operations and generate visualizations
-endpoint: https://my-calculator-app-here.com
-```
-
-3. **With OAuth Integration (Optional)**
-   - For agents that need access to services like GitHub, Google, Discord, etc.
-   - First connect the required apps at [bhindi.io/apps](https://bhindi.io/apps)
-   - Include OAuth services in your agent registration:
-
-```
-Add my agent using Bhindi Agent Manager. The details are as follows:
-
-id: my-github-analyzer
-name: GitHub Repository Analyzer
-description: Analyzes GitHub repositories and provides insights
-endpoint: https://my-github-analyzer.com
-oauth: github, discord
-```
-
-### Required Information
-
-- **id**: Unique identifier for your agent (lowercase, hyphens allowed)
-- **name**: Display name for your agent
-- **description**: What your agent does and its capabilities
-- **endpoint**: Public HTTPS URL where your agent is deployed
-- **oauth** (optional): Comma-separated list of services your agent needs access to
-
-### OAuth Access
-
-For agents requiring OAuth access:
-
-1. **Connect Apps First**: Visit [bhindi.io/apps](https://bhindi.io/apps) and connect the required services (GitHub, Google, Discord, etc.)
-2. **Account Access**: Your custom agent will get access to predefined scopes only, not full authentication access to connected accounts
-3. **Supported Services**: Include any of the 100\+ integrations available in the Bhindi ecosystem
-
-**Note**: OAuth agents can only access the specific scopes that are currently configured in Bhindi, ensuring secure and limited access to your connected accounts.
-
-### Integration Support
-
-The **Bhindi Agent Manager** will guide you through the integration process and help resolve any issues during setup.
-
----
+![Screenshot 2025-06-20 at 9.29.19 PM.png](/images/Screenshot2025-06-20at9.29.19PM.png)
 
 ## 📖 Next Steps
 
-1. [**📚 Detailed specifications and advanced examples**](./development-guide.md)
-2. [**🚀 Clone the Starter Kit**](https://github.com/upsurgeio/bhindi-agent-starter) - Get started immediately
-3. **💬 Join the Community** - [Discord](https://discord.gg/hSfTG33ymy) • [Twitter/X](https://x.com/bhindiai)
-4. **🆘 Get Support** - [Documentation](https://github.com/upsurgeio/bhindi-docs) • [Email](mailto:info@bhindi.io)
-5. **🌐 Visit** - [Bhindi.io](https://bhindi.io)
+1. **💬 Join the Community** - [Discord](https://discord.gg/hSfTG33ymy) • [Twitter/X](https://x.com/bhindiai) - We are here to guide you in any way possible so that you can make the most out of Bhindi
+2. [**🚀 Clone the Starter Kit**](https://github.com/upsurgeio/bhindi-agent-starter) - Build your first custom agent and Bhindi-Maxx your way out of boring stuff
+3. **🆘 Get Support** - [Documentation](https://github.com/upsurgeio/bhindi-docs) • [Email](mailto:info@bhindi.io)
+4. Chill\! Bhindi got you back**💚** 
 
 ---
 
