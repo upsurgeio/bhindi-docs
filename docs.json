@@ -12,6 +12,11 @@
         "dark": "#15803D"
     },
     "favicon": "/favicon.ico",
+  "seo": {
+    "metatags": {
+        "og:image": "/bhindi-logo.webp"
+    }
+},
     "navigation": {
         "tabs": [
             {
