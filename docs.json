@@ -35,18 +35,17 @@
                         "group": "Get Started",
                         "pages": [
                             "index",
-                          "agents"
+                            "agents"
                         ]
                     },
-                  {
+                    {
                         "group": "Build your custom agent",
                         "pages": [
                             "quickstart",
                             "development",
-                          "connect"
+                            "connect"
                         ]
                     }
-                
                 ]
             }
         ],
