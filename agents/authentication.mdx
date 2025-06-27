@@ -1,0 +1,157 @@
+---
+title: "Authentication & Security"
+description: "Learn about authentication patterns, security considerations, and error handling for Bhindi agents."
+---
+
+## Overview
+
+Bhindi agents use a flexible authentication system where authentication requirements depend on your agent's functionality. Understanding these patterns is crucial for building secure and reliable agents.
+
+## Authentication Patterns
+
+### GET `/tools` - No Authentication Required
+
+The `/tools` endpoint does **not** require any authentication headers. This allows Bhindi to discover what capabilities your agent provides without needing credentials.
+
+```http
+GET /tools
+```
+
+**Purpose**: Allows Bhindi to discover available tools and their parameters.
+
+### POST `/tools/:toolName` - Conditional Authentication
+
+Authentication requirements for tool execution depend entirely on your agent:
+
+
+If your agent provides simple utilities or calculations like a calculator then no authentication is needed:
+
+Example:
+
+```http
+POST /tools/calculate
+
+{
+  "expression": "2 + 2 * 3"
+}
+```
+
+If your agent integrates with external services/servers, or want your tool to be private then authentication is required (eg. `github`, `slack`, `notion`, etc.):
+
+```http
+POST /tools/sendMessage
+x-slack-api-key: your-api-key-here
+Authorization: Bearer user-oauth-token-here
+```
+
+### Variable Headers (Optional)
+
+For agent-specific configuration, use custom headers:
+
+Example for appwrite agent you may define your configuration something like this:
+
+```http
+POST /tools/listDocuments
+x-appwrite-api-key: your-api-key-here
+x-appwrite-project-id: your-project-id-here
+x-appwrite-endpoint-url: your-endpoint-url-here
+BODY {
+    "databaseId": "your-database-id-here",
+    "collectionId": "your-collection-id-here",
+    "query": "your-query-here"
+}
+```
+
+## Security Considerations
+### Input Validation
+
+Input validation is crucial for security. Always validate and sanitize all input parameters to prevent injection attacks, buffer overflows, and other security vulnerabilities. Consider using validation libraries like Joi or Yup, and follow OWASP input validation guidelines. Learn more about secure input validation at:
+- [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
+- [NodeJS Security Best Practices](https://nodejs.org/en/docs/guides/security)
+
+### Data Protection 
+
+Protecting sensitive data is critical. Never log or expose sensitive information like API keys, passwords, or personal data. Use encryption for sensitive data in transit and at rest. Follow data protection regulations like GDPR and CCPA. Learn more about data protection at:
+- [OWASP Sensitive Data Exposure](https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure)
+- [GDPR Compliance Guide](https://gdpr.eu/compliance/)
+
+### Rate Limiting
+
+Rate limiting helps prevent abuse and DoS attacks. Implement rate limiting based on IP address, user ID, or API key. Consider using token bucket or leaky bucket algorithms. Learn more about rate limiting at:
+- [Rate Limiting Algorithms Explained](https://konghq.com/blog/how-to-design-a-scalable-rate-limiting-algorithm)
+- [API Rate Limiting Best Practices](https://cloud.google.com/armor/docs/rate-limiting-overview)
+
+### HTTPS Enforcement
+
+HTTPS encryption is mandatory for production environments to protect data in transit. Use strong TLS configurations and keep certificates up to date. Consider HSTS and certificate pinning.
+
+## Error Handling
+
+### Consistent Error Format
+
+Always use the `BaseErrorResponseDto` format:
+
+```typescript
+// Standard error response structure
+interface ErrorResponse {
+  success: false;
+  error: {
+    message: string;      // Human-readable error message
+    code: string;         // Machine-readable error code
+    details: string;      // Additional context or debugging info
+  };
+}
+```
+
+### Common Error Codes
+
+Use consistent, descriptive error codes:
+
+```typescript
+// Authentication Errors
+const AUTH_ERRORS = {
+  MISSING_API_KEY: 'MISSING_API_KEY',
+  INVALID_API_KEY: 'INVALID_API_KEY',
+  MISSING_OAUTH_TOKEN: 'MISSING_OAUTH_TOKEN',
+  INVALID_OAUTH_TOKEN: 'INVALID_OAUTH_TOKEN',
+  TOKEN_EXPIRED: 'TOKEN_EXPIRED',
+  INSUFFICIENT_PERMISSIONS: 'INSUFFICIENT_PERMISSIONS'
+};
+
+// Validation Errors
+const VALIDATION_ERRORS = {
+  INVALID_PARAMETERS: 'INVALID_PARAMETERS',
+  MISSING_REQUIRED_FIELD: 'MISSING_REQUIRED_FIELD',
+  INVALID_FORMAT: 'INVALID_FORMAT',
+  VALUE_TOO_LONG: 'VALUE_TOO_LONG'
+};
+
+// Resource Errors
+const RESOURCE_ERRORS = {
+  RESOURCE_NOT_FOUND: 'RESOURCE_NOT_FOUND',
+  RESOURCE_ALREADY_EXISTS: 'RESOURCE_ALREADY_EXISTS',
+  RESOURCE_UNAVAILABLE: 'RESOURCE_UNAVAILABLE'
+};
+
+// System Errors
+const SYSTEM_ERRORS = {
+  INTERNAL_ERROR: 'INTERNAL_ERROR',
+  SERVICE_UNAVAILABLE: 'SERVICE_UNAVAILABLE',
+  TIMEOUT: 'TIMEOUT',
+  RATE_LIMIT_EXCEEDED: 'RATE_LIMIT_EXCEEDED'
+};
+```
+
+### HTTP Status Codes
+
+Use appropriate HTTP status codes:
+
+| Status Code | Usage | Example |
+|-------------|-------|---------|
+| 200 | Success | Tool executed successfully |
+| 400 | Bad Request | Invalid parameters |
+| 401 | Unauthorized | Missing or invalid API key |
+| 403 | Forbidden | Insufficient permissions |
+| 404 | Not Found | Tool or resource not found |
+| 429 | Too Many Requests | Rate limit exceeded |
+| 500 | Internal Server Error | Unexpected server error |

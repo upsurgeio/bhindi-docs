@@ -1,0 +1,78 @@
+---
+title: "Bring Your Agent to Bhindi"
+description: "Learn how to deploy and integrate your custom agent with Bhindi Platform"
+---
+
+### Integration Process
+
+1. **Create & Deploy Your Agent**
+   - Build your agent using this development guide
+   - Deploy it to a publicly accessible endpoint
+   - Ensure both `/tools` and `/tools/:toolName` endpoints are working
+2. **Add Agent to Your Bhindi Account**
+   - Start a new chat on [Bhindi.io](https://bhindi.io)
+   - Use the following message format:
+
+```
+Add my agent using Bhindi Agent Manager. The details are as follows:
+
+id: your-agent-id
+name: Your Agent Name
+description: Your Agent Description
+endpoint: https://your-agent-endpoint.com
+```
+
+3. **With OAuth Integration (Optional)**
+   - For agents that need access to services like GitHub, Google, Discord, etc.
+   - First connect the required apps at [bhindi.io/apps](https://bhindi.io/apps)
+   - Include OAuth services in your agent registration:
+
+```
+Add my agent using Bhindi Agent Manager. The details are as follows:
+
+id: my-github-analyzer
+name: GitHub Repository Analyzer
+description: Analyzes GitHub repositories and provides insights
+endpoint: https://my-github-analyzer.com
+oauth: github, discord
+```
+
+
+Add my agent using Bhindi Agent Manager. The details are as follows:
+
+```
+id: my-github-analyzer
+name: GitHub Repository Analyzer
+description: Analyzes GitHub repositories and provides insights
+```
+### Required Information
+
+- **id**: Unique identifier for your agent (lowercase, hyphens allowed)
+- **name**: Display name for your agent
+- **description**: What your agent does and its capabilities
+- **endpoint**: Public HTTPS URL where your agent is deployed
+- **oauth** (optional): Comma-separated list of services your agent needs access to
+
+### OAuth Access
+
+For agents requiring OAuth access:
+
+1. **Connect Apps First**: Visit [bhindi.io/apps](https://bhindi.io/apps) and connect the required services (GitHub, Google, Discord, etc.)
+2. **Account Access**: Your custom agent will get access to predefined scopes only, not full authentication access to connected accounts
+3. **Supported Services**: Include any of the 15+ integrations available in the Bhindi ecosystem
+
+**Note**: OAuth agents can only access the specific scopes that are currently configured in Bhindi, ensuring secure and limited access to your connected accounts.
+
+### Integration Support
+
+The **Bhindi Agent Manager** will guide you through the integration process and help resolve any issues during setup.
+
+### Configuring Headers of your agent
+
+To configure headers of your agent follow the below steps:
+
+1. Go to [Apps](https://bhindi.io/apps)
+2. Find your agent in the list.
+3. Click on `configure` button.
+4. Add the headers and save configuration.
+

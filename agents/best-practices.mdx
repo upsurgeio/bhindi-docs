@@ -1,0 +1,117 @@
+---
+title: "Best Practices for Agent Creation"
+description: "Learn the best practices for designing, building, testing, and deploying high-quality Bhindi agents."
+---
+
+## Overview
+
+Building great Bhindi agents requires following established best practices for tool design, performance optimization, testing, and deployment. This guide covers the essential practices that will help you create reliable, maintainable, and user-friendly agents.
+
+## Tool Design Best Practices
+
+### Clear Naming Conventions
+
+Use descriptive, action-oriented names that clearly indicate what the tool does:
+
+```typescript
+// ✅ Good: Clear and descriptive
+{
+  "name": "sendMessage",
+  "description": "Send a message to a Slack user or channel. Supports both direct messages and channel posts. Messages can include text, emojis, and basic formatting. Maximum message length is 4000 characters."
+}
+
+{
+  "name": "createPage",
+  "description": "Create a new page in Notion workspace"
+}
+
+{
+  "name": "updateRepository",
+  "description": "Update repository settings on GitHub"
+}
+
+// ❌ Bad: Generic and unclear
+{
+  "name": "execute",
+  "description": "Execute something"
+}
+
+{
+  "name": "process",
+  "description": "Process the request"
+}
+```
+
+### Comprehensive Descriptions
+
+Write descriptions that explain the tool's purpose, use cases, and any important limitations:
+
+```typescript
+// ✅ Good: Detailed and helpful
+{
+  "name": "sendMessage",
+  "description": "Send a message to a Slack user or channel. Supports both direct messages and channel posts. Messages can include text, emojis, and basic formatting. Maximum message length is 4000 characters."
+}
+
+// ❌ Bad: Vague and unhelpful
+{
+  "name": "sendMessage",
+  "description": "Sends a message"
+}
+```
+
+### Parameter Design
+
+Design parameters with user experience in mind:
+
+```typescript
+// ✅ Good: Well-designed parameters
+{
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "recipient": {
+        "type": "string",
+        "description": "Name or ID of the user/channel to send message to",
+        "examples": ["#general", "@john.doe", "C1234567890"]
+      },
+      "message": {
+        "type": "string",
+        "description": "Message content to send",
+        "maxLength": 4000
+      },
+      "threadTs": {
+        "type": "string",
+        "description": "Thread timestamp to reply to an existing thread (optional)",
+        "optional": true
+      }
+    },
+    "required": ["recipient", "message"]
+  }
+}
+```
+
+### Smart Defaults
+
+Provide sensible defaults for optional parameters:
+
+```typescript
+// ✅ Good: Helpful defaults
+{
+  "properties": {
+    "visibility": {
+      "type": "string",
+      "enum": ["public", "private", "internal"],
+      "default": "private",
+      "description": "Repository visibility setting"
+    },
+    "limit": {
+      "type": "number",
+      "default": 50,
+      "minimum": 1,
+      "maximum": 100,
+      "description": "Maximum number of items to return"
+    }
+  }
+}
+```

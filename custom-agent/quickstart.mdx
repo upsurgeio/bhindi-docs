@@ -1,0 +1,109 @@
+---
+title: "Quick Start"
+description: "Get started with building your custom agent on Bhindi Platform"
+---
+
+## Getting Started with the Starter Repository
+
+The fastest way to start building your custom agent is using our official **Node.js TypeScript Starter** repository. This repository provides three complete example agents that demonstrate different patterns and capabilities.
+
+### Repository Overview
+
+**Repository**: [https://github.com/upsurgeio/bhindi-external-agent-templates](https://github.com/upsurgeio/bhindi-external-agent-templates)
+
+The starter contains three example agents in the `node-typescript-starter` directory:
+
+1. **Calculator Agent** - Basic mathematical operations (no auth required)
+2. **Twitter Agent** - Social media integration (OAuth required)
+3. **Redis Agent** - Database operations (custom variables required)
+
+### Project Setup
+
+Clone and set up the starter repository:
+
+```bash
+# Clone the repository
+git clone https://github.com/upsurgeio/bhindi-external-agent-templates.git
+cd bhindi-external-agent-templates/node-typescript-starter
+
+# Install dependencies
+npm install
+
+# Create environment file
+cp .env.example .env
+```
+
+### Project Structure
+
+```
+node-typescript-starter/
+├── src/
+│   ├── agents/
+│   │   ├── calculator/         # Simple math operations
+│   │   ├── twitter/           # OAuth integration example
+│   │   ├── redis/             # Variables integration example
+│   │   ├── base-agent.ts      # Abstract base class
+│   │   └── registry.ts        # Agent registration
+│   ├── middleware/
+│   │   └── auth.ts           # Authentication middleware
+│   ├── types/
+│   │   └── tools.ts          # Type definitions
+│   ├── utils/
+│   │   ├── response.ts       # Response helpers
+│   │   └── env.ts           # Environment config
+│   └── server.ts            # Express server
+├── docs/                    # Agent documentation
+├── package.json
+└── tsconfig.json
+```
+
+### Environment Configuration
+
+Update your `.env` file:
+
+```bash
+# Required - API key for authentication
+SERVER_API_KEY=your-secret-api-key
+
+# Optional - Server port (defaults to 3000)
+PORT=3000
+
+# Twitter integration (if using Twitter agent)
+TWITTER_API_KEY=your-twitter-api-key
+```
+
+### Running the Development Server
+
+```bash
+# Development with auto-reload
+npm run dev
+
+# Production build and run
+npm start
+```
+
+Your agent server will be available at `http://localhost:3000`
+
+### Testing Your Agents
+
+Test the Calculator agent (no auth required):
+
+```bash
+# List available tools
+curl -X GET "http://localhost:3000/calculator/tools" \
+  -H "x-api-key: your-secret-api-key"
+
+# Execute addition
+curl -X POST "http://localhost:3000/calculator/tools/add" \
+  -H "x-api-key: your-secret-api-key" \
+  -H "Content-Type: application/json" \
+  -d '{"a": 5, "b": 3}'
+```
+
+### Example Agent Capabilities
+
+| Agent          | Tools                                                      | Auth Type       | Use Case                   |
+| -------------- | ---------------------------------------------------------- | --------------- | -------------------------- |
+| **Calculator** | `add`, `subtract`                                          | API Key only    | Basic operations, learning |
+| **Twitter**    | `tweet`                                                    | OAuth (Twitter) | Social media integration   |
+| **Redis**      | `get`, `set`, `delete`, `list_keys`, `increment`, `expire` | Variables       | Database operations        |

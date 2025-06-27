@@ -1,0 +1,307 @@
+---
+title: "Agent Specification"
+description: "Complete API specification for building Bhindi agents, including required endpoints, DTOs, and response formats."
+---
+
+## Overview
+
+Every Bhindi agent must implement a standardized API with specific endpoints and data transfer objects (DTOs). This ensures consistency and interoperability across all agents in the ecosystem.
+
+## Required Endpoints
+
+### GET `/tools`
+
+Returns the list of available tools (functions) that the agent can execute.
+
+**Purpose**: Allows Bhindi to discover what capabilities the agent provides.
+
+**Response Format**: `ToolsResponseDto`
+
+<Tip>
+  **Dto** stands for `Data Transfer Object`. It is a plain object that is used to
+  transfer data between the client and the server. Just to maintain consistency
+  and readability, we use Dto's for all responses.
+</Tip>
+
+```typescript
+export class ToolsResponseDto {
+  tools: ToolDto[];
+}
+
+export class ToolDto {
+  name: string; // Unique tool identifier eg. "sendMessage"
+  description: string; // Human-readable description eg. "Send a message to a Slack user or channel"
+  parameters: ToolParameterDto; // JSON Schema for parameters eg. { "query": { "type": "string", "description": "Name of user/channel to send message to" } }
+  confirmationRequired?: boolean; // Whether user confirmation is needed eg. true
+  visibleParameters?: string[]; // Parameters to show in UI eg. ["query", "text"]
+}
+
+export class ToolParameterDto {
+  type: "object";
+  properties: Record<string, PropertyDto>;
+  required?: string[];
+}
+
+export class PropertyDto {
+  type: "string" | "number" | "boolean" | "array" | "object";
+  description: string;
+  enum?: string[]; // For enum parameters eg. ["user", "channel", "id", "unknown"]
+  default?: any; // Default value eg. "unknown"
+  items?: PropertyDto; // For array parameters eg. { "type": "string", "description": "Name of user/channel to send message to" }
+}
+```
+
+**Example Response from the `/tools` endpoint should look like this**:
+
+```json
+{
+  "tools": [
+    {
+      "name": "sendMessage",
+      "description": "Send a message to a Slack user or channel",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Name of user/channel to send message to"
+          },
+          "text": {
+            "type": "string",
+            "description": "Message content"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["user", "channel", "id", "unknown"],
+            "default": "unknown",
+            "description": "Type of recipient"
+          }
+        },
+        "required": ["query", "text"]
+      },
+      "confirmationRequired": true,
+      "visibleParameters": ["query", "text"]
+    },
+    {
+      "name": "getChannels",
+      "description": "Get list of available Slack channels",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "number",
+            "description": "Maximum number of channels to return",
+            "default": 100
+          }
+        },
+        "required": []
+      },
+      "confirmationRequired": false
+    }
+  ]
+}
+```
+
+### POST `/tools/:toolName`
+
+Executes a specific tool with the provided parameters.
+A parameter can be a header, a query parameter, or a request body parameter.
+
+**Purpose**: Performs the actual work requested by the user.
+
+**Parameters**:
+
+- `toolName` (path): Name of the tool to execute
+- Request body: Tool-specific parameters matching the schema
+
+**Response Format**: `BaseSuccessResponseDto<T> | BaseErrorResponseDto`
+
+```typescript
+// Success Response
+export class BaseSuccessResponseDto<T> {
+  success: true;
+  responseType: "text" | "html" | "media" | "mixed";
+  data: {
+    [key: string]: T;
+  };
+}
+
+// Error Response
+export class BaseErrorResponseDto {
+  success: false;
+  error: {
+    message: string;
+    code: number | string;
+    details: string;
+  };
+}
+```
+
+**Response Types**:
+
+- `text`: Simple text response
+- `html`: Rich HTML content
+- `media`: Images, files, or other media
+- `mixed`: Combination of different content types
+
+**Example Success Response**:
+
+```json
+{
+  "success": true,
+  "responseType": "text",
+  "data": {
+    "text": "Message sent successfully to #general channel"
+  }
+}
+```
+
+**Example Error Response**:
+
+```json
+{
+  "success": false,
+  "error": {
+    "message": "Channel not found",
+    "code": "CHANNEL_NOT_FOUND",
+    "details": "The specified channel 'nonexistent' does not exist"
+  }
+}
+```
+
+**Example Request/Response Flow**:
+
+```http
+POST /tools/sendMessage
+Content-Type: application/json
+x-api-key: your-api-key-here
+
+{
+  "query": "#general",
+  "text": "Hello from Bhindi!",
+  "type": "channel"
+}
+```
+
+```json
+{
+  "success": true,
+  "responseType": "text",
+  "data": {
+    "text": "Message sent successfully to #general channel"
+  }
+}
+```
+
+### POST `/resource` (Optional)
+
+Provides contextual information about the current user or environment. This endpoint is called automatically by Bhindi before every `/tools/:toolName` request to gather necessary context information.
+
+**Purpose**: Helps the agent understand the user's context and available resources by providing dynamic context that may be required for tool execution.
+
+**How it works**: When you need certain information for your agent (like a slug, user ID, or other context), Bhindi will automatically call the `/resource` endpoint before executing any tool. The response from this endpoint provides the necessary context that your tools can use.
+
+**Use Cases**:
+
+- **AWS Agent**: If you need a project slug, the slug will be added to the resource endpoint and called before every `/tools/:toolName` request
+- **GitHub Agent**: User profile, repositories, organizations
+- **MongoDB Agent**: Database schemas, collections
+- **Slack Agent**: Workspace info, user's channels and contacts
+
+**Example Response**:
+
+```json
+{
+  "success": true,
+  "responseType": "mixed",
+  "data": {
+    "user": {
+      "id": "U123456",
+      "name": "John Doe",
+      "email": "john@example.com"
+    },
+    "workspace": {
+      "id": "T123456",
+      "name": "My Company"
+    },
+    "channels": [
+      { "id": "C123", "name": "general" },
+      { "id": "C124", "name": "random" }
+    ]
+  }
+}
+```
+
+## Reserved Keywords
+
+The following keywords are reserved by Bhindi and cannot be used as parameter names in your custom agent:
+
+- `userId`
+- `jobId`
+- `executionId`
+- `chatId`
+
+## DTO Reference
+
+### ToolsResponseDto
+
+The main response object for the `/tools` endpoint.
+
+| Field   | Type        | Description              | Example             |
+| ------- | ----------- | ------------------------ | ------------------- |
+| `tools` | `ToolDto[]` | Array of available tools | See ToolDto example |
+
+### ToolDto
+
+Represents a single tool/function that the agent can execute.
+
+| Field                  | Type               | Required | Description                         | Example                                       |
+| ---------------------- | ------------------ | -------- | ----------------------------------- | --------------------------------------------- |
+| `name`                 | `string`           | Yes      | Unique tool identifier              | `"sendMessage"`                               |
+| `description`          | `string`           | Yes      | Human-readable description          | `"Send a message to a Slack user or channel"` |
+| `parameters`           | `ToolParameterDto` | Yes      | JSON Schema for parameters          | See ToolParameterDto                          |
+| `confirmationRequired` | `boolean`          | No       | Whether user confirmation is needed | `true`                                        |
+| `visibleParameters`    | `string[]`         | No       | Parameters to show in UI            | `["query", "text"]`                           |
+
+### ToolParameterDto
+
+JSON Schema object defining the parameters for a tool.
+
+| Field        | Type                          | Required | Description                       | Example             |
+| ------------ | ----------------------------- | -------- | --------------------------------- | ------------------- |
+| `type`       | `string`                      | Yes      | Always `"object"`                 | `"object"`          |
+| `properties` | `Record<string, PropertyDto>` | Yes      | Parameter definitions             | See PropertyDto     |
+| `required`   | `string[]`                    | No       | Array of required parameter names | `["query", "text"]` |
+
+### PropertyDto
+
+Defines a single parameter property.
+
+| Field         | Type          | Required | Description                   | Example                                                    |
+| ------------- | ------------- | -------- | ----------------------------- | ---------------------------------------------------------- |
+| `type`        | `string`      | Yes      | Data type                     | `"string"`, `"number"`, `"boolean"`, `"array"`, `"object"` |
+| `description` | `string`      | Yes      | Parameter description         | `"Name of user/channel to send message to"`                |
+| `enum`        | `string[]`    | No       | Allowed values for enum types | `["user", "channel", "id", "unknown"]`                     |
+| `default`     | `any`         | No       | Default value                 | `"unknown"`                                                |
+| `items`       | `PropertyDto` | No       | For array parameters          | See PropertyDto                                            |
+
+### BaseSuccessResponseDto
+
+Standard success response format.
+
+| Field          | Type      | Description                     | Example                                  |
+| -------------- | --------- | ------------------------------- | ---------------------------------------- |
+| `success`      | `boolean` | Always `true`                   | `true`                                   |
+| `responseType` | `string`  | Type of response content        | `"text"`, `"html"`, `"media"`, `"mixed"` |
+| `data`         | `object`  | Response data with dynamic keys | `{"text": "Success message"}`            |
+
+### BaseErrorResponseDto
+
+Standard error response format.
+
+| Field           | Type             | Description                  | Example                                                |
+| --------------- | ---------------- | ---------------------------- | ------------------------------------------------------ |
+| `success`       | `boolean`        | Always `false`               | `false`                                                |
+| `error.message` | `string`         | Human-readable error message | `"Channel not found"`                                  |
+| `error.code`    | `string\|number` | Machine-readable error code  | `"CHANNEL_NOT_FOUND"`                                  |
+| `error.details` | `string`         | Additional error context     | `"The specified channel 'nonexistent' does not exist"` |

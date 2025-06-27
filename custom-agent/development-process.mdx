@@ -1,0 +1,519 @@
+---
+title: "Development Process"
+description: "Learn the development process for building custom agents on Bhindi Platform"
+---
+
+This guide walks you through how Bhindi custom agents work internally, using examples from our [official starter repository](https://github.com/upsurgeio/bhindi-external-agent-templates/tree/main/node-typescript-starter).
+
+## Architecture Overview
+
+Bhindi agents follow a modular architecture with clear separation of concerns:
+
+```
+Agent Structure
+├── Base Agent Class - Abstract foundation
+├── Agent Implementation - Specific business logic
+├── Tools Definition - Available operations
+├── Authentication - OAuth & API keys
+├── HTTP Server - Express.js endpoints
+└── Response Formatting - Standardized outputs
+```
+
+## File Tree Structure
+
+Here's the complete file structure of the starter repository:
+
+```
+node-typescript-starter/
+├── src/
+│   ├── agents/                    # Agent implementations
+│   │   ├── calculator/
+│   │   │   ├── index.ts          # Calculator agent class
+│   │   │   └── tools.ts          # Tools & type definitions
+│   │   ├── twitter/
+│   │   │   ├── index.ts          # Twitter agent with OAuth
+│   │   │   └── tools.ts          # Twitter tool definitions
+│   │   ├── redis/
+│   │   │   ├── index.ts          # Redis agent with variables
+│   │   │   └── tools.ts          # Redis operations
+│   │   ├── base-agent.ts         # Abstract base class
+│   │   └── registry.ts           # Agent registration system
+│   ├── middleware/
+│   │   └── auth.ts              # Authentication middleware
+│   ├── types/
+│   │   ├── index.ts             # Type exports
+│   │   └── tools.ts             # Core type definitions
+│   ├── utils/
+│   │   ├── response.ts          # Response formatting
+│   │   └── env.ts              # Environment configuration
+│   └── server.ts               # Express server setup
+├── docs/                       # Agent documentation
+│   ├── calculator.md
+│   ├── twitter.md
+│   └── redis.md
+├── package.json               # Dependencies & scripts
+└── tsconfig.json             # TypeScript configuration
+```
+
+## Core Components Deep Dive
+
+### 1. Base Agent Class
+
+All agents extend the `BaseAgentHandler` abstract class:
+
+```typescript
+// src/agents/base-agent.ts
+export abstract class BaseAgentHandler<T extends Record<string, any>>
+  implements AgentHandler<T>
+{
+  protected tools: Tool[];
+  protected oauth: SupportedOAuth[];
+  protected variables: string[];
+
+  constructor(tools: Tool[], oauth: SupportedOAuth[], variables: string[]) {
+    this.tools = tools;
+    this.oauth = oauth;
+    this.variables = variables;
+  }
+
+  getAgentInfo() {
+    return {
+      tools: this.tools,
+      oauth: this.oauth,
+      variables: this.variables,
+    };
+  }
+
+  getTools() {
+    return {
+      tools: this.tools,
+    };
+  }
+
+  abstract executeTool<K extends keyof T>(
+    toolName: K,
+    parameters: T[K],
+    oauthTokens?: Record<SupportedOAuth, string>,
+    variables?: Record<string, string>
+  ): Promise<any>;
+}
+```
+
+### 2. Tool Definition Pattern
+
+Each agent defines its tools using TypeScript interfaces and JSON schema:
+
+```typescript
+// src/agents/calculator/tools.ts
+export interface CalculatorTools {
+  add: {
+    a: number;
+    b: number;
+  };
+  subtract: {
+    a: number;
+    b: number;
+  };
+}
+
+export const calculatorTools: Tool[] = [
+  {
+    name: "add",
+    description: "Add two numbers together",
+    parameters: {
+      type: "object",
+      properties: {
+        a: {
+          type: "number",
+          description: "First number",
+        },
+        b: {
+          type: "number",
+          description: "Second number",
+        },
+      },
+      required: ["a", "b"],
+    },
+  },
+  // ... more tools
+];
+```
+
+## Agent Examples Analysis
+
+### Calculator Agent (Basic Pattern)
+
+The calculator agent demonstrates the simplest agent pattern - no authentication required:
+
+```typescript
+// src/agents/calculator/index.ts
+export class CalculatorAgent extends BaseAgentHandler<CalculatorTools> {
+  constructor() {
+    super(calculatorTools, [], []); // No OAuth, no variables
+  }
+
+  async executeTool<K extends keyof CalculatorTools>(
+    toolName: K,
+    parameters: CalculatorTools[K]
+  ): Promise<any> {
+    switch (toolName) {
+      case "add":
+        return createTextResponse({
+          result: parameters.a + parameters.b,
+        });
+      case "subtract":
+        return createTextResponse({
+          result: parameters.a - parameters.b,
+        });
+      default:
+        return createErrorResponse(
+          `Tool ${String(toolName)} not implemented`,
+          404
+        );
+    }
+  }
+}
+```
+
+**Testing the Calculator Agent:**
+
+```bash
+# List tools
+curl -X GET "http://localhost:3000/calculator/tools" \
+  -H "x-api-key: your-secret-api-key"
+
+# Execute addition
+curl -X POST "http://localhost:3000/calculator/tools/add" \
+  -H "x-api-key: your-secret-api-key" \
+  -H "Content-Type: application/json" \
+  -d '{"a": 5, "b": 3}'
+```
+
+### Twitter Agent (OAuth Pattern)
+
+The Twitter agent shows how to handle OAuth authentication:
+
+```typescript
+// src/agents/twitter/index.ts
+export class TwitterAgent extends BaseAgentHandler<TwitterTools> {
+  constructor() {
+    super(twitterTools, [OAuthType.TWITTER], []); // Requires Twitter OAuth
+  }
+
+  async executeTool<K extends keyof TwitterTools>(
+    toolName: K,
+    parameters: TwitterTools[K],
+    oauthTokens?: Record<SupportedOAuth, string>,
+    variables?: Record<string, string>
+  ): Promise<any> {
+    switch (toolName) {
+      case "tweet":
+        if (!parameters?.content) {
+          return createErrorResponse("Content is required", 400);
+        }
+        const twitterToken = oauthTokens?.[OAuthType.TWITTER];
+        if (!twitterToken) {
+          return createErrorResponse("Twitter token is required", 400);
+        }
+        // TODO: Implement Twitter API call
+        return createTextResponse({
+          message: "Tweet posted successfully",
+          tweet: parameters?.content,
+        });
+      default:
+        return createErrorResponse(
+          `Tool ${String(toolName)} not implemented`,
+          404
+        );
+    }
+  }
+}
+```
+
+**Testing the Twitter Agent:**
+
+```bash
+curl -X POST "http://localhost:3000/twitter/tools/tweet" \
+  -H "x-api-key: your-secret-api-key" \
+  -H "x-twitter-token: your-twitter-oauth-token" \
+  -H "Content-Type: application/json" \
+  -d '{"content": "Hello from Bhindi!"}'
+```
+
+### Redis Agent (Variables Pattern)
+
+The Redis agent demonstrates using custom variables for configuration:
+
+```typescript
+// src/agents/redis/index.ts
+export class RedisAgent extends BaseAgentHandler<RedisTools> {
+  constructor() {
+    super(redisTools, [], ["redis-host", "redis-port", "redis-password"]);
+  }
+
+  async executeTool<K extends keyof RedisTools>(
+    toolName: K,
+    parameters: RedisTools[K],
+    oauthTokens?: Record<string, string>,
+    variables?: Record<string, string>
+  ): Promise<any> {
+    // Validate required variables
+    const redisHost = variables?.["redis-host"];
+    const redisPort = variables?.["redis-port"];
+    const redisPassword = variables?.["redis-password"];
+
+    if (!redisHost || !redisPort || !redisPassword) {
+      return createErrorResponse(
+        "Redis connection variables are required",
+        400
+      );
+    }
+
+    switch (toolName) {
+      case "get":
+        if (!parameters.key) {
+          return createErrorResponse("Key is required", 400);
+        }
+        return createTextResponse({
+          key: parameters.key,
+          value: `simulated_value_for_${parameters.key}`,
+          message: "Value retrieved successfully",
+        });
+      case "set":
+        return createTextResponse({
+          key: parameters.key,
+          value: parameters.value,
+          ttl: parameters.ttl || null,
+          message: "Value set successfully",
+        });
+      // ... more Redis operations
+    }
+  }
+}
+```
+
+**Testing the Redis Agent:**
+
+```bash
+curl -X POST "http://localhost:3000/redis/tools/get" \
+  -H "x-api-key: your-secret-api-key" \
+  -H "x-redis-host: localhost" \
+  -H "x-redis-port: 6379" \
+  -H "x-redis-password: mypassword" \
+  -H "Content-Type: application/json" \
+  -d '{"key": "user:123"}'
+```
+
+## Authentication Flow
+
+The authentication middleware handles three types of authentication:
+
+### 1. API Key Authentication
+
+```typescript
+// src/middleware/auth.ts
+export const checkApiKey = (req: Request) => {
+  const apiKey = req.headers["x-api-key"];
+
+  if (!apiKey || apiKey !== ENV.SERVER_API_KEY) {
+    return createErrorResponse("Invalid API key", 401);
+  }
+
+  return { success: true };
+};
+```
+
+### 2. OAuth Token Validation
+
+```typescript
+export const checkOAuthTokens = (req: Request, oauth: SupportedOAuth[]) => {
+  const missingTokens: string[] = [];
+  const presentTokens: Record<string, string> = {};
+
+  for (const oauthProvider of oauth) {
+    const token = req.headers[`x-${oauthProvider}-token`];
+    if (!token) {
+      missingTokens.push(oauthProvider);
+    } else {
+      presentTokens[oauthProvider] = token as string;
+    }
+  }
+
+  if (missingTokens.length > 0) {
+    return createErrorResponse(
+      `Missing OAuth tokens: ${missingTokens.join(", ")}`,
+      401
+    );
+  }
+
+  return { success: true, tokens: presentTokens };
+};
+```
+
+### 3. Custom Variables
+
+```typescript
+export const checkVariables = (req: Request, variables: string[]) => {
+  const missingVariables: string[] = [];
+  const presentVariables: Record<string, string> = {};
+
+  for (const variable of variables) {
+    const value = req.headers[`x-${variable}`];
+    if (!value) {
+      missingVariables.push(variable);
+    } else {
+      presentVariables[variable] = value as string;
+    }
+  }
+
+  if (missingVariables.length > 0) {
+    return createErrorResponse(
+      `Missing variables: ${missingVariables.join(", ")}`,
+      401
+    );
+  }
+
+  return { success: true, variables: presentVariables };
+};
+```
+
+## HTTP Server & Routing
+
+The Express server provides standardized endpoints for all agents:
+
+```typescript
+// src/server.ts - Key endpoints
+router.get("/:agent/tools", getToolsHandler); // List tools
+router.post("/:agent/tools/:toolName", executeToolHandler); // Execute tool
+router.get("/:agent", getAgentHandler); // Agent status
+```
+
+Each endpoint follows the pattern:
+
+- `GET /:agent/tools` - Returns available tools for the agent
+- `POST /:agent/tools/:toolName` - Executes a specific tool
+- `GET /:agent` - Returns agent status
+
+## Response Formatting
+
+All responses follow a standardized format using utility functions:
+
+```typescript
+// src/utils/response.ts
+export const createTextResponse = (textData: object) => {
+  return createSuccessResponse("text", {
+    text: textData,
+  });
+};
+
+export const createErrorResponse = (
+  message: string,
+  code: number = 500,
+  details: string = ""
+): ErrorResponse => {
+  return {
+    success: false,
+    error: {
+      message: message,
+      code: code,
+      details: details,
+    },
+  };
+};
+```
+
+## Agent Registration
+
+The registry system automatically manages all agents:
+
+```typescript
+// src/agents/registry.ts
+export class AgentRegistry {
+  private registerDefaultAgents() {
+    this.registerAgent("calculator", new CalculatorAgent());
+    this.registerAgent("twitter", new TwitterAgent());
+    this.registerAgent("redis", new RedisAgent());
+  }
+
+  public registerAgent<K extends keyof AgentMap>(
+    name: K,
+    handler: AgentMap[K]
+  ) {
+    this.agents.set(name, handler);
+  }
+}
+```
+
+## Building Your Own Agent
+
+To create a new agent, follow these steps:
+
+1. **Define Tool Types**: Create interfaces for your tool parameters
+2. **Create Tool Schema**: Define JSON schema for validation
+3. **Implement Agent Class**: Extend `BaseAgentHandler`
+4. **Handle Authentication**: Specify required OAuth/variables
+5. **Register Agent**: Add to the registry
+6. **Test & Deploy**: Use curl or Postman to test
+
+### Example: Creating a Weather Agent
+
+```typescript
+// Step 1: Define types
+export interface WeatherTools {
+  getCurrentWeather: {
+    city: string;
+    units?: "metric" | "imperial";
+  };
+}
+
+// Step 2: Create schema
+export const weatherTools: Tool[] = [
+  {
+    name: "getCurrentWeather",
+    description: "Get current weather for a city",
+    parameters: {
+      type: "object",
+      properties: {
+        city: {
+          type: "string",
+          description: "City name",
+        },
+        units: {
+          type: "string",
+          description: "Temperature units",
+          enum: ["metric", "imperial"],
+        },
+      },
+      required: ["city"],
+    },
+  },
+];
+
+// Step 3: Implement agent
+export class WeatherAgent extends BaseAgentHandler<WeatherTools> {
+  constructor() {
+    super(weatherTools, [], ["weather-api-key"]);
+  }
+
+  async executeTool<K extends keyof WeatherTools>(
+    toolName: K,
+    parameters: WeatherTools[K],
+    oauthTokens?: Record<string, string>,
+    variables?: Record<string, string>
+  ): Promise<any> {
+    const apiKey = variables?.["weather-api-key"];
+
+    switch (toolName) {
+      case "getCurrentWeather":
+        // Implement weather API call
+        return createTextResponse({
+          city: parameters.city,
+          temperature: "22°C",
+          condition: "Sunny",
+        });
+    }
+  }
+}
+```
+
+This modular architecture makes it easy to create powerful, scalable agents that integrate seamlessly with the Bhindi platform.
