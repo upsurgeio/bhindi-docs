@@ -232,16 +232,24 @@ flowchart LR
     ```typescript
     // Good error message
     {
-      "message": "Channel not found",
-      "code": "CHANNEL_NOT_FOUND",
-      "details": "The channel '#marketing' doesn't exist or you don't have access to it"
+      "success": false,
+      "error": {
+        "message": "Channel not found", 
+        "code": "CHANNEL_NOT_FOUND",
+        "details": "The specified channel does not exist"
+      }
     }
     ```
   </Card>
 
-<Card title="Performance" icon="tachometer-alt">
-  **Optimize for speed** - Keep response times under 5 seconds - Use efficient
-  algorithms - Cache when appropriate - Implement timeouts - Handle rate limits
+<Card title="Performance" icon="gauge-high">
+  **Optimize for speed** 
+  
+  - Keep response times under 5 seconds 
+  - Use efficient algorithms 
+  - Cache when appropriate 
+  - Implement timeouts 
+  - Handle rate limits
   gracefully
 </Card>
 

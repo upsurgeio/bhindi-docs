@@ -287,15 +287,15 @@ interface ErrorResponse {
   clients handle responses correctly.
 </Card>
 
-| Status Code | Usage                 | Example                    | Icon |
-| ----------- | --------------------- | -------------------------- | ---- |
-| **200**     | Success               | Tool executed successfully | ✅   |
-| **400**     | Bad Request           | Invalid parameters         | ❌   |
-| **401**     | Unauthorized          | Missing or invalid API key | 🔐   |
-| **403**     | Forbidden             | Insufficient permissions   | 🚫   |
-| **404**     | Not Found             | Tool or resource not found | 🔍   |
-| **429**     | Too Many Requests     | Rate limit exceeded        | ⏱️   |
-| **500**     | Internal Server Error | Unexpected server error    | ⚠️   |
+| Status Code | Usage                 | Example                    |
+| ----------- | --------------------- | -------------------------- |
+| **200**     | Success               | Tool executed successfully |
+| **400**     | Bad Request           | Invalid parameters         |
+| **401**     | Unauthorized          | Missing or invalid API key |
+| **403**     | Forbidden             | Insufficient permissions   |
+| **404**     | Not Found             | Tool or resource not found |
+| **429**     | Too Many Requests     | Rate limit exceeded        |
+| **500**     | Internal Server Error | Unexpected server error    |
 
 ## Implementation Steps
 
@@ -340,11 +340,11 @@ interface ErrorResponse {
     - Perform security audits
     
     <Card title="Security Checklist" icon="clipboard-check">
-      ✅ Input validation
-      ✅ Rate limiting
-      ✅ Error handling
-      ✅ HTTPS enforcement
-      ✅ Credential security
+      - Input validation
+      - Rate limiting
+      - Error handling
+      - HTTPS enforcement
+      - Credential security
     </Card>
   </Step>
 </Steps>
