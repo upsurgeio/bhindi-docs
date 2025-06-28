@@ -1,109 +1,256 @@
 ---
 title: "Quick Start"
-description: "Get started with building your custom agent on Bhindi Platform"
+description: "Get started with building your custom MongoDB agent on Bhindi Platform"
+icon: "bolt"
 ---
 
-## Getting Started with the Starter Repository
+## Getting Started with the Custom Agent
 
-The fastest way to start building your custom agent is using our official **Node.js TypeScript Starter** repository. This repository provides three complete example agents that demonstrate different patterns and capabilities.
+The fastest way to start building your custom agent is using our **Express Starter Kit**. This repository provides a just a basic express server with a few tools & a basic authentication.
 
 ### Repository Overview
 
-**Repository**: [https://github.com/upsurgeio/bhindi-external-agent-templates](https://github.com/upsurgeio/bhindi-external-agent-templates)
+**Repository**: [https://github.com/upsurgeio/bhindi-starter-kit-express](https://github.com/upsurgeio/bhindi-starter-kit-express)
 
-The starter contains three example agents in the `node-typescript-starter` directory:
+The starter contains a complete MongoDB agent with two powerful database tools:
 
-1. **Calculator Agent** - Basic mathematical operations (no auth required)
-2. **Twitter Agent** - Social media integration (OAuth required)
-3. **Redis Agent** - Database operations (custom variables required)
+1. **createDocument** - Insert new documents into MongoDB collections
+2. **listDocuments** - Query and retrieve documents with filtering, sorting, and pagination
+
+<Note>
+  This agent requires a MongoDB connection and supports any MongoDB-compatible
+  database including MongoDB Atlas, local instances, and Docker containers.
+</Note>
 
 ### Project Setup
 
-Clone and set up the starter repository:
-
+<Tabs>
+<Tab title="npm">
 ```bash
 # Clone the repository
-git clone https://github.com/upsurgeio/bhindi-external-agent-templates.git
-cd bhindi-external-agent-templates/node-typescript-starter
+git clone https://github.com/upsurgeio/bhindi-starter-kit-express.git
+cd bhindi-starter-kit-express
 
 # Install dependencies
+
 npm install
 
-# Create environment file
-cp .env.example .env
+# Start development server
+
+npm run dev
+
+````
+</Tab>
+
+<Tab title="yarn">
+```bash
+# Clone the repository
+git clone https://github.com/upsurgeio/bhindi-starter-kit-express.git
+cd bhindi-starter-kit-express
+
+# Install dependencies
+yarn install
+
+# Start development server
+yarn dev
+````
+
+</Tab>
+
+<Tab title="bun">
+```bash
+# Clone the repository
+git clone https://github.com/upsurgeio/bhindi-starter-kit-express.git
+cd bhindi-starter-kit-express
+
+# Install dependencies
+
+bun install
+
+# Start development server
+
+bun dev
+
 ```
+</Tab>
+</Tabs>
 
 ### Project Structure
 
 ```
-node-typescript-starter/
+
+bhindi-starter-kit-express/
 ├── src/
-│   ├── agents/
-│   │   ├── calculator/         # Simple math operations
-│   │   ├── twitter/           # OAuth integration example
-│   │   ├── redis/             # Variables integration example
-│   │   ├── base-agent.ts      # Abstract base class
-│   │   └── registry.ts        # Agent registration
-│   ├── middleware/
-│   │   └── auth.ts           # Authentication middleware
-│   ├── types/
-│   │   └── tools.ts          # Type definitions
-│   ├── utils/
-│   │   ├── response.ts       # Response helpers
-│   │   └── env.ts           # Environment config
-│   └── server.ts            # Express server
-├── docs/                    # Agent documentation
+│ ├── types/
+│ │ └── tool.ts # Tool type definitions
+│ ├── db/
+│ │ └── db.ts # MongoDB connection
+│ ├── tools/
+│ │ ├── defination/
+│ │ │ └── mongodb-tool.ts # Tool definitions
+│ │ ├── createDocument/
+│ │ │ └── index.ts # Create document tool
+│ │ └── listDocuments/
+│ │ └── index.ts # List documents tool
+│ └── index.ts # Express server
 ├── package.json
-└── tsconfig.json
-```
+├── tsconfig.json
+└── README.md
+
+````
 
 ### Environment Configuration
 
-Update your `.env` file:
+<Warning>
+Make sure you have a MongoDB instance running and accessible. The agent requires a valid MongoDB connection URI.
+</Warning>
 
-```bash
-# Required - API key for authentication
-SERVER_API_KEY=your-secret-api-key
-
-# Optional - Server port (defaults to 3000)
-PORT=3000
-
-# Twitter integration (if using Twitter agent)
-TWITTER_API_KEY=your-twitter-api-key
-```
+The agent doesn't require environment variables as it accepts the MongoDB URI through request headers, making it flexible for different database connections.
 
 ### Running the Development Server
 
-```bash
-# Development with auto-reload
+The agent server will be available at `http://localhost:8080`:
+
+<CodeGroup>
+```bash npm
 npm run dev
+````
 
-# Production build and run
-npm start
+```bash yarn
+yarn dev
 ```
 
-Your agent server will be available at `http://localhost:3000`
+```bash bun
+bun dev
+```
 
-### Testing Your Agents
+</CodeGroup>
 
-Test the Calculator agent (no auth required):
+### Agent Capabilities
+
+<CardGroup cols={2}>
+<Card title="Create Documents" icon="plus">
+Insert new documents into any MongoDB collection with automatic database selection and comprehensive error handling.
+</Card>
+
+<Card title="List Documents" icon="list">
+Query documents with advanced filtering, sorting, pagination, and field projection capabilities.
+</Card>
+</CardGroup>
+
+### Testing Your MongoDB Agent
+
+<Steps>
+<Step title="Get Available Tools">
+First, check what tools are available:
 
 ```bash
-# List available tools
-curl -X GET "http://localhost:3000/calculator/tools" \
-  -H "x-api-key: your-secret-api-key"
-
-# Execute addition
-curl -X POST "http://localhost:3000/calculator/tools/add" \
-  -H "x-api-key: your-secret-api-key" \
-  -H "Content-Type: application/json" \
-  -d '{"a": 5, "b": 3}'
+curl -X GET http://localhost:8080/tools
 ```
 
-### Example Agent Capabilities
+<Check>
+You should see both `createDocument` and `listDocuments` tools in the response.
+</Check>
+</Step>
 
-| Agent          | Tools                                                      | Auth Type       | Use Case                   |
-| -------------- | ---------------------------------------------------------- | --------------- | -------------------------- |
-| **Calculator** | `add`, `subtract`                                          | API Key only    | Basic operations, learning |
-| **Twitter**    | `tweet`                                                    | OAuth (Twitter) | Social media integration   |
-| **Redis**      | `get`, `set`, `delete`, `list_keys`, `increment`, `expire` | Variables       | Database operations        |
+<Step title="Create a Document">
+Insert a new document into your MongoDB collection:
+
+```bash
+curl -X POST http://localhost:8080/tools/createDocument \
+  -H "Content-Type: application/json" \
+  -H "x-mongo-db-uri: mongodb://localhost:27017/testdb" \
+  -d '{
+    "collection": "users",
+    "document": {
+      "name": "John Doe",
+      "email": "john@example.com",
+      "age": 30
+    },
+    "database": "testdb"
+  }'
+```
+
+<Check>
+The response should include the `insertedId` of your new document.
+</Check>
+</Step>
+
+<Step title="List Documents">
+Retrieve documents from your collection:
+
+```bash
+curl -X POST http://localhost:8080/tools/listDocuments \
+  -H "Content-Type: application/json" \
+  -H "x-mongo-db-uri: mongodb://localhost:27017/testdb" \
+  -d '{
+    "collection": "users",
+    "database": "testdb",
+    "filter": {},
+    "limit": 10
+  }'
+```
+
+<Check>
+You should see the document you just created in the response.
+</Check>
+</Step>
+</Steps>
+
+### Advanced Usage Examples
+
+<Accordion title="Filtering Documents">
+```bash
+# Find users older than 25
+curl -X POST http://localhost:8080/tools/listDocuments \
+  -H "Content-Type: application/json" \
+  -H "x-mongo-db-uri: mongodb://localhost:27017/testdb" \
+  -d '{
+    "collection": "users",
+    "database": "testdb",
+    "filter": {"age": {"$gte": 25}},
+    "limit": 5,
+    "sort": {"name": 1}
+  }'
+```
+</Accordion>
+
+<Accordion title="Complex Document Creation">
+```bash
+# Create a user with nested profile data
+curl -X POST http://localhost:8080/tools/createDocument \
+  -H "Content-Type: application/json" \
+  -H "x-mongo-db-uri: mongodb://localhost:27017/testdb" \
+  -d '{
+    "collection": "users",
+    "document": {
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "profile": {
+        "bio": "Software Engineer",
+        "location": "San Francisco",
+        "skills": ["JavaScript", "Python", "MongoDB"]
+      },
+      "createdAt": "2024-01-15T10:30:00Z"
+    }
+  }'
+```
+</Accordion>
+
+### Tool Specifications
+
+| Tool               | Description                                   | Required Parameters      | Optional Parameters                                 |
+| ------------------ | --------------------------------------------- | ------------------------ | --------------------------------------------------- |
+| **createDocument** | Insert new documents into MongoDB collections | `collection`, `document` | `database` (defaults to "default")                  |
+| **listDocuments**  | Query documents with filtering and pagination | `collection`             | `database`, `filter`, `limit`, `sort`, `projection` |
+
+<Tip>
+  The agent supports any MongoDB query operators in the `filter` parameter,
+  giving you full flexibility for complex queries.
+</Tip>
+
+### Next Steps
+
+- **Customize Tools**: Modify the existing tools or add new ones in the `/src/tools/` directory
+- **Add Authentication**: Implement custom authentication middleware for secure access
+- **Deploy**: Deploy your agent to production using platforms like Vercel, Railway, or AWS

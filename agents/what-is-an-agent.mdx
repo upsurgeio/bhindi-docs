@@ -1,119 +1,322 @@
 ---
 title: "What is an Agent?"
 description: "Learn what AI agents are, how they work in Bhindi, and why they're powerful tools for automation and productivity."
+icon: "circle-question"
 ---
 
-An agent is a specialized software program that can perform specific tasks autonomously. Think of it as your digital assistant like Siri, Alexa, or Google Assistant that can interact with various applications, APIs, and services to get things done on your behalf.
+<Card title="Understanding AI Agents" icon="robot">
+  An agent is a specialized software program that can perform specific tasks
+  autonomously. Think of it as your digital assistant like Siri, Alexa, or
+  Google Assistant that can interact with various applications, APIs, and
+  services to get things done on your behalf.
+</Card>
 
 ## How Agents Work in Bhindi
 
-In Bhindi, agents are the core building blocks that enable automation across your digital workspace. Each agent is designed to:
+<Info>
+  In Bhindi, agents are the core building blocks that enable automation across
+  your digital workspace.
+</Info>
 
-- **Connect to specific services** (like Gmail, Slack, Notion, GitHub, etc.)
-- **Understand natural language requests** from you
-- **Execute actions** based on your instructions
-- **Return results** in a clear, structured format that's easy to understand and act upon
+Each agent is designed to:
+
+<CardGroup cols={2}>
+  <Card title="Connect to Services" icon="link">
+    Connect to specific services like Gmail, Slack, Notion, GitHub, and more
+  </Card>
+
+<Card title="Understand Natural Language" icon="comments">
+  Understand natural language requests from you in plain English
+</Card>
+
+<Card title="Execute Actions" icon="bolt">
+  Execute actions based on your instructions automatically
+</Card>
+
+  <Card title="Return Results" icon="chart-line">
+    Return results in a clear, structured format that's easy to understand
+  </Card>
+</CardGroup>
 
 ## Key Characteristics of Bhindi Agents
 
-### **Service-Specific**
+<Tabs>
+  <Tab title="Service-Specific">
+    Each agent is built to work with a particular service or platform:
 
-Each agent is built to work with a particular service or platform:
+    <CardGroup cols={2}>
+      <Card title="Gmail Agent" icon="envelope">
+        Manages emails, drafts, calendar events & more!
+      </Card>
 
-- **Gmail Agent**: Manages emails, drafts, and calendar events & more!
-- **Slack Agent**: Sends messages, manages channels, and handles notifications & more!
-- **Notion Agent**: Creates pages, updates databases, and retrieves information & more!
-- **GitHub Agent**: Manages repositories, issues, and pull requests & more!
+      <Card title="Slack Agent" icon="slack">
+        Sends messages, manages channels, handles notifications & more!
+      </Card>
 
-### **Intelligent**
+      <Card title="Notion Agent" icon="book">
+        Creates pages, updates databases, retrieves information & more!
+      </Card>
 
-Agents understand context and can:
+      <Card title="GitHub Agent" icon="github">
+        Manages repositories, issues, pull requests & more!
+      </Card>
+    </CardGroup>
 
-- Interpret natural language requests
-- Ask clarifying questions when needed
-- Handle complex workflows with multiple steps
-- Learn from your preferences over time
+  </Tab>
+  
+  <Tab title="Intelligent">
+    Agents understand context and can:
 
-### **Secure**
+    <CardGroup cols={2}>
+      <Card title="Natural Language" icon="brain">
+        Interpret natural language requests with ease
+      </Card>
 
-All agents follow strict security protocols:
+      <Card title="Smart Questions" icon="question">
+        Ask clarifying questions when needed
+      </Card>
 
-- OAuth authentication for user-specific access
-- API key validation for service authentication
-- Encrypted data transmission
-- User permission controls
+      <Card title="Complex Workflows" icon="list-ul">
+        Handle complex workflows with multiple steps
+      </Card>
 
-### **Fast & Reliable**
+      <Card title="Learning" icon="chart-line">
+        Learn from your preferences over time
+      </Card>
+    </CardGroup>
 
-Agents are designed for:
+  </Tab>
+  
+  <Tab title="Secure">
+    All agents follow strict security protocols:
 
-- Quick response times
-- Reliable execution
-- Error handling and recovery
-- Scalable performance
+    <CardGroup cols={2}>
+      <Card title="OAuth Authentication" icon="shield">
+        OAuth authentication for user-specific access
+      </Card>
+
+      <Card title="API Key Validation" icon="key">
+        API key validation for service authentication
+      </Card>
+
+      <Card title="Encrypted Data" icon="lock">
+        Encrypted data transmission for security
+      </Card>
+
+      <Card title="User Controls" icon="user-shield">
+        User permission controls and access management
+      </Card>
+    </CardGroup>
+
+  </Tab>
+  
+  <Tab title="Fast & Reliable">
+    Agents are designed for optimal performance:
+
+    <CardGroup cols={2}>
+      <Card title="Quick Response" icon="clock">
+        Quick response times for immediate results
+      </Card>
+
+      <Card title="Reliable Execution" icon="check">
+        Reliable execution you can count on
+      </Card>
+
+      <Card title="Error Handling" icon="bug">
+        Error handling and recovery mechanisms
+      </Card>
+
+      <Card title="Scalable" icon="arrow-up-to-line">
+        Scalable performance for growing needs
+      </Card>
+    </CardGroup>
+
+  </Tab>
+</Tabs>
 
 ## Types of Agents
 
-### **Built-in Agents**
+<Tabs>
+  <Tab title="Built-in Agents">
+    <Note>
+      **Bhindi comes with 80+ pre-built agents** covering all major productivity and business tools.
+    </Note>
 
-Bhindi comes with 80+ pre-built agents covering:
+    <AccordionGroup>
+      <Accordion title="Productivity" icon="briefcase">
+        - **Email Management**: Gmail, Outlook integration
+        - **Calendar**: Google Calendar, scheduling tools
+        - **Document Management**: Google Docs, Sheets, Drive
+        - **Task Management**: Trello, Linear, Asana
+      </Accordion>
 
-- **Productivity**: Email, calendar, document management
-- **Communication**: Slack, Discord, Teams integration
-- **Development**: GitHub, GitLab, code analysis
-- **Content**: Notion, Google Docs, content creation
-- **Search & Research**: Web search, YouTube analysis
-- **Creative**: Image generation, design tools
+      <Accordion title="Communication" icon="comments">
+        - **Team Chat**: Slack, Discord, Microsoft Teams
+        - **Messaging**: Telegram, WhatsApp integration
+        - **Email**: SendGrid, advanced email automation
+        - **Notifications**: Cross-platform messaging
+      </Accordion>
 
-### **Custom Agents**
+      <Accordion title="Development" icon="code">
+        - **Version Control**: GitHub, GitLab integration
+        - **Code Analysis**: Automated code review
+        - **CI/CD**: Pipeline automation and deployment
+        - **Project Management**: Issue tracking and planning
+      </Accordion>
 
-You can build your own agents to:
+      <Accordion title="Content & Research" icon="pen">
+        - **Knowledge Base**: Notion, Confluence
+        - **Research**: Web search, YouTube analysis
+        - **Documentation**: Auto-generated docs
+        - **Content Creation**: AI-powered writing tools
+      </Accordion>
 
-- Integrate with internal tools and APIs
-- Automate company-specific workflows
-- Create specialized automation for your needs
-- Extend Bhindi's capabilities
+      <Accordion title="Creative Tools" icon="palette">
+        - **Image Generation**: AI-powered image creation
+        - **Design Tools**: Automated graphic design
+        - **Media Processing**: Video and audio tools
+        - **Creative Assets**: Stock photo and design resources
+      </Accordion>
+    </AccordionGroup>
+
+  </Tab>
+  
+  <Tab title="Custom Agents">
+    <Card title="Build Your Own" icon="wrench">
+      You can build custom agents to extend Bhindi's capabilities and automate your specific workflows.
+    </Card>
+
+    **Custom agents allow you to:**
+
+    <CardGroup cols={2}>
+      <Card title="Internal Tools" icon="building">
+        Integrate with internal tools and APIs specific to your organization
+      </Card>
+
+      <Card title="Custom Workflows" icon="briefcase">
+        Automate company-specific workflows and processes
+      </Card>
+
+      <Card title="Specialized Automation" icon="wand-magic-sparkles">
+        Create specialized automation for your unique needs
+      </Card>
+
+      <Card title="Extend Capabilities" icon="rocket">
+        Extend Bhindi's capabilities beyond built-in agents
+      </Card>
+    </CardGroup>
+
+    <Tip>
+      Check out our [Custom Agent Development Guide](/custom-agent/quickstart) to get started building your own agents.
+    </Tip>
+
+  </Tab>
+</Tabs>
 
 ## How to Use Agents
 
-### **Natural Language Interface**
+<Card title="Natural Language Interface" icon="microphone">
+  Simply tell Bhindi what you want in plain English - no complex commands or
+  syntax required!
+</Card>
 
-Simply tell Bhindi what you want in plain English:
+### Examples of Natural Language Commands
 
-```
+```text
 "Send a message to the #general channel in Slack"
+```
+
+```text
 "Create a new page in my Notion workspace"
+```
+
+```text
 "Schedule a meeting for tomorrow at 2 PM"
+```
+
+```text
 "Summarize the latest emails in my inbox"
 ```
 
+<Note>
+  The more specific you are with your requests, the better agents can understand
+  and execute your tasks.
+</Note>
+
 ## Benefits of Using Agents
 
-### **Time Savings**
+<CardGroup cols={2}>
+  <Card title="Time Savings" icon="clock">
+    - Automate repetitive tasks - Reduce manual data entry - Streamline
+    workflows - Eliminate context switching
+  </Card>
 
-- Automate repetitive tasks
-- Reduce manual data entry
-- Streamline workflows
-- Eliminate context switching
+<Card title="Improved Productivity" icon="chart-line">
+  - Focus on high-value work - Reduce human error - Scale operations efficiently
+  - Maintain consistency
+</Card>
 
-### **Improved Productivity**
+<Card title="Better Integration" icon="plug">
+  - Connect disparate tools and services - Share data across platforms - Create
+  unified workflows - Centralize automation
+</Card>
 
-- Focus on high-value work
-- Reduce human error
-- Scale operations efficiently
-- Maintain consistency
-
-### **Better Integration**
-
-- Connect disparate tools and services
-- Share data across platforms
-- Create unified workflows
-- Centralize automation
+  <Card title="Enhanced Focus" icon="bullseye">
+    - Less time on mundane tasks - More strategic thinking time - Reduced
+    cognitive load - Better work-life balance
+  </Card>
+</CardGroup>
 
 ## Getting Started with Agents
 
-1. **Explore Available Agents**: Browse the [agent directory](https://directory.bhindi.io/) to see what's available
-2. **Try Built-in Agents**: Start with pre-built agents for common tasks
-3. **Build Custom Agents**: Create agents for your specific needs
-4. **Connect Your Tools**: Set up authentication for your services
-5. **Automate Workflows**: Chain agents together for complex automation
+<Steps>
+  <Step title="Explore Available Agents" icon="magnifying-glass">
+    Browse the [agent directory](https://directory.bhindi.io/) to see what's available and discover agents that match your workflow needs.
+    
+    <Card title="Agent Directory" icon="grip" href="https://directory.bhindi.io/">
+      Discover all 80+ available agents and their capabilities
+    </Card>
+  </Step>
+
+<Step title="Try Built-in Agents" icon="play">
+  Start with pre-built agents for common tasks like email management, calendar
+  scheduling, or document creation.
+  <Tip>
+    Begin with agents for tools you already use daily - this will give you
+    immediate value and help you understand how agents work.
+  </Tip>
+</Step>
+
+<Step title="Connect Your Tools" icon="link">
+  Set up authentication for your services to allow agents to access and interact
+  with your accounts securely.
+  <Note>
+    All connections use industry-standard OAuth or API key authentication for
+    maximum security.
+  </Note>
+</Step>
+
+<Step title="Build Custom Agents" icon="hammer">
+  Once comfortable with built-in agents, create custom agents for your specific
+  needs and internal tools.
+  <Card title="Custom Agent Guide" icon="book" href="/custom-agent/quickstart">
+    Learn how to build your first custom agent
+  </Card>
+</Step>
+
+  <Step title="Automate Workflows" icon="bolt">
+    Chain agents together for complex automation and create powerful multi-step workflows.
+    
+    <Warning>
+      Start simple with single-agent tasks, then gradually build more complex workflows as you become comfortable with the system.
+    </Warning>
+  </Step>
+</Steps>
+
+---
+
+<Card title="Ready to Get Started?" icon="rocket">
+  Agents are the key to unlocking Bhindi's full potential. Start exploring the
+  [agent directory](https://directory.bhindi.io/) and see how you can automate
+  your workflow today!
+</Card>

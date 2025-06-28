@@ -33,10 +33,12 @@
         "groups": [
           {
             "group": "Get Started",
+            "icon": "rocket",
             "pages": ["index", "agents"]
           },
           {
             "group": "Agents",
+            "icon": "robot",
             "pages": [
               "agents/what-is-an-agent",
               "agents/agent-specification",
@@ -46,10 +48,12 @@
           },
           {
             "group": "Build Your Own Agent",
+            "icon": "code",
             "pages": [
               "custom-agent/quickstart",
               "custom-agent/development-process",
-              "custom-agent/bring-your-agent-to-bhindi"
+              "custom-agent/bring-your-agent-to-bhindi",
+              "custom-agent/success"
             ]
           }
         ]

@@ -1,519 +1,543 @@
 ---
 title: "Development Process"
-description: "Learn the development process for building custom agents on Bhindi Platform"
+description: "Learn how to build custom MongoDB agents with detailed architecture and development workflow"
+icon: "gear"
 ---
 
-This guide walks you through how Bhindi custom agents work internally, using examples from our [official starter repository](https://github.com/upsurgeio/bhindi-external-agent-templates/tree/main/node-typescript-starter).
+This guide walks you through how Bhindi MongoDB agents work internally, using our Express starter kit as a reference implementation.
 
 ## Architecture Overview
 
-Bhindi agents follow a modular architecture with clear separation of concerns:
+Bhindi MongoDB agents follow a modular, service-oriented architecture:
 
-```
-Agent Structure
-├── Base Agent Class - Abstract foundation
-├── Agent Implementation - Specific business logic
-├── Tools Definition - Available operations
-├── Authentication - OAuth & API keys
-├── HTTP Server - Express.js endpoints
-└── Response Formatting - Standardized outputs
-```
-
-## File Tree Structure
-
-Here's the complete file structure of the starter repository:
-
-```
-node-typescript-starter/
-├── src/
-│   ├── agents/                    # Agent implementations
-│   │   ├── calculator/
-│   │   │   ├── index.ts          # Calculator agent class
-│   │   │   └── tools.ts          # Tools & type definitions
-│   │   ├── twitter/
-│   │   │   ├── index.ts          # Twitter agent with OAuth
-│   │   │   └── tools.ts          # Twitter tool definitions
-│   │   ├── redis/
-│   │   │   ├── index.ts          # Redis agent with variables
-│   │   │   └── tools.ts          # Redis operations
-│   │   ├── base-agent.ts         # Abstract base class
-│   │   └── registry.ts           # Agent registration system
-│   ├── middleware/
-│   │   └── auth.ts              # Authentication middleware
-│   ├── types/
-│   │   ├── index.ts             # Type exports
-│   │   └── tools.ts             # Core type definitions
-│   ├── utils/
-│   │   ├── response.ts          # Response formatting
-│   │   └── env.ts              # Environment configuration
-│   └── server.ts               # Express server setup
-├── docs/                       # Agent documentation
-│   ├── calculator.md
-│   ├── twitter.md
-│   └── redis.md
-├── package.json               # Dependencies & scripts
-└── tsconfig.json             # TypeScript configuration
+```mermaid
+graph TD
+    A[Express Server] --> B[Route Handlers]
+    B --> C[Tool Executor]
+    C --> D[MongoDB Client]
+    C --> E[Response Formatter]
+    D --> F[Database Operations]
+    E --> G[Standardized Response]
 ```
 
-## Core Components Deep Dive
+<CardGroup cols={2}>
+<Card title="Separation of Concerns" icon="layer-group">
+Each component has a single responsibility, making the codebase maintainable and testable.
+</Card>
 
-### 1. Base Agent Class
+<Card title="Type Safety" icon="shield-check">
+  Full TypeScript support ensures compile-time error checking and better
+  developer experience.
+</Card>
 
-All agents extend the `BaseAgentHandler` abstract class:
+<Card title="Scalable Design" icon="arrow-up">
+  Easy to add new tools and extend functionality without breaking existing
+  features.
+</Card>
 
-```typescript
-// src/agents/base-agent.ts
-export abstract class BaseAgentHandler<T extends Record<string, any>>
-  implements AgentHandler<T>
-{
-  protected tools: Tool[];
-  protected oauth: SupportedOAuth[];
-  protected variables: string[];
+<Card title="Error Handling" icon="triangle-exclamation">
+Comprehensive error handling with standardized error responses and logging.
+</Card>
+</CardGroup>
 
-  constructor(tools: Tool[], oauth: SupportedOAuth[], variables: string[]) {
-    this.tools = tools;
-    this.oauth = oauth;
-    this.variables = variables;
+## Files and Folder Structure
+
+<Tabs>
+<Tab title="Complete Structure">
+```
+bhindi-starter-kit-express/
+├── src/                          # Source code directory
+│   ├── types/                    # Type definitions
+│   │   └── tool.ts              # Tool interfaces and response types
+│   ├── db/                      # Database layer
+│   │   └── db.ts               # MongoDB connection and client
+│   ├── tools/                   # Tool implementations
+│   │   ├── defination/          # Tool schema definitions
+│   │   │   └── mongodb-tool.ts # Tool configurations and schemas
+│   │   ├── createDocument/      # Create document tool
+│   │   │   └── index.ts        # Implementation logic
+│   │   └── listDocuments/       # List documents tool
+│   │       └── index.ts        # Implementation logic
+│   └── index.ts                # Express server and routing
+├── package.json                 # Dependencies and scripts
+├── tsconfig.json               # TypeScript configuration
+├── README.md                   # Usage documentation
+└── bun.lock                    # Package lock file
+```
+</Tab>
+
+<Tab title="Key Files">
+| File | Purpose | Responsibility |
+|------|---------|----------------|
+| `src/index.ts` | Express server | HTTP routing, middleware, error handling |
+| `src/types/tool.ts` | Type definitions | Tool interfaces, response types |
+| `src/db/db.ts` | Database layer | MongoDB connection management |
+| `src/tools/defination/mongodb-tool.ts` | Tool schemas | Tool definitions and parameters |
+| `src/tools/*/index.ts` | Tool logic | Business logic for each tool |
+</Tab>
+</Tabs>
+
+## Core Components
+
+### 1. Type System (`src/types/tool.ts`)
+
+The foundation of type safety across the entire agent:
+
+<CodeGroup>
+```typescript Tool Definition Types
+export type ToolDto = {
+  name: string;                    // Unique tool identifier
+  description: string;             // Human-readable description
+  parameters: ToolParameterDto;    // JSON Schema for parameters
+  confirmationRequired?: boolean;  // User confirmation needed
+  visibleParameters?: string[];    // UI-visible parameters
+};
+
+export type ToolParameterDto = {
+  type: "object";
+  properties: Record<string, PropertyDto>;
+  required?: string[];
+};
+```
+
+```typescript Response Types
+export type BaseSuccessResponseDto<T> = {
+  success: true;
+  responseType: "text" | "html" | "media" | "mixed";
+  data: {
+    [key: string]: T;
+  };
+};
+
+export type BaseErrorResponseDto = {
+  success: false;
+  error: {
+    message: string;
+    code: number | string;
+    details: string;
+  };
+};
+```
+
+</CodeGroup>
+
+<Note>
+  All tools must conform to these type definitions to ensure consistency across
+  the platform.
+</Note>
+
+### 2. Database Connection (`src/db/db.ts`)
+
+Centralized MongoDB connection management with connection pooling:
+
+```typescript src/db/db.ts
+import mongoose from "mongoose";
+
+const connections: { [uri: string]: { isConnected?: number } } = {};
+
+async function dbConnect(mongoUri?: string) {
+  const uri = mongoUri || process.env.MONGO_URI!;
+
+  if (!connections[uri]) {
+    connections[uri] = {};
   }
 
-  getAgentInfo() {
-    return {
-      tools: this.tools,
-      oauth: this.oauth,
-      variables: this.variables,
-    };
+  if (connections[uri].isConnected) {
+    return mongoose.connection.getClient();
   }
 
-  getTools() {
-    return {
-      tools: this.tools,
-    };
-  }
+  const db = await mongoose.connect(uri);
+  connections[uri].isConnected = db.connections[0]?.readyState ?? 0;
 
-  abstract executeTool<K extends keyof T>(
-    toolName: K,
-    parameters: T[K],
-    oauthTokens?: Record<SupportedOAuth, string>,
-    variables?: Record<string, string>
-  ): Promise<any>;
+  return mongoose.connection.getClient();
+}
+
+export async function getMongoClient(mongoUri?: string) {
+  await dbConnect(mongoUri);
+  return mongoose.connection.getClient();
 }
 ```
 
-### 2. Tool Definition Pattern
+<Tip>
+  Connection pooling ensures efficient database connections and supports
+  multiple MongoDB URIs for different environments.
+</Tip>
 
-Each agent defines its tools using TypeScript interfaces and JSON schema:
+### 3. Tool Definitions (`src/tools/defination/mongodb-tool.ts`)
 
-```typescript
-// src/agents/calculator/tools.ts
-export interface CalculatorTools {
-  add: {
-    a: number;
-    b: number;
-  };
-  subtract: {
-    a: number;
-    b: number;
-  };
-}
+JSON Schema-based tool configurations that define available operations:
 
-export const calculatorTools: Tool[] = [
-  {
-    name: "add",
-    description: "Add two numbers together",
-    parameters: {
-      type: "object",
-      properties: {
-        a: {
-          type: "number",
-          description: "First number",
+<Accordion title="Tool Definition Structure">
+```typescript src/tools/defination/mongodb-tool.ts
+export const mongodbTools: ToolsResponseDto = {
+  tools: [
+    {
+      name: "createDocument",
+      description: "Create a new document in a MongoDB collection",
+      parameters: {
+        type: "object",
+        properties: {
+          collection: {
+            type: "string",
+            description: "Name of the MongoDB collection"
+          },
+          document: {
+            type: "object", 
+            description: "The document object to insert"
+          },
+          database: {
+            type: "string",
+            description: "Name of the MongoDB database",
+            default: "default"
+          }
         },
-        b: {
-          type: "number",
-          description: "Second number",
-        },
+        required: ["collection", "document"]
       },
-      required: ["a", "b"],
-    },
-  },
-  // ... more tools
-];
-```
-
-## Agent Examples Analysis
-
-### Calculator Agent (Basic Pattern)
-
-The calculator agent demonstrates the simplest agent pattern - no authentication required:
-
-```typescript
-// src/agents/calculator/index.ts
-export class CalculatorAgent extends BaseAgentHandler<CalculatorTools> {
-  constructor() {
-    super(calculatorTools, [], []); // No OAuth, no variables
-  }
-
-  async executeTool<K extends keyof CalculatorTools>(
-    toolName: K,
-    parameters: CalculatorTools[K]
-  ): Promise<any> {
-    switch (toolName) {
-      case "add":
-        return createTextResponse({
-          result: parameters.a + parameters.b,
-        });
-      case "subtract":
-        return createTextResponse({
-          result: parameters.a - parameters.b,
-        });
-      default:
-        return createErrorResponse(
-          `Tool ${String(toolName)} not implemented`,
-          404
-        );
+      confirmationRequired: true,
+      visibleParameters: ["collection", "document"]
     }
+    // ... more tools
+  ]
+};
+```
+</Accordion>
+
+### 4. Express Server (`src/index.ts`)
+
+HTTP server with routing and middleware:
+
+<Steps>
+<Step title="Server Setup">
+```typescript Express Configuration
+import express from "express";
+
+const app = express();
+const port = 8080;
+
+// Middleware
+app.use(express.json());
+
+````
+</Step>
+
+<Step title="Route Implementation">
+```typescript Route Handlers
+// GET /tools - Return available tools
+app.get("/tools", async (req, res) => {
+  try {
+    res.status(200).json(mongodbTools);
+  } catch (error) {
+    // Error handling
+  }
+});
+
+// POST /tools/:toolName - Execute specific tool
+app.post("/tools/:toolName", async (req: any, res: any) => {
+  const { toolName } = req.params;
+  const mongoUri = req.headers["x-mongo-db-uri"] as string;
+
+  // Tool execution logic
+});
+````
+
+</Step>
+</Steps>
+
+## Working Principles
+
+### Request Flow
+
+<Steps>
+<Step title="HTTP Request">
+Client sends POST request to `/tools/:toolName` with:
+- **Headers**: `x-mongo-db-uri` (MongoDB connection string)
+- **Body**: Tool parameters (collection, document, etc.)
+</Step>
+
+<Step title="Parameter Validation">
+  Server validates: - Required headers are present - Request body contains valid
+  parameters - Tool name exists in available tools
+</Step>
+
+<Step title="Database Connection">
+  ```typescript Connection Process const client = await
+  getMongoClient(mongoUri); const db = client.db(database); const collection =
+  db.collection(collectionName); ```
+</Step>
+
+<Step title="Tool Execution">
+  Execute the specific tool logic:
+
+- **createDocument**:
+  `collection.insertOne(document)`
+- **listDocuments**:
+  `collection.find(filter).limit(limit).toArray()`
+  </Step>
+
+<Step title="Response Formatting">
+Return standardized response format:
+```typescript Response Format
+{
+  success: true,
+  responseType: "text",
+  data: {
+    message: "Operation completed successfully",
+    result: /* operation result */
   }
 }
 ```
+</Step>
+</Steps>
 
-**Testing the Calculator Agent:**
+### Error Handling Strategy
 
-```bash
-# List tools
-curl -X GET "http://localhost:3000/calculator/tools" \
-  -H "x-api-key: your-secret-api-key"
-
-# Execute addition
-curl -X POST "http://localhost:3000/calculator/tools/add" \
-  -H "x-api-key: your-secret-api-key" \
-  -H "Content-Type: application/json" \
-  -d '{"a": 5, "b": 3}'
-```
-
-### Twitter Agent (OAuth Pattern)
-
-The Twitter agent shows how to handle OAuth authentication:
-
-```typescript
-// src/agents/twitter/index.ts
-export class TwitterAgent extends BaseAgentHandler<TwitterTools> {
-  constructor() {
-    super(twitterTools, [OAuthType.TWITTER], []); // Requires Twitter OAuth
-  }
-
-  async executeTool<K extends keyof TwitterTools>(
-    toolName: K,
-    parameters: TwitterTools[K],
-    oauthTokens?: Record<SupportedOAuth, string>,
-    variables?: Record<string, string>
-  ): Promise<any> {
-    switch (toolName) {
-      case "tweet":
-        if (!parameters?.content) {
-          return createErrorResponse("Content is required", 400);
-        }
-        const twitterToken = oauthTokens?.[OAuthType.TWITTER];
-        if (!twitterToken) {
-          return createErrorResponse("Twitter token is required", 400);
-        }
-        // TODO: Implement Twitter API call
-        return createTextResponse({
-          message: "Tweet posted successfully",
-          tweet: parameters?.content,
-        });
-      default:
-        return createErrorResponse(
-          `Tool ${String(toolName)} not implemented`,
-          404
-        );
-    }
-  }
-}
-```
-
-**Testing the Twitter Agent:**
-
-```bash
-curl -X POST "http://localhost:3000/twitter/tools/tweet" \
-  -H "x-api-key: your-secret-api-key" \
-  -H "x-twitter-token: your-twitter-oauth-token" \
-  -H "Content-Type: application/json" \
-  -d '{"content": "Hello from Bhindi!"}'
-```
-
-### Redis Agent (Variables Pattern)
-
-The Redis agent demonstrates using custom variables for configuration:
-
-```typescript
-// src/agents/redis/index.ts
-export class RedisAgent extends BaseAgentHandler<RedisTools> {
-  constructor() {
-    super(redisTools, [], ["redis-host", "redis-port", "redis-password"]);
-  }
-
-  async executeTool<K extends keyof RedisTools>(
-    toolName: K,
-    parameters: RedisTools[K],
-    oauthTokens?: Record<string, string>,
-    variables?: Record<string, string>
-  ): Promise<any> {
-    // Validate required variables
-    const redisHost = variables?.["redis-host"];
-    const redisPort = variables?.["redis-port"];
-    const redisPassword = variables?.["redis-password"];
-
-    if (!redisHost || !redisPort || !redisPassword) {
-      return createErrorResponse(
-        "Redis connection variables are required",
-        400
-      );
-    }
-
-    switch (toolName) {
-      case "get":
-        if (!parameters.key) {
-          return createErrorResponse("Key is required", 400);
-        }
-        return createTextResponse({
-          key: parameters.key,
-          value: `simulated_value_for_${parameters.key}`,
-          message: "Value retrieved successfully",
-        });
-      case "set":
-        return createTextResponse({
-          key: parameters.key,
-          value: parameters.value,
-          ttl: parameters.ttl || null,
-          message: "Value set successfully",
-        });
-      // ... more Redis operations
-    }
-  }
-}
-```
-
-**Testing the Redis Agent:**
-
-```bash
-curl -X POST "http://localhost:3000/redis/tools/get" \
-  -H "x-api-key: your-secret-api-key" \
-  -H "x-redis-host: localhost" \
-  -H "x-redis-port: 6379" \
-  -H "x-redis-password: mypassword" \
-  -H "Content-Type: application/json" \
-  -d '{"key": "user:123"}'
-```
-
-## Authentication Flow
-
-The authentication middleware handles three types of authentication:
-
-### 1. API Key Authentication
-
-```typescript
-// src/middleware/auth.ts
-export const checkApiKey = (req: Request) => {
-  const apiKey = req.headers["x-api-key"];
-
-  if (!apiKey || apiKey !== ENV.SERVER_API_KEY) {
-    return createErrorResponse("Invalid API key", 401);
-  }
-
-  return { success: true };
-};
-```
-
-### 2. OAuth Token Validation
-
-```typescript
-export const checkOAuthTokens = (req: Request, oauth: SupportedOAuth[]) => {
-  const missingTokens: string[] = [];
-  const presentTokens: Record<string, string> = {};
-
-  for (const oauthProvider of oauth) {
-    const token = req.headers[`x-${oauthProvider}-token`];
-    if (!token) {
-      missingTokens.push(oauthProvider);
-    } else {
-      presentTokens[oauthProvider] = token as string;
-    }
-  }
-
-  if (missingTokens.length > 0) {
-    return createErrorResponse(
-      `Missing OAuth tokens: ${missingTokens.join(", ")}`,
-      401
-    );
-  }
-
-  return { success: true, tokens: presentTokens };
-};
-```
-
-### 3. Custom Variables
-
-```typescript
-export const checkVariables = (req: Request, variables: string[]) => {
-  const missingVariables: string[] = [];
-  const presentVariables: Record<string, string> = {};
-
-  for (const variable of variables) {
-    const value = req.headers[`x-${variable}`];
-    if (!value) {
-      missingVariables.push(variable);
-    } else {
-      presentVariables[variable] = value as string;
-    }
-  }
-
-  if (missingVariables.length > 0) {
-    return createErrorResponse(
-      `Missing variables: ${missingVariables.join(", ")}`,
-      401
-    );
-  }
-
-  return { success: true, variables: presentVariables };
-};
-```
-
-## HTTP Server & Routing
-
-The Express server provides standardized endpoints for all agents:
-
-```typescript
-// src/server.ts - Key endpoints
-router.get("/:agent/tools", getToolsHandler); // List tools
-router.post("/:agent/tools/:toolName", executeToolHandler); // Execute tool
-router.get("/:agent", getAgentHandler); // Agent status
-```
-
-Each endpoint follows the pattern:
-
-- `GET /:agent/tools` - Returns available tools for the agent
-- `POST /:agent/tools/:toolName` - Executes a specific tool
-- `GET /:agent` - Returns agent status
-
-## Response Formatting
-
-All responses follow a standardized format using utility functions:
-
-```typescript
-// src/utils/response.ts
-export const createTextResponse = (textData: object) => {
-  return createSuccessResponse("text", {
-    text: textData,
-  });
-};
-
-export const createErrorResponse = (
-  message: string,
-  code: number = 500,
-  details: string = ""
-): ErrorResponse => {
+<Tabs>
+<Tab title="Parameter Validation">
+```typescript Parameter Validation
+if (!params || typeof params !== 'object') {
   return {
-    success: false,
-    error: {
-      message: message,
-      code: code,
-      details: details,
+    data: {
+      success: false,
+      error: {
+        message: "Invalid parameters",
+        code: 400,
+        details: "Request body must be a valid object"
+      }
     },
+    status: 400
   };
-};
-```
-
-## Agent Registration
-
-The registry system automatically manages all agents:
-
-```typescript
-// src/agents/registry.ts
-export class AgentRegistry {
-  private registerDefaultAgents() {
-    this.registerAgent("calculator", new CalculatorAgent());
-    this.registerAgent("twitter", new TwitterAgent());
-    this.registerAgent("redis", new RedisAgent());
-  }
-
-  public registerAgent<K extends keyof AgentMap>(
-    name: K,
-    handler: AgentMap[K]
-  ) {
-    this.agents.set(name, handler);
-  }
 }
 ```
+</Tab>
+
+<Tab title="Database Errors">
+```typescript Database Error Handling
+try {
+  const result = await collection.insertOne(document);
+  return successResponse;
+} catch (error) {
+  return {
+    data: {
+      success: false,
+      error: {
+        message: "Database operation failed",
+        code: 500,
+        details: error instanceof Error ? error.message : "Unknown error"
+      }
+    },
+    status: 500
+  };
+}
+```
+</Tab>
+</Tabs>
+
+## Testing
+
+### Manual Testing with cURL
+
+<Steps>
+<Step title="Test Tool Discovery">
+```bash
+curl -X GET http://localhost:8080/tools
+````
+
+<Check>
+Should return available tools configuration
+</Check>
+</Step>
+
+<Step title="Test Document Creation">
+```bash
+curl -X POST http://localhost:8080/tools/createDocument \
+  -H "Content-Type: application/json" \
+  -H "x-mongo-db-uri: mongodb://localhost:27017/testdb" \
+  -d '{
+    "collection": "test_collection",
+    "document": {"name": "Test Document", "value": 123}
+  }'
+```
+
+<Check>
+Should return success response with insertedId
+</Check>
+</Step>
+
+<Step title="Test Document Listing">
+```bash
+curl -X POST http://localhost:8080/tools/listDocuments \
+  -H "Content-Type: application/json" \
+  -H "x-mongo-db-uri: mongodb://localhost:27017/testdb" \
+  -d '{
+    "collection": "test_collection",
+    "filter": {},
+    "limit": 10
+  }'
+```
+
+<Check>
+Should return list of documents including the one created
+</Check>
+</Step>
+</Steps>
+
+### Error Scenario Testing
+
+<Accordion title="Missing Headers">
+```bash
+# Test missing MongoDB URI
+curl -X POST http://localhost:8080/tools/createDocument \
+  -H "Content-Type: application/json" \
+  -d '{"collection": "test", "document": {"test": true}}'
+
+# Expected: 400 error with "Missing MongoDB URI" message
+
+````
+</Accordion>
+
+<Accordion title="Invalid Tool Name">
+```bash
+# Test non-existent tool
+curl -X POST http://localhost:8080/tools/nonExistentTool \
+  -H "Content-Type: application/json" \
+  -H "x-mongo-db-uri: mongodb://localhost:27017/test" \
+  -d '{}'
+
+# Expected: 404 error with "Tool not found" message
+````
+
+</Accordion>
 
 ## Building Your Own Agent
 
-To create a new agent, follow these steps:
+### Adding New Tools
 
-1. **Define Tool Types**: Create interfaces for your tool parameters
-2. **Create Tool Schema**: Define JSON schema for validation
-3. **Implement Agent Class**: Extend `BaseAgentHandler`
-4. **Handle Authentication**: Specify required OAuth/variables
-5. **Register Agent**: Add to the registry
-6. **Test & Deploy**: Use curl or Postman to test
+<Steps>
+<Step title="Define Tool Schema">
+Add your tool definition to `src/tools/defination/mongodb-tool.ts`:
 
-### Example: Creating a Weather Agent
-
-```typescript
-// Step 1: Define types
-export interface WeatherTools {
-  getCurrentWeather: {
-    city: string;
-    units?: "metric" | "imperial";
-  };
-}
-
-// Step 2: Create schema
-export const weatherTools: Tool[] = [
-  {
-    name: "getCurrentWeather",
-    description: "Get current weather for a city",
-    parameters: {
-      type: "object",
-      properties: {
-        city: {
-          type: "string",
-          description: "City name",
-        },
-        units: {
-          type: "string",
-          description: "Temperature units",
-          enum: ["metric", "imperial"],
-        },
+```typescript Tool Definition
+{
+  name: "updateDocument",
+  description: "Update an existing document in MongoDB",
+  parameters: {
+    type: "object",
+    properties: {
+      collection: {
+        type: "string",
+        description: "Collection name"
       },
-      required: ["city"],
+      filter: {
+        type: "object",
+        description: "Filter to find document"
+      },
+      update: {
+        type: "object",
+        description: "Update operations"
+      }
     },
-  },
-];
-
-// Step 3: Implement agent
-export class WeatherAgent extends BaseAgentHandler<WeatherTools> {
-  constructor() {
-    super(weatherTools, [], ["weather-api-key"]);
-  }
-
-  async executeTool<K extends keyof WeatherTools>(
-    toolName: K,
-    parameters: WeatherTools[K],
-    oauthTokens?: Record<string, string>,
-    variables?: Record<string, string>
-  ): Promise<any> {
-    const apiKey = variables?.["weather-api-key"];
-
-    switch (toolName) {
-      case "getCurrentWeather":
-        // Implement weather API call
-        return createTextResponse({
-          city: parameters.city,
-          temperature: "22°C",
-          condition: "Sunny",
-        });
-    }
+    required: ["collection", "filter", "update"]
   }
 }
 ```
 
-This modular architecture makes it easy to create powerful, scalable agents that integrate seamlessly with the Bhindi platform.
+</Step>
+
+<Step title="Implement Tool Logic">
+Create `src/tools/updateDocument/index.ts`:
+
+```typescript Tool Implementation
+export async function updateDocumentTool(
+  mongoUri: string,
+  params: UpdateDocumentParams
+): Promise<ToolResponse> {
+  // Validation logic
+  // Database operations
+  // Response formatting
+}
+```
+
+</Step>
+
+<Step title="Register Tool in Server">
+Add the tool to your Express routes:
+
+```typescript Route Registration
+if (toolName === "updateDocument") {
+  const result = await updateDocumentTool(mongoUri, body);
+  return res.status(result.status).json(result.data);
+}
+```
+
+</Step>
+</Steps>
+
+### Customization Options
+
+<CardGroup cols={2}>
+<Card title="Authentication" icon="key">
+Add middleware for API key validation, JWT tokens, or OAuth integration.
+</Card>
+
+<Card title="Rate Limiting" icon="clock">
+  Implement rate limiting to prevent abuse and ensure fair usage.
+</Card>
+
+<Card title="Logging" icon="file">
+  Add structured logging for monitoring and debugging capabilities.
+</Card>
+
+<Card title="Caching" icon="database">
+Implement Redis caching for frequently accessed data.
+</Card>
+</CardGroup>
+
+<Warning>
+  Always validate user input and sanitize MongoDB queries to prevent injection
+  attacks.
+</Warning>
+
+## Deployment Considerations
+
+### Production Setup
+
+<Tabs>
+<Tab title="Docker">
+```dockerfile Dockerfile
+FROM node:18-alpine
+
+WORKDIR /app
+COPY package\*.json ./
+RUN npm ci --only=production
+
+COPY src ./src
+COPY tsconfig.json ./
+
+RUN npm run build
+EXPOSE 8080
+
+CMD ["npm", "start"]
+
+````
+</Tab>
+
+<Tab title="Railway">
+```json railway.json
+{
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "startCommand": "npm start",
+    "healthcheckPath": "/tools"
+  }
+}
+````
+
+</Tab>
+</Tabs>
+
+<Tip>
+  Consider using managed MongoDB services like MongoDB Atlas for production
+  deployments to ensure reliability and scalability.
+</Tip>

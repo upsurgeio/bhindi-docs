@@ -1,157 +1,356 @@
 ---
 title: "Authentication & Security"
 description: "Learn about authentication patterns, security considerations, and error handling for Bhindi agents."
+icon: "shield"
 ---
 
-## Overview
+<Card title="Agent Security & Authentication" icon="shield">
+  Bhindi agents use a flexible authentication system where requirements depend
+  on your agent's functionality. Understanding these patterns is crucial for
+  building secure and reliable agents.
+</Card>
 
-Bhindi agents use a flexible authentication system where authentication requirements depend on your agent's functionality. Understanding these patterns is crucial for building secure and reliable agents.
+## Authentication Flow
+
+```mermaid
+flowchart TD
+    A[User Request] --> B{Tool Type?}
+    B -->|Public Tool| C[No Auth Required]
+    B -->|Private Tool| D[Auth Required]
+    D --> E[API Key/OAuth]
+    E --> F[Validate Credentials]
+    F -->|Valid| G[Execute Tool]
+    F -->|Invalid| H[Return Error]
+    C --> G
+    G --> I[Return Result]
+
+    style A fill:#3498db,stroke:#2980b9,color:#fff
+    style G fill:#2ecc71,stroke:#27ae60,color:#fff
+    style H fill:#e74c3c,stroke:#c0392b,color:#fff
+```
 
 ## Authentication Patterns
 
-### GET `/tools` - No Authentication Required
+<Tabs>
+  <Tab title="Public Tools">
+    <Card title="No Authentication Required" icon="unlock">
+      The `/tools` endpoint and simple utility tools don't require authentication.
+    </Card>
 
-The `/tools` endpoint does **not** require any authentication headers. This allows Bhindi to discover what capabilities your agent provides without needing credentials.
+    ### GET `/tools` Endpoint
 
-```http
-GET /tools
-```
+    <Info>
+      This endpoint is always public to allow Bhindi to discover your agent's capabilities.
+    </Info>
 
-**Purpose**: Allows Bhindi to discover available tools and their parameters.
+    ```http
+    GET /tools
+    ```
 
-### POST `/tools/:toolName` - Conditional Authentication
+    ### Public Utility Tools
 
-Authentication requirements for tool execution depend entirely on your agent:
+    <Card title="Calculator Example" icon="calculator">
+      Simple tools like calculators don't need authentication since they don't access sensitive data.
+    </Card>
 
+    ```http
+    POST /tools/calculate
+    Content-Type: application/json
 
-If your agent provides simple utilities or calculations like a calculator then no authentication is needed:
+    {
+      "expression": "2 + 2 * 3"
+    }
+    ```
 
-Example:
+    <Note>
+      Public tools are great for utilities, converters, formatters, and other non-sensitive operations.
+    </Note>
 
-```http
-POST /tools/calculate
+  </Tab>
 
-{
-  "expression": "2 + 2 * 3"
-}
-```
+  <Tab title="Private Tools">
+    <Card title="Authentication Required" icon="lock">
+      Tools that integrate with external services or handle sensitive data require authentication.
+    </Card>
 
-If your agent integrates with external services/servers, or want your tool to be private then authentication is required (eg. `github`, `slack`, `notion`, etc.):
+    ### Standard Authentication
 
-```http
-POST /tools/sendMessage
-x-slack-api-key: your-api-key-here
-Authorization: Bearer user-oauth-token-here
-```
+    <CardGroup cols={2}>
+      <Card title="API Key" icon="key">
+        For service-to-service authentication
+      </Card>
+      <Card title="OAuth Token" icon="user-shield">
+        For user-specific access to external services
+      </Card>
+    </CardGroup>
 
-### Variable Headers (Optional)
+    ```http
+    POST /tools/sendMessage
+    x-slack-api-key: your-api-key-here
+    Authorization: Bearer user-oauth-token-here
+    Content-Type: application/json
 
-For agent-specific configuration, use custom headers:
+    {
+      "channel": "#general",
+      "message": "Hello from Bhindi!"
+    }
+    ```
 
-Example for appwrite agent you may define your configuration something like this:
+    ### Custom Headers
 
-```http
-POST /tools/listDocuments
-x-appwrite-api-key: your-api-key-here
-x-appwrite-project-id: your-project-id-here
-x-appwrite-endpoint-url: your-endpoint-url-here
-BODY {
-    "databaseId": "your-database-id-here",
-    "collectionId": "your-collection-id-here",
-    "query": "your-query-here"
-}
-```
+    <Card title="Service-Specific Configuration" icon="list-ul">
+      Use custom headers for agent-specific configuration like endpoints, project IDs, etc.
+    </Card>
 
-## Security Considerations
-### Input Validation
+    ```http
+    POST /tools/listDocuments
+    x-appwrite-api-key: your-api-key-here
+    x-appwrite-project-id: your-project-id-here
+    x-appwrite-endpoint-url: your-endpoint-url-here
+    Content-Type: application/json
 
-Input validation is crucial for security. Always validate and sanitize all input parameters to prevent injection attacks, buffer overflows, and other security vulnerabilities. Consider using validation libraries like Joi or Yup, and follow OWASP input validation guidelines. Learn more about secure input validation at:
-- [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
-- [NodeJS Security Best Practices](https://nodejs.org/en/docs/guides/security)
+    {
+      "databaseId": "your-database-id-here",
+      "collectionId": "your-collection-id-here",
+      "query": "your-query-here"
+    }
+    ```
 
-### Data Protection 
+    <Tip>
+      Use descriptive header names with your service prefix to avoid conflicts (e.g., `x-slack-`, `x-github-`).
+    </Tip>
 
-Protecting sensitive data is critical. Never log or expose sensitive information like API keys, passwords, or personal data. Use encryption for sensitive data in transit and at rest. Follow data protection regulations like GDPR and CCPA. Learn more about data protection at:
-- [OWASP Sensitive Data Exposure](https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure)
-- [GDPR Compliance Guide](https://gdpr.eu/compliance/)
+  </Tab>
+</Tabs>
 
-### Rate Limiting
+## Security Best Practices
 
-Rate limiting helps prevent abuse and DoS attacks. Implement rate limiting based on IP address, user ID, or API key. Consider using token bucket or leaky bucket algorithms. Learn more about rate limiting at:
-- [Rate Limiting Algorithms Explained](https://konghq.com/blog/how-to-design-a-scalable-rate-limiting-algorithm)
-- [API Rate Limiting Best Practices](https://cloud.google.com/armor/docs/rate-limiting-overview)
+<CardGroup cols={2}>
+  <Card title="Input Validation" icon="shield">
+    **Always validate and sanitize input**
+    
+    - Use validation libraries like Joi or Yup
+    - Follow OWASP input validation guidelines
+    - Prevent injection attacks and buffer overflows
+    <br />
+    **Resources:**
+    - [OWASP Input Validation](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
+    - [NodeJS Security](https://nodejs.org/en/docs/guides/security)
+  </Card>
 
-### HTTPS Enforcement
+<Card title="Data Protection" icon="user-lock">
+  **Protect sensitive information** - Never log API keys or passwords - Encrypt
+  sensitive data in transit and at rest - Follow GDPR and CCPA regulations.
+  <br />
+  **Resources:** - [OWASP Data
+  Exposure](https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure)
+  - [GDPR Compliance](https://gdpr.eu/compliance/)
+</Card>
 
-HTTPS encryption is mandatory for production environments to protect data in transit. Use strong TLS configurations and keep certificates up to date. Consider HSTS and certificate pinning.
+<Card title="Rate Limiting" icon="hive">
+  **Prevent abuse and DoS attacks** - Implement per-IP or per-user limits - Use
+  token bucket or leaky bucket algorithms - Return appropriate 429 status codes.
+  <br />
+  **Resources:**
+
+- [Rate Limiting Algorithms](https://konghq.com/blog/how-to-design-a-scalable-rate-limiting-algorithm)
+- [API Rate Limiting](https://cloud.google.com/armor/docs/rate-limiting-overview)
+</Card>
+
+<Card title="HTTPS Enforcement" icon="certificate">
+    **Secure data in transit**
+    <br />
+    - HTTPS is mandatory for production
+    - Use strong TLS configurations
+    - Keep certificates up to date
+    - Consider HSTS and certificate pinning
+  </Card>
+</CardGroup>
 
 ## Error Handling
 
-### Consistent Error Format
+### Standard Error Format
 
-Always use the `BaseErrorResponseDto` format:
+<Card title="Consistent Error Structure" icon="triangle-exclamation">
+  Always use the `BaseErrorResponseDto` format for consistent error handling
+  across all agents.
+</Card>
 
 ```typescript
-// Standard error response structure
 interface ErrorResponse {
   success: false;
   error: {
-    message: string;      // Human-readable error message
-    code: string;         // Machine-readable error code
-    details: string;      // Additional context or debugging info
+    message: string; // Human-readable error message
+    code: string; // Machine-readable error code
+    details: string; // Additional context or debugging info
   };
 }
 ```
 
-### Common Error Codes
+### Error Categories
 
-Use consistent, descriptive error codes:
+<Tabs>
+  <Tab title="Authentication Errors">
+    <Card title="Auth-Related Errors" icon="lock">
+      Handle authentication and authorization failures gracefully.
+    </Card>
 
-```typescript
-// Authentication Errors
-const AUTH_ERRORS = {
-  MISSING_API_KEY: 'MISSING_API_KEY',
-  INVALID_API_KEY: 'INVALID_API_KEY',
-  MISSING_OAUTH_TOKEN: 'MISSING_OAUTH_TOKEN',
-  INVALID_OAUTH_TOKEN: 'INVALID_OAUTH_TOKEN',
-  TOKEN_EXPIRED: 'TOKEN_EXPIRED',
-  INSUFFICIENT_PERMISSIONS: 'INSUFFICIENT_PERMISSIONS'
-};
+    ```typescript
+    const AUTH_ERRORS = {
+      MISSING_API_KEY: 'MISSING_API_KEY',
+      INVALID_API_KEY: 'INVALID_API_KEY',
+      MISSING_OAUTH_TOKEN: 'MISSING_OAUTH_TOKEN',
+      INVALID_OAUTH_TOKEN: 'INVALID_OAUTH_TOKEN',
+      TOKEN_EXPIRED: 'TOKEN_EXPIRED',
+      INSUFFICIENT_PERMISSIONS: 'INSUFFICIENT_PERMISSIONS'
+    };
+    ```
 
-// Validation Errors
-const VALIDATION_ERRORS = {
-  INVALID_PARAMETERS: 'INVALID_PARAMETERS',
-  MISSING_REQUIRED_FIELD: 'MISSING_REQUIRED_FIELD',
-  INVALID_FORMAT: 'INVALID_FORMAT',
-  VALUE_TOO_LONG: 'VALUE_TOO_LONG'
-};
+    **Example Error Response:**
+    ```json
+    {
+      "success": false,
+      "error": {
+        "message": "API key is required for this operation",
+        "code": "MISSING_API_KEY",
+        "details": "Please provide a valid API key in the x-api-key header"
+      }
+    }
+    ```
 
-// Resource Errors
-const RESOURCE_ERRORS = {
-  RESOURCE_NOT_FOUND: 'RESOURCE_NOT_FOUND',
-  RESOURCE_ALREADY_EXISTS: 'RESOURCE_ALREADY_EXISTS',
-  RESOURCE_UNAVAILABLE: 'RESOURCE_UNAVAILABLE'
-};
+  </Tab>
 
-// System Errors
-const SYSTEM_ERRORS = {
-  INTERNAL_ERROR: 'INTERNAL_ERROR',
-  SERVICE_UNAVAILABLE: 'SERVICE_UNAVAILABLE',
-  TIMEOUT: 'TIMEOUT',
-  RATE_LIMIT_EXCEEDED: 'RATE_LIMIT_EXCEEDED'
-};
-```
+  <Tab title="Validation Errors">
+    <Card title="Input Validation Errors" icon="shield-check">
+      Handle invalid or malformed input parameters.
+    </Card>
 
-### HTTP Status Codes
+    ```typescript
+    const VALIDATION_ERRORS = {
+      INVALID_PARAMETERS: 'INVALID_PARAMETERS',
+      MISSING_REQUIRED_FIELD: 'MISSING_REQUIRED_FIELD',
+      INVALID_FORMAT: 'INVALID_FORMAT',
+      VALUE_TOO_LONG: 'VALUE_TOO_LONG'
+    };
+    ```
 
-Use appropriate HTTP status codes:
+    **Example Error Response:**
+    ```json
+    {
+      "success": false,
+      "error": {
+        "message": "Required field 'channel' is missing",
+        "code": "MISSING_REQUIRED_FIELD",
+        "details": "The 'channel' parameter is required for sending messages"
+      }
+    }
+    ```
 
-| Status Code | Usage | Example |
-|-------------|-------|---------|
-| 200 | Success | Tool executed successfully |
-| 400 | Bad Request | Invalid parameters |
-| 401 | Unauthorized | Missing or invalid API key |
-| 403 | Forbidden | Insufficient permissions |
-| 404 | Not Found | Tool or resource not found |
-| 429 | Too Many Requests | Rate limit exceeded |
-| 500 | Internal Server Error | Unexpected server error |
+  </Tab>
+
+  <Tab title="Resource Errors">
+    <Card title="Resource-Related Errors" icon="folder-open">
+      Handle resource not found, conflicts, and availability issues.
+    </Card>
+
+    ```typescript
+    const RESOURCE_ERRORS = {
+      RESOURCE_NOT_FOUND: 'RESOURCE_NOT_FOUND',
+      RESOURCE_ALREADY_EXISTS: 'RESOURCE_ALREADY_EXISTS',
+      RESOURCE_UNAVAILABLE: 'RESOURCE_UNAVAILABLE'
+    };
+    ```
+
+  </Tab>
+
+  <Tab title="System Errors">
+    <Card title="System-Level Errors" icon="server">
+      Handle internal errors, timeouts, and service unavailability.
+    </Card>
+
+    ```typescript
+    const SYSTEM_ERRORS = {
+      INTERNAL_ERROR: 'INTERNAL_ERROR',
+      SERVICE_UNAVAILABLE: 'SERVICE_UNAVAILABLE',
+      TIMEOUT: 'TIMEOUT',
+      RATE_LIMIT_EXCEEDED: 'RATE_LIMIT_EXCEEDED'
+    };
+    ```
+
+  </Tab>
+</Tabs>
+
+## HTTP Status Codes
+
+<Card title="Use Appropriate Status Codes" icon="list-ol">
+  Match your response status codes to the type of error or success to help
+  clients handle responses correctly.
+</Card>
+
+| Status Code | Usage                 | Example                    | Icon |
+| ----------- | --------------------- | -------------------------- | ---- |
+| **200**     | Success               | Tool executed successfully | ✅   |
+| **400**     | Bad Request           | Invalid parameters         | ❌   |
+| **401**     | Unauthorized          | Missing or invalid API key | 🔐   |
+| **403**     | Forbidden             | Insufficient permissions   | 🚫   |
+| **404**     | Not Found             | Tool or resource not found | 🔍   |
+| **429**     | Too Many Requests     | Rate limit exceeded        | ⏱️   |
+| **500**     | Internal Server Error | Unexpected server error    | ⚠️   |
+
+## Implementation Steps
+
+<Steps>
+  <Step title="Choose Authentication Strategy" icon="compass">
+    **Determine what authentication your agent needs**
+    
+    - Public tools: No authentication required
+    - Private tools: API keys, OAuth tokens, or custom headers
+    - Consider user privacy and security requirements
+    
+    <Card title="Decision Matrix" icon="table">
+      **Public tools**: Calculators, converters, formatters
+      **Private tools**: External API integrations, user data access
+    </Card>
+  </Step>
+
+<Step title="Implement Security Measures" icon="shield">
+  **Build security into your agent from the start** - Input validation and
+  sanitization - Rate limiting and abuse prevention - Secure credential handling
+  - HTTPS enforcement
+  <Warning>
+    Never store or log sensitive credentials like API keys or tokens.
+  </Warning>
+</Step>
+
+<Step title="Design Error Handling" icon="bug">
+  **Create consistent error responses** - Use standard error format - Provide
+  helpful error messages - Include appropriate HTTP status codes - Add debugging
+  context when needed
+  <Tip>
+    Good error messages help users fix issues quickly and reduce support burden.
+  </Tip>
+</Step>
+
+  <Step title="Test Security & Errors" icon="vial">
+    **Validate your security implementation**
+    
+    - Test with invalid credentials
+    - Verify rate limiting works
+    - Check error message quality
+    - Perform security audits
+    
+    <Card title="Security Checklist" icon="clipboard-check">
+      ✅ Input validation
+      ✅ Rate limiting
+      ✅ Error handling
+      ✅ HTTPS enforcement
+      ✅ Credential security
+    </Card>
+  </Step>
+</Steps>
+
+<Card title="Security Resources" icon="book">
+  Building secure agents? Check out the [OWASP Security
+  Guidelines](https://owasp.org/www-project-api-security/) and our [agent best
+  practices](/agents/best-practices) for comprehensive security guidance.
+</Card>
