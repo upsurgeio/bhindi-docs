@@ -72,8 +72,8 @@
           "icon": "magnifying-glass"
         },
         {
-          "anchor": "Warpspeed X Bhindi",
-          "href": "https://discord.gg/dHh5TZtg",
+          "anchor": "Discord",
+          "href": "https://discord.com/invite/hSfTG33ymy",
           "icon": "discord"
         }
       ]
@@ -86,8 +86,9 @@
   "navbar": {
     "primary": {
       "type": "button",
-      "label": "Warpseed X Bhindi",
-      "href": "https://discord.gg/dHh5TZtg"
+      "label": "Discord",
+      "icon": "discord",
+      "href": "https://discord.com/invite/hSfTG33ymy"
     }
   },
   "footer": {
