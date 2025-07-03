@@ -1,6 +1,6 @@
 ---
-title: "🛠️ Development Guide"
-description: "This guide explains how to create external agents that integrate with the system. Each agent must implement specific endpoints and follow authentication patterns."
+title: '🛠️ Development Guide'
+description: 'This guide explains how to create external agents that integrate with the system. Each agent must implement specific endpoints and follow authentication patterns.'
 ---
 
 ## 🏗️ Agent Architecture
@@ -78,6 +78,31 @@ tools: [
   },
 ];
 ```
+
+> #### ⚠️ **Important: Reserved Keywords**
+>
+> When defining tool parameters, be aware that certain keywords are reserved by the system and cannot be used as property names. Using these reserved keywords will result in validation errors
+> Following keywords are reserved:
+>
+> - `executionId`
+> - `chatId`
+> - `userId`
+> - `toolName`
+>
+> 💡 Tip: If you need to use a similar concept, consider prefixing or suffixing the property name
+> Example:
+>
+> ```typescript
+> // ❌ Avoid this
+> properties: {
+>  exectionId: { type: 'string' },  // Will throw error!
+> }
+>
+> // ✅ Use this instead
+> properties: {
+>  slackExecutionId: { type: 'string' },  // Safe alternative
+> }
+> ```
 
 ### 2. POST /tools/:toolName (Required)
 
