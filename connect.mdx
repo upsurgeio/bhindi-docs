@@ -1,5 +1,5 @@
 ---
-title: "🚀 Bring your agent to Bhindi"
+title: '🚀 Bring your agent to Bhindi'
 description: "Once you've built and deployed your agent, you can easily integrate it with Bhindi.io to make it accessible through the platform."
 ---
 
@@ -58,3 +58,24 @@ For agents requiring OAuth access:
 ### Integration Support
 
 The **Bhindi Agent Manager** will guide you through the integration process and help resolve any issues during setup.
+
+4. **With Variable Integration (Optional)**
+   - For agents that need access to variables like `x-var-api-key` or `x-var`
+   - Include variables in your agent registration:
+
+```
+Add my agent using Bhindi Agent Manager. The details are as follows:
+
+id: my-app
+name: My App Analyzer
+description: Analyzes and provides insights for app
+endpoint: https://my-app.com
+variables: [{
+   ref: “var-api-key”,
+   name: “var Api Key”,
+   description: “<Your var API Key>”,
+   required: true
+}],
+```
+
+> Whatever the `ref` in the agent variable is provided, will be called at the `endpoint` with `x-ref`
