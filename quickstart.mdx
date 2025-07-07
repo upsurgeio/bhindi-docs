@@ -1,6 +1,6 @@
 ---
-title: "⚡️ Quickstart"
-description: "Get started with building your own custom agent on Bhindi Platform in a few minutes!"
+title: 'Quickstart'
+description: 'Get started with building your own custom agent on Bhindi Platform in a few minutes!'
 ---
 
 ## Why build on Bhindi though?
@@ -10,34 +10,45 @@ description: "Get started with building your own custom agent on Bhindi Platform
 3. You connect with 15\+ OAuth apps out of the box.
 4. So you can focus on your idea and get it out before it becomes dead burried under other 99 dead ideas which you did not ship because some random setup issue took half of your day
 
-## Start here 👇🏻
+## Getting Started
 
-https://github.com/upsurgeio/bhindi-agent-starter
+### Agent Starter Kit
 
-We have provideed an Open Source TypeScript-based agent starter kit that demonstrates both **public calculator tools** and **authenticated GitHub tools**. Perfect for learning agent development with the [Bhindi.io](https://bhindi.io) specification.
+Access our comprehensive TypeScript-based agent starter kit to begin building intelligent agents with the Bhindi.io platform.
+
+**Repository**: [github.com/upsurgeio/bhindi-agent-starter](https://github.com/upsurgeio/bhindi-agent-starter)
+
+This open-source starter kit provides a robust foundation for agent development, featuring:
+
+- **Public Tool Integration**: Pre-configured calculator tools demonstrating basic agent capabilities
+- **Authenticated Tool Access**: GitHub integration examples showcasing secure API interactions
+- **TypeScript Support**: Full type safety and modern development practices
+- **Bhindi.io Specification**: Complete implementation following the official [Bhindi.io](https://bhindi.io) agent specification
+
+The starter kit serves as both a learning resource and a production-ready template for developers looking to create custom agents on the Bhindi.io platform.
 
 ### Available OAuth Integrations
 
 Here is a list of Bhindi Agents you can have access of in your agent\!
 
-GitHub\
-Trello\
-Notion\
-Linear\
-Gmail\
-Google Calendar\
-Google Docs\
-Google Sheets\
-GitHub Pages\
-Slack\
-X/Twitter\
-Typeform\
-Google Forms\
-Reddit
+- GitHub
+- Trello
+- Notion
+- Linear
+- Gmail
+- Google Calendar
+- Google Docs
+- Google Sheets
+- GitHub Pages
+- Slack
+- X/Twitter
+- Typeform
+- Google Forms
+- Reddit
 
 You can find these agents and their available tools at https://directory.bhindi.io/
 
-## 📋 Quick Start
+## Quick Start
 
 ### 0. Clone the agent starter template
 
@@ -82,7 +93,7 @@ curl -X POST "http://localhost:3000/tools/countCharacter" \
   -d '{"character": "s", "text": "strawberrry"}'
 ```
 
-## 🧮 Usage Examples
+## Usage Examples
 
 ### Calculator Tools (No Authentication)
 
@@ -135,7 +146,7 @@ curl -X POST "http://localhost:3000/tools/listUserRepositories" \
   -d '{"per_page": 5, "sort": "updated"}'
 ```
 
-## 🚀 Available Tools
+## Available Tools
 
 ### Calculator Tools
 
@@ -157,26 +168,26 @@ curl -X POST "http://localhost:3000/tools/listUserRepositories" \
 | :--------------------- | :----------------------- | :-------------------- |
 | `listUserRepositories` | List user's repositories | Bearer token required |
 
-## 🔐 Authentication
+## Authentication
 
 This agent demonstrates **hybrid authentication**:
 
 - **Calculator tools**: No authentication required (public)
 - **GitHub tools**: Bearer token authentication required (private)
 
-## 📚 API Endpoints
+## API Endpoints
 
 - `GET /tools` - Get list of available tools (public)
 - `POST /tools/:toolName` - Execute a specific tool (auth depends on tool type)
 - `GET /health` - Health check endpoint (shows tool authentication requirements)
 - `GET /docs` - Swagger UI documentation (serves `public/swagger.json`)
 
-## 📖 Documentation & Examples
+## Documentation & Examples
 
 - **Swagger Documentation** - Available at `/docs` endpoint when server is running
 - **Postman Collection** - Import `Bhind-Agent-Starter.postman_collection.json` for easy testing
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 src/
@@ -201,7 +212,7 @@ src/
 └── server.ts              # Server entry point
 ```
 
-## 🧪 Development
+## Development
 
 ```bash
 # Run tests
@@ -220,7 +231,7 @@ npm run format
 npm run dev
 ```
 
-## 🎯 What This Starter Kit Demonstrates
+## What This Starter Kit Demonstrates
 
 This starter kit teaches you how to build agents with:
 
@@ -231,7 +242,7 @@ This starter kit teaches you how to build agents with:
 - **Advanced features** like `confirmationRequired`
 - **Standardized response formats** following agent specification
 
-## ✨ Features
+## Features
 
 ### Calculator Tools (No Authentication)
 
@@ -253,7 +264,7 @@ This starter kit teaches you how to build agents with:
 - **JSON Schema validation** for parameters
 - **Standardized error handling**
 
-## 🚀 Next Steps
+## Next Steps
 
 Once you understand this agent, you can:
 
@@ -264,7 +275,7 @@ Once you understand this agent, you can:
 5. **Add rate limiting**: Protect expensive operations
 6. **Add database integration**: Store calculation history
 
-## 📖 Agent Specification Compliance
+## Agent Specification Compliance
 
 This starter follows the [Bhindi.io](https://bhindi.io) agent specification:
 
