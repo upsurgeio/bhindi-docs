@@ -33,7 +33,7 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["index", "agents"]
+            "pages": ["agents"]
           },
           {
             "group": "Build your custom agent",
