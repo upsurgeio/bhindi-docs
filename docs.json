@@ -1,89 +1,70 @@
 {
-    "$schema": "https://mintlify.com/docs.json",
-    "theme": "mint",
-    "name": "Bhindi.io Docs",
-    "colors": {
-        "primary": "#16A34A",
-        "light": "#07C983",
-        "dark": "#15803D"
-    },
-    "favicon": "/favicon.ico",
-    "seo": {
-        "metatags": {
-            "title": "Bhindi.io - Documentation",
-            "description": "Explore comprehensive documentation and resources making AI agents for Bhindi.io.",
-            "keywords": "bhindi.io, documentation, developer tools",
-            "robots": "index, follow",
-            "og:title": "Bhindi.io - Documentation",
-            "og:description": "Your go-to resource for bhindi.io documentation.",
-            "og:url": "https://bhindi.io",
-            "og:image": "/images/og-docs.png",
-            "og:type": "website",
-            "twitter:card": "summary",
-            "twitter:site": "@bhindiai",
-            "twitter:title": "Bhindi.io - Documentation",
-            "twitter:description": "Your go-to resource for bhindi.io documentation.",
-            "twitter:image": "/images/og-docs.png"
-        }
-    },
-    "navigation": {
-        "tabs": [
-            {
-                "tab": "Guides",
-                "groups": [
-                    {
-                        "group": "Get Started",
-                        "pages": [
-                            "index",
-                            "agents"
-                        ]
-                    },
-                    {
-                        "group": "Build your custom agent",
-                        "pages": [
-                            "quickstart",
-                            "development",
-                            "connect"
-                        ]
-                    }
-                ]
-            }
-        ],
-        "global": {
-            "anchors": [
-                {
-                    "anchor": "Launch Bhindi",
-                    "href": "https://bhindi.io",
-                    "icon": "arrow-up-right-from-square"
-                },
-                {
-                    "anchor": "Discover Agents",
-                    "href": "https://directory.bhindi.io/",
-                    "icon": "magnifying-glass"
-                },
-                {
-                    "anchor": "Warpspeed X Bhindi",
-                    "href": "https://discord.gg/dHh5TZtg",
-                    "icon": "discord"
-                }
-            ]
-        }
-    },
-    "logo": {
-        "light": "/logo/logo-light.png",
-        "dark": "/logo/logo-dark.png"
-    },
-    "navbar": {
-        "primary": {
-            "type": "button",
-            "label": "Warpseed X Bhindi",
-            "href": "https://discord.gg/dHh5TZtg"
-        }
-    },
-    "footer": {
-        "socials": {
-            "x": "https://x.com/bhindiai",
-            "github": "https://github.com/upsurgeio"
-        }
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Bhindi.io Docs",
+  "colors": {
+    "primary": "#16A34A",
+    "light": "#07C983",
+    "dark": "#15803D"
+  },
+  "favicon": "/favicon.ico",
+  "seo": {
+    "metatags": {
+      "title": "Bhindi.io - Documentation",
+      "description": "Explore comprehensive documentation and resources making AI agents for Bhindi.io.",
+      "keywords": "bhindi.io, documentation, developer tools",
+      "robots": "index, follow",
+      "og:title": "Bhindi.io - Documentation",
+      "og:description": "Your go-to resource for bhindi.io documentation.",
+      "og:url": "https://bhindi.io",
+      "og:image": "/images/og-docs.png",
+      "og:type": "website",
+      "twitter:card": "summary",
+      "twitter:site": "@bhindiai",
+      "twitter:title": "Bhindi.io - Documentation",
+      "twitter:description": "Your go-to resource for bhindi.io documentation.",
+      "twitter:image": "/images/og-docs.png"
     }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": ["index", "agents"]
+          },
+          {
+            "group": "Build your custom agent",
+            "pages": ["quickstart", "development", "connect"]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Launch Bhindi",
+          "href": "https://bhindi.io",
+          "icon": "arrow-up-right-from-square"
+        },
+        {
+          "anchor": "Discover Agents",
+          "href": "https://directory.bhindi.io/",
+          "icon": "magnifying-glass"
+        }
+      ]
+    }
+  },
+  "logo": {
+    "light": "/logo/logo-light.png",
+    "dark": "/logo/logo-dark.png"
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/bhindiai",
+      "github": "https://github.com/upsurgeio"
+    }
+  }
 }
